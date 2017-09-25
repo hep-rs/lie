@@ -1,7 +1,9 @@
-use ndarray::Array1;
-use std::ops;
 use std::cmp;
 use std::fmt;
+use std::i64;
+use std::ops;
+
+use ndarray::Array1;
 
 /// Instance of a root.
 ///
@@ -101,6 +103,61 @@ impl Root {
             }
             _ => {
                 let alpha = Array1::from_shape_fn(omega.dim(), |i| if i == alpha { 1 } else { 0 });
+                Root { omega, alpha }
+            }
+        }
+    }
+
+    /// Create a new arbitrary root with all coefficients in the \\(\omega\\)
+    /// and \\(\alpha\\) bases specified.
+    ///
+    /// This function should **not** be used unless you are sure of what you are
+    /// doing.  Incorrectly or inconsistently defining `omega` with respect to
+    /// `alpha` (or simply on their own) may have serious repercussions when the
+    /// roots are being manipulated with other roots.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use lie::Root;
+    ///
+    /// let r = Root::new(vec![2, -1, 0], vec![1, 0, 0]);
+    /// assert!(r.is_simple());
+    /// assert_eq!(r.level(), 1);
+    ///
+    /// let r = Root::new(vec![2, -1, 0], vec![1, 0, 0]);
+    /// assert!(r.is_simple());
+    /// assert_eq!(r.level(), 1);
+    /// ```
+    ///
+    /// # Panics
+    ///
+    /// Panics if the sizes of `omega` and `alpha` differ or if they are zero.
+    /// Also panics if the coefficients in `alpha` don't all have the same sign.
+    pub fn new<A, B>(omega: A, alpha: B) -> Self
+    where
+        A: Into<Array1<i64>>,
+        B: Into<Array1<i64>>,
+    {
+        let omega = omega.into();
+        let alpha = alpha.into();
+
+        if omega.dim() != alpha.dim() {
+            panic!("The omega and alpha coefficients have to be the same size.")
+        } else if omega.dim() == 0 {
+            panic!("Must provide an array of at least 1 element.")
+        } else {
+            let (min, max) = alpha
+                .iter()
+                .map(|&v| i64::signum(v))
+                .filter(|&v| v != 0)
+                .fold(
+                    (2, -2),
+                    |(min, max), s| (cmp::min(min, s), cmp::max(max, s)),
+                );
+            if min != max {
+                panic!("All coefficients in the alpha basis must have the same sign")
+            } else {
                 Root { omega, alpha }
             }
         }
@@ -448,6 +505,32 @@ mod test {
     #[should_panic]
     fn simple_panic_invalid_alpha() {
         Root::simple(vec![2, -1], 2);
+    }
+
+    #[test]
+    fn new() {
+        let r = Root::new(vec![2, -1, 0], vec![1, 0, 0]);
+        assert_eq!(r.level(), 1);
+        assert_eq!(r.rank(), 3);
+        assert!(r.is_simple());
+    }
+
+    #[test]
+    #[should_panic]
+    fn new_panic_inconsistent_size() {
+        Root::new(vec![2, -1, 0], vec![1, 0]);
+    }
+
+    #[test]
+    #[should_panic]
+    fn new_panic_0() {
+        Root::new(vec![], vec![]);
+    }
+
+    #[test]
+    #[should_panic]
+    fn new_panic_diff_sign() {
+        Root::new(vec![1, 2, 3], vec![1, 0, -1]);
     }
 
     #[test]
