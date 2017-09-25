@@ -134,11 +134,19 @@ mod test {
 
     #[test]
     fn roots() {
-        for rank in 2..10 {
+        for rank in (2..10).chain(30..31) {
             let g = TypeB::new(rank).unwrap();
             assert_eq!(g.num_simple_roots(), g.simple_roots().len());
             assert_eq!(g.num_positive_roots(), g.positive_roots().len());
             assert_eq!(g.num_roots(), g.roots().len());
+        }
+    }
+
+    #[test]
+    fn fmt() {
+        for rank in (2..10).chain(30..31) {
+            let g = TypeB::new(rank).unwrap();
+            assert_eq!(format!("{}", g), format!("B{}", rank));
         }
     }
 

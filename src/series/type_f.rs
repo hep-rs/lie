@@ -123,6 +123,12 @@ mod test {
         assert_eq!(g.num_roots(), g.roots().len());
     }
 
+    #[test]
+    fn fmt() {
+        let g = TypeF::new(4).unwrap();
+        assert_eq!(format!("{}", g), "F4");
+    }
+
     #[cfg(feature = "nightly")]
     #[bench]
     fn bench_roots_4(b: &mut Bencher) {

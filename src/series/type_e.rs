@@ -187,6 +187,14 @@ mod test {
         }
     }
 
+    #[test]
+    fn fmt() {
+        for rank in 6..9 {
+            let g = TypeE::new(rank).unwrap();
+            assert_eq!(format!("{}", g), format!("E{}", rank));
+        }
+    }
+
     #[cfg(feature = "nightly")]
     #[bench]
     fn bench_roots_6(b: &mut Bencher) {

@@ -86,11 +86,15 @@ impl Root {
         A: Into<Array1<i64>>,
     {
         let omega = omega.into();
-        if alpha >= omega.dim() {
-            panic!("Simple root must have an index that is strictly less than rank.")
-        } else {
-            let alpha = Array1::from_shape_fn(omega.dim(), |i| if i == alpha { 1 } else { 0 });
-            Root { omega, alpha }
+        match (omega.dim(), alpha) {
+            (0, _) => panic!("Omega must contain at least 1 element."),
+            (d, a) if a >= d => {
+                panic!("Simple root must have an index that is strictly less than rank.")
+            }
+            _ => {
+                let alpha = Array1::from_shape_fn(omega.dim(), |i| if i == alpha { 1 } else { 0 });
+                Root { omega, alpha }
+            }
         }
     }
 
@@ -257,8 +261,8 @@ impl ops::Add<Root> for Root {
 
     fn add(self, other: Root) -> Self::Output {
         Root {
-            omega: self.omega + other.omega,
-            alpha: self.alpha + other.alpha,
+            omega: &self.omega + &other.omega,
+            alpha: &self.alpha + &other.alpha,
         }
     }
 }
@@ -268,8 +272,8 @@ impl<'a> ops::Add<&'a Root> for Root {
 
     fn add(self, other: &Root) -> Self::Output {
         Root {
-            omega: self.omega + &other.omega,
-            alpha: self.alpha + &other.alpha,
+            omega: &self.omega + &other.omega,
+            alpha: &self.alpha + &other.alpha,
         }
     }
 }
@@ -303,8 +307,8 @@ impl ops::Sub<Root> for Root {
 
     fn sub(self, other: Root) -> Self::Output {
         Root {
-            omega: self.omega - other.omega,
-            alpha: self.alpha - other.alpha,
+            omega: &self.omega - &other.omega,
+            alpha: &self.alpha - &other.alpha,
         }
     }
 }
@@ -314,8 +318,8 @@ impl<'a> ops::Sub<&'a Root> for Root {
 
     fn sub(self, other: &Root) -> Self::Output {
         Root {
-            omega: self.omega - &other.omega,
-            alpha: self.alpha - &other.alpha,
+            omega: &self.omega - &other.omega,
+            alpha: &self.alpha - &other.alpha,
         }
     }
 }
@@ -349,8 +353,8 @@ impl ops::Mul<i64> for Root {
 
     fn mul(self, other: i64) -> Self::Output {
         Root {
-            omega: self.omega * other,
-            alpha: self.alpha * other,
+            omega: &self.omega * other,
+            alpha: &self.alpha * other,
         }
     }
 }
@@ -371,8 +375,19 @@ impl ops::Mul<Root> for i64 {
 
     fn mul(self, other: Root) -> Self::Output {
         Root {
-            omega: self * other.omega,
-            alpha: self * other.alpha,
+            omega: self * &other.omega,
+            alpha: self * &other.alpha,
+        }
+    }
+}
+
+impl<'a> ops::Mul<&'a Root> for i64 {
+    type Output = Root;
+
+    fn mul(self, other: &Root) -> Self::Output {
+        Root {
+            omega: self * &other.omega,
+            alpha: self * &other.alpha,
         }
     }
 }
@@ -402,11 +417,29 @@ mod test {
     }
 
     #[test]
+    #[should_panic]
+    fn zero_panic() {
+        Root::zero(0);
+    }
+
+    #[test]
     fn simple() {
         let r = Root::simple(vec![2, -1, 0], 0);
         assert_eq!(r.level(), 1);
         assert_eq!(r.rank(), 3);
         assert!(r.is_simple());
+    }
+
+    #[test]
+    #[should_panic]
+    fn simple_panic_0() {
+        Root::simple(vec![], 0);
+    }
+
+    #[test]
+    #[should_panic]
+    fn simple_panic_invalid_alpha() {
+        Root::simple(vec![2, -1], 2);
     }
 
     #[test]
@@ -489,5 +522,74 @@ mod test {
         let v_sorted = vec![a3, a2, a1, r2, r1, r3];
         v_unsorted.sort_unstable();
         assert_eq!(v_unsorted, v_sorted);
+    }
+
+    #[test]
+    fn fmt() {
+        let r = Root::simple(vec![-1, 2, -1], 1);
+        assert_eq!(format!("{}", r), "[-1, 2, -1]");
+        assert_eq!(format!("{:?}", r), "[-1, 2, -1]");
+    }
+
+    #[test]
+    fn add_sub() {
+        let a1 = Root::simple(vec![2, -1, 0], 0);
+        let a2 = Root::simple(vec![-1, 2, -1], 1);
+        let r = &a1 + &a2;
+        assert_eq!(r.alpha().as_slice().unwrap(), &[1, 1, 0]);
+
+        let a1 = Root::simple(vec![2, -1, 0], 0);
+        let a2 = Root::simple(vec![-1, 2, -1], 1);
+        let r = &a1 + a2;
+        assert_eq!(r.alpha().as_slice().unwrap(), &[1, 1, 0]);
+
+        let a1 = Root::simple(vec![2, -1, 0], 0);
+        let a2 = Root::simple(vec![-1, 2, -1], 1);
+        let r = a1 + &a2;
+        assert_eq!(r.alpha().as_slice().unwrap(), &[1, 1, 0]);
+
+        let a1 = Root::simple(vec![2, -1, 0], 0);
+        let a2 = Root::simple(vec![-1, 2, -1], 1);
+        let r = a1 + a2;
+        assert_eq!(r.alpha().as_slice().unwrap(), &[1, 1, 0]);
+
+        let a1 = Root::simple(vec![2, -1, 0], 0);
+        let a2 = Root::simple(vec![-1, 2, -1], 1);
+        let r = &a1 - &a2;
+        assert_eq!(r.alpha().as_slice().unwrap(), &[1, -1, 0]);
+
+        let a1 = Root::simple(vec![2, -1, 0], 0);
+        let a2 = Root::simple(vec![-1, 2, -1], 1);
+        let r = &a1 - a2;
+        assert_eq!(r.alpha().as_slice().unwrap(), &[1, -1, 0]);
+
+        let a1 = Root::simple(vec![2, -1, 0], 0);
+        let a2 = Root::simple(vec![-1, 2, -1], 1);
+        let r = a1 - &a2;
+        assert_eq!(r.alpha().as_slice().unwrap(), &[1, -1, 0]);
+
+        let a1 = Root::simple(vec![2, -1, 0], 0);
+        let a2 = Root::simple(vec![-1, 2, -1], 1);
+        let r = a1 - a2;
+        assert_eq!(r.alpha().as_slice().unwrap(), &[1, -1, 0]);
+    }
+
+    #[test]
+    fn scalar_mul() {
+        let a1 = Root::simple(vec![2, -1, 0], 0);
+        let r = 2 * &a1;
+        assert_eq!(r.alpha().as_slice().unwrap(), &[2, 0, 0]);
+
+        let a1 = Root::simple(vec![2, -1, 0], 0);
+        let r = 2 * a1;
+        assert_eq!(r.alpha().as_slice().unwrap(), &[2, 0, 0]);
+
+        let a1 = Root::simple(vec![2, -1, 0], 0);
+        let r = &a1 * 2;
+        assert_eq!(r.alpha().as_slice().unwrap(), &[2, 0, 0]);
+
+        let a1 = Root::simple(vec![2, -1, 0], 0);
+        let r = a1 * 2;
+        assert_eq!(r.alpha().as_slice().unwrap(), &[2, 0, 0]);
     }
 }
