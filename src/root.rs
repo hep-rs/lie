@@ -12,16 +12,24 @@ use std::fmt;
 ///
 /// The roots are stored in the following two bases:
 ///
-/// - **\\(\alpha\\)-basis**: Represents the root \\(\beta\\) as the array
+/// - *\\(\alpha\\)-basis*: Represents the root \\(\beta\\) as the array
 ///   \\((k_{1}, \dots, k_{n})\\) such that \\(\beta = \sum_{i} k_{i}
 ///   \alpha_{i}\\), where \\(\alpha_{i}\\) are the simple roots.  Note that
 ///   \\(n\\) corresponds to the number of simple roots and thus the rank of the
 ///   corresponding Lie group.
 ///
-/// - **\\(\omega\\)-basis**: In the \\(\omega\\) basis, each \\(\alpha_{i}\\)
-///   corresponds to the \\(i\\)th row of Cartan matrix.  Thus a root
-///   \\(\beta\\) in the \\(\omega\\) basis is expressed \\(\beta_{j} = \sum_{i}
+/// - *\\(\omega\\)-basis*: In the \\(\omega\\) basis, each \\(\alpha_{i}\\)
+///   corresponds to the \\(i\\)th row of Cartan matrix; thus, a root
+///   \\(\beta\\) in the \\(\omega\\) basis is expressed \\(\beta = \sum_{i}
 ///   k_{i} A_{ij}\\).
+///
+/// A root on its own makes little sense without the corresponding [root
+/// system](trait.RootSystem.html); however, it is still possible to manipulate
+/// roots in several ways without needing the additional information provided by
+/// the root system.  For this to be possible though, it assumes that the
+/// \\(\omega\\) and \\(\alpha\\) weights have been correctly specified.
+/// **Incorrectly defining \\(\omega\\) or \\(\alpha\\) may result in undefined
+/// behaviour when roots are being manipulated.**
 #[derive(Clone)]
 pub struct Root {
     omega: Array1<i64>,

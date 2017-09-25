@@ -24,6 +24,11 @@
 //! - [\\(E_{7}\\)](https://en.wikipedia.org/wiki/E7_(mathematics)); and,
 //! - [\\(E_{8}\\)](https://en.wikipedia.org/wiki/E8_(mathematics)).
 //!
+//! The corresponding Lie algebras are conventionally denoted using fraktur
+//! symbols: \\(\mathfrak{su}_{n}\\), \\(\mathfrak{so}_{n}\\),
+//! \\(\mathfrak{sp}_{n}\\), \\(\mathfrak{g}_{2}\\), \\(\mathfrak{f}_{4}\\),
+//! \\(\mathfrak{e}_{6}\\), \\(\mathfrak{e}_{7}\\) and \\(\mathfrak{e}_{8}\\).
+
 //! ## Exceptional Isomorphisms
 //!
 //! For low values of \\(n\\), there are accidental isomorphisms between the

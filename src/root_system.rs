@@ -25,6 +25,46 @@ use root::Root;
 pub type CartanMatrix = ndarray::Array2<i64>;
 
 /// Trait for root systems.
+///
+/// ## Definition
+///
+/// Let \\(V\\) be a finite dimensional Euclidean vector space with the standard
+/// Euclidean inner product being denoted by \\(\langle \cdot, \cdot \rangle\\).
+/// A *root system* in \\(V\\) is a finite set \\(\Phi\\) of non-zero vectors
+/// (called *roots*) that satisfy the following conditions:
+///
+/// 1. The roots span \\(V\\);
+///
+/// 2. The only scalar multiple of a root \\(\alpha \in \Phi\\) that belong to
+///    \\(\Phi\\) are \\(\alpha\\) and \\(-\alpha\\);
+///
+/// 3. For every root \\(\alpha \in \Phi\\), the set \\(\Phi\\) is closed under
+///    reflections through the hyperplane perpendicular to \\(\alpha\\);
+///
+/// 4. If \\(\alpha, \beta \in \Phi\\), then the projection of
+///    \\(\beta\\) onto \\(\alpha\\) is a half-integral multiple of
+///    \\(\alpha\\).
+///
+/// In addition to the set of roots themselves, there are two important subsets
+/// of \\(\Phi\\) which are commonly used:
+///
+/// - \\(\Phi\^{+} \subseteq \Phi\\): the set of positive roots.  This is the
+///   subset chosen such that:
+///   - For each \\(\alpha \in \Phi\\), only one of \\(\alpha\\) and
+///     \\(-\alpha\\) are in \\(\Phi\^{+}\\); and,
+///   - For any two distinct \\(\alpha, \beta \in \Phi\^{+}\\) then \\(\alpha +
+///     \beta \in \Phi\^{+}\\) provided that \\(\alpha + \beta \in \Phi\\).
+/// - \\(\Delta \subseteq \Phi\^{+}\\): the set of simple root.  An element of
+///   \\(\Phi\^{+}\\) is a simple root if it cannot be expressed as the sum of
+///   two other elements in \\(\Phi\^{+}\\).  The set of simple roots has the
+///   property that every root in \\(\Phi\\) can be expressed as linear
+///   combination of elements of \\(\Delta\\) with all coefficients
+///   non-negative, or all coefficients non-positive.
+///
+/// Although the roots are, strictly speaking, elements of a Euclidean vector
+/// space; we will not be handling these vectors directly.  Instead, all the
+/// relevant information is contained in the [Cartan
+/// matrix](type.CartanMatrix.html).
 pub trait RootSystem {
     /// Return the rank of the Lie group.
     ///
@@ -58,20 +98,6 @@ pub trait RootSystem {
     }
 
     /// Return the Cartan matrix of the Lie group.
-    ///
-    /// # Definition
-    ///
-    /// The Cartan matrix of a Lie group is the matrix
-    ///
-    /// \\begin{equation}
-    ///   A_{ij} = 2 \frac{\langle \alpha_{i}, \alpha_{j} \rangle}{\langle \alpha_{i}, \alpha_{i} \rangle}
-    /// \\end{equation}
-    ///
-    /// Where \\(\alpha_{i}\\) are the simple roots of the root system of the Lie
-    /// group \\(G\\).  As a result, the matrix is of size \\(n \times n\\) where
-    /// \\(n = \mathop{\rm Rank}(G)\\).  An immediate consequence of the above
-    /// definition and properties of root systems is that \\(A_{ii} = 2\\) and
-    /// \\(A_{ij} \leq 0\\) and \\(A_{ij} = 0 \Leftrightarrow A_{ji} = 0\\).
     ///
     /// # Example
     ///
