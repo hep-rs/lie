@@ -1,0 +1,25 @@
+[package]
+name = "lie"
+version = "0.1.0"
+authors = ["JP-Ellis <josh@jpellis.me>"]
+
+readme = "README.md"
+description = """
+Library to manipulate Lie algebras and their representations.
+"""
+
+documentation = "https://github.com/hep-rs/lie"
+homepage = "https://github.com/hep-rs/lie"
+repository  = "https://github.com/hep-rs/lie"
+
+license = "GPL-3.0"
+
+[dependencies]
+log = "^0.3.8"
+ndarray = "^0.10"
+rayon = "0.8.2"
+
+[features]
+
+default = []
+nightly = []
