@@ -1,4 +1,4 @@
-# `lie-rs`
+# lie-rs
 
 `lie-rs` provides functionalities to manipulate Lie groups and their
 representations, including the ability to:
