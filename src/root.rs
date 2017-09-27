@@ -26,12 +26,12 @@ use ndarray::Array1;
 ///   k_{i} A_{ij}\\).
 ///
 /// A root on its own makes little sense without the corresponding [root
-/// system](trait.RootSystem.html); however, it is still possible to manipulate
-/// roots in several ways without needing the additional information provided by
-/// the root system.  For this to be possible though, it assumes that the
-/// \\(\omega\\) and \\(\alpha\\) weights have been correctly specified.
-/// **Incorrectly defining \\(\omega\\) or \\(\alpha\\) may result in undefined
-/// behaviour when roots are being manipulated.**
+/// system](root_system/trait.RootSystem.html); however, it is still possible to
+/// manipulate roots in several ways without needing the additional information
+/// provided by the root system.  For this to be possible though, it assumes
+/// that the \\(\omega\\) and \\(\alpha\\) weights have been correctly
+/// specified.  **Incorrectly defining \\(\omega\\) or \\(\alpha\\) may result
+/// in undefined behaviour when roots are being manipulated.**
 #[derive(Clone)]
 pub struct Root {
     omega: Array1<i64>,
