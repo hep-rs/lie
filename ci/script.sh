@@ -2,7 +2,7 @@
 set -eux
 
 # Run clippy and see if it has anything to say
-clippy() {
+clippy_lints() {
     if $CLIPPY ; then
         cargo clippy $FEATURES
     fi
@@ -16,7 +16,7 @@ build_and_test() {
 
 main() {
     build_and_test
-    clippy
+    clippy_lints
 }
 
 main
