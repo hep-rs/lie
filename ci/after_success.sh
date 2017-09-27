@@ -38,15 +38,37 @@ kcov_suite() {
     fi
 }
 
-make_doc() {
-    if [[ "$TRAVIS_RUST_VERSION" == "stable" ]]; then
-        SED_SUB='s|</body>|<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script></body>|'
+setup_git() {
+    git config --global user.email "travis@travis-ci.org"
+    git config --global user.name "Travis CI"
+}
 
-        cargo doc
-        find $(dirname $(realpath $0))/target/doc \
+make_doc() {
+    # Only want to update the docs when pushing to master.  Ultimately, this
+    # should be changed to using a tag once things have stabilized.
+    if [[ "$TRAVIS_RUST_VERSION" == "stable"
+       && "$TRAVIS_EVENT_TYPE" == "push"
+       && "$TRAVIS_BRANCH" == "master" ]]; then
+
+        cargo doc $FEATURES
+
+        SED_SUB='s|</body>|<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script></body>|'
+        find ./target/doc \
              -type f \
              -name "*.html" \
              -exec sed -i "$SED_SUB" '{}' +
+
+        setup_git
+        git clone --depth=1 --branch=gh-pages https://${GH_TOKEN}@github.com/$TRAVIS_REPO_SLUG.git ./target/doc-git
+
+        cd ./target/doc-git
+        cp index.html ../doc/
+        rm -rf *
+        cp -R ../doc/* .
+        git add -A .
+        git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
+        git push
+
     fi
 }
 
