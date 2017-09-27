@@ -62,7 +62,9 @@ make_doc() {
         git clone --depth=1 --branch=gh-pages https://${GH_TOKEN}@github.com/$TRAVIS_REPO_SLUG.git ./target/doc-git
 
         cd ./target/doc-git
-        cp index.html ../doc/
+        for f in index.html CNAME; do
+            cp $f ../doc/
+        done
         rm -rf *
         cp -R ../doc/* .
         git add -A .
