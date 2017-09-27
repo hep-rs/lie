@@ -58,13 +58,10 @@ impl Root {
     ///
     /// Panics if the rank is 0.
     pub fn zero(rank: usize) -> Self {
-        if rank == 0 {
-            panic!("Rank of a zero root must be at least 1.")
-        } else {
-            Root {
-                omega: Array1::zeros(rank),
-                alpha: Array1::zeros(rank),
-            }
+        assert!(rank > 0, "Rank of a zero root must be at least 1.");
+        Root {
+            omega: Array1::zeros(rank),
+            alpha: Array1::zeros(rank),
         }
     }
 
@@ -142,25 +139,27 @@ impl Root {
         let omega = omega.into();
         let alpha = alpha.into();
 
-        if omega.dim() != alpha.dim() {
-            panic!("The omega and alpha coefficients have to be the same size.")
-        } else if omega.dim() == 0 {
-            panic!("Must provide an array of at least 1 element.")
-        } else {
-            let (min, max) = alpha
-                .iter()
-                .map(|&v| i64::signum(v))
-                .filter(|&v| v != 0)
-                .fold(
-                    (2, -2),
-                    |(min, max), s| (cmp::min(min, s), cmp::max(max, s)),
-                );
-            if min != max {
-                panic!("All coefficients in the alpha basis must have the same sign")
-            } else {
-                Root { omega, alpha }
-            }
-        }
+        assert!(
+            omega.dim() == alpha.dim(),
+            "The omega and alpha coefficients have to be the same size."
+        );
+        assert!(
+            omega.dim() > 0,
+            "Must provide an array of at least 1 element."
+        );
+        let (min, max) = alpha
+            .iter()
+            .map(|&v| i64::signum(v))
+            .filter(|&v| v != 0)
+            .fold(
+                (2, -2),
+                |(min, max), s| (cmp::min(min, s), cmp::max(max, s)),
+            );
+        assert!(
+            min == max,
+            "All coefficients in the alpha basis must have the same sign"
+        );
+        Root { omega, alpha }
     }
 
     /// Return the rank of the root's corresponding Lie group.
@@ -311,7 +310,7 @@ impl cmp::Ord for Root {
 
 impl cmp::PartialEq for Root {
     fn eq(&self, other: &Root) -> bool {
-        self.cmp(other) == cmp::Ordering::Equal
+        self.cmp(other) == cmp::Ordering::Equal && self.omega == other.omega
     }
 }
 

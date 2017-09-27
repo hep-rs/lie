@@ -1,7 +1,8 @@
 use std::fmt;
 
 use error::Error;
-use root_system::{CartanMatrix, RootSystem};
+use root::Root;
+use root_system::{self, CartanMatrix, RootSystem};
 
 /// The \\(E_{n}\\) exceptional Lie groups.
 ///
@@ -19,6 +20,9 @@ use root_system::{CartanMatrix, RootSystem};
 pub struct TypeE {
     rank: usize,
     cartan_matrix: CartanMatrix,
+    simple_roots: Vec<Root>,
+    positive_roots: Vec<Root>,
+    roots: Vec<Root>,
 }
 
 impl TypeE {
@@ -41,7 +45,7 @@ impl TypeE {
     /// assert_eq!(e6.num_roots(), 78);
     ///
     /// println!("The roots of {} are:", e6);
-    /// for r in &e6.roots() {
+    /// for r in e6.roots() {
     ///     println!("level {} | {}", r.level(), r);
     /// }
     /// ```
@@ -60,9 +64,16 @@ impl TypeE {
                 "E5 is isomorphic to D5.  Please use the latter.",
             )),
             rank if rank == 6 || rank == 7 || rank == 8 => {
+                let cartan_matrix = Self::cartan_matrix(rank);
+                let simple_roots = root_system::find_simple_roots(&cartan_matrix);
+                let positive_roots = root_system::find_positive_roots(&simple_roots);
+                let roots = root_system::find_roots_from_positive(&positive_roots);
                 Ok(TypeE {
                     rank,
-                    cartan_matrix: Self::cartan_matrix(rank),
+                    cartan_matrix,
+                    simple_roots,
+                    positive_roots,
+                    roots,
                 })
             }
             _ => Err(Error::new(
@@ -94,12 +105,16 @@ impl RootSystem for TypeE {
         &self.cartan_matrix
     }
 
-    fn num_roots(&self) -> usize {
-        30 * self.rank * self.rank + 1008 - 335 * self.rank
+    fn simple_roots(&self) -> &[Root] {
+        &self.simple_roots
     }
 
-    fn num_positive_roots(&self) -> usize {
-        15 * self.rank * self.rank + 504 - 168 * self.rank
+    fn positive_roots(&self) -> &[Root] {
+        &self.positive_roots
+    }
+
+    fn roots(&self) -> &[Root] {
+        &self.roots
     }
 }
 

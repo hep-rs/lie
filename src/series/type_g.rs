@@ -1,7 +1,8 @@
 use std::fmt;
 
 use error::Error;
-use root_system::{CartanMatrix, RootSystem};
+use root::Root;
+use root_system::{self, CartanMatrix, RootSystem};
 
 /// The \\(G_{n}\\) exceptional Lie groups.
 ///
@@ -10,6 +11,9 @@ use root_system::{CartanMatrix, RootSystem};
 pub struct TypeG {
     rank: usize,
     cartan_matrix: CartanMatrix,
+    simple_roots: Vec<Root>,
+    positive_roots: Vec<Root>,
+    roots: Vec<Root>,
 }
 
 impl TypeG {
@@ -30,7 +34,7 @@ impl TypeG {
     /// assert_eq!(g2.num_roots(), 14);
     ///
     /// println!("The roots of {} are:", g2);
-    /// for r in &g2.roots() {
+    /// for r in g2.roots() {
     ///     println!("level {} | {}", r.level(), r);
     /// }
     /// ```
@@ -38,9 +42,16 @@ impl TypeG {
         match rank {
             0 => Err(Error::new("Rank of a Lie group must be at least 1.")),
             rank if rank == 2 => {
+                let cartan_matrix = array![[2, -1], [-3, 2]];
+                let simple_roots = root_system::find_simple_roots(&cartan_matrix);
+                let positive_roots = root_system::find_positive_roots(&simple_roots);
+                let roots = root_system::find_roots_from_positive(&positive_roots);
                 Ok(TypeG {
                     rank,
-                    cartan_matrix: array![[2, -1], [-3, 2]],
+                    cartan_matrix,
+                    simple_roots,
+                    positive_roots,
+                    roots,
                 })
             }
             _ => Err(Error::new("Rank of G series groups can only be 2.")),
@@ -57,12 +68,16 @@ impl RootSystem for TypeG {
         &self.cartan_matrix
     }
 
-    fn num_roots(&self) -> usize {
-        14
+    fn simple_roots(&self) -> &[Root] {
+        &self.simple_roots
     }
 
-    fn num_positive_roots(&self) -> usize {
-        6
+    fn positive_roots(&self) -> &[Root] {
+        &self.positive_roots
+    }
+
+    fn roots(&self) -> &[Root] {
+        &self.roots
     }
 }
 

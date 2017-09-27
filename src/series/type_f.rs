@@ -1,7 +1,8 @@
 use std::fmt;
 
 use error::Error;
-use root_system::{CartanMatrix, RootSystem};
+use root::Root;
+use root_system::{self, CartanMatrix, RootSystem};
 
 /// The \\(F_{n}\\) exceptional Lie groups.
 ///
@@ -10,6 +11,9 @@ use root_system::{CartanMatrix, RootSystem};
 pub struct TypeF {
     rank: usize,
     cartan_matrix: CartanMatrix,
+    simple_roots: Vec<Root>,
+    positive_roots: Vec<Root>,
+    roots: Vec<Root>,
 }
 
 impl TypeF {
@@ -32,7 +36,7 @@ impl TypeF {
     /// assert_eq!(f4.num_roots(), 52);
     ///
     /// println!("The roots of {} are:", f4);
-    /// for r in &f4.roots() {
+    /// for r in f4.roots() {
     ///     println!("level {} | {}", r.level(), r);
     /// }
     /// ```
@@ -40,14 +44,22 @@ impl TypeF {
         match rank {
             0 => Err(Error::new("Rank of a Lie group must be at least 1.")),
             rank if rank == 4 => {
+                let cartan_matrix =
+                    array![
+                    [2, -1, 0, 0],
+                    [-1, 2, -2, 0],
+                    [0, -1, 2, -1],
+                    [0, 0, -1, 2],
+                ];
+                let simple_roots = root_system::find_simple_roots(&cartan_matrix);
+                let positive_roots = root_system::find_positive_roots(&simple_roots);
+                let roots = root_system::find_roots_from_positive(&positive_roots);
                 Ok(TypeF {
                     rank,
-                    cartan_matrix: array![
-                        [2, -1, 0, 0],
-                        [-1, 2, -2, 0],
-                        [0, -1, 2, -1],
-                        [0, 0, -1, 2],
-                    ],
+                    cartan_matrix,
+                    simple_roots,
+                    positive_roots,
+                    roots,
                 })
             }
             _ => Err(Error::new("Rank of F series groups is only defined for 4.")),
@@ -64,12 +76,16 @@ impl RootSystem for TypeF {
         &self.cartan_matrix
     }
 
-    fn num_roots(&self) -> usize {
-        52
+    fn simple_roots(&self) -> &[Root] {
+        &self.simple_roots
     }
 
-    fn num_positive_roots(&self) -> usize {
-        24
+    fn positive_roots(&self) -> &[Root] {
+        &self.positive_roots
+    }
+
+    fn roots(&self) -> &[Root] {
+        &self.roots
     }
 }
 

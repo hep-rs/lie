@@ -118,8 +118,6 @@
 #![cfg_attr(feature = "nightly", feature(test))]
 
 #[macro_use]
-extern crate log;
-#[macro_use]
 extern crate ndarray;
 extern crate rayon;
 
@@ -128,7 +126,7 @@ extern crate test;
 
 mod error;
 mod root;
-mod root_system;
+pub mod root_system;
 pub mod series;
 
 pub use root::Root;

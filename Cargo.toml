@@ -15,7 +15,6 @@ repository  = "https://github.com/hep-rs/lie"
 license = "GPL-3.0"
 
 [dependencies]
-log = "^0.3.8"
 ndarray = "^0.10"
 rayon = "0.8.2"
 

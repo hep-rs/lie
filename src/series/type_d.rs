@@ -1,7 +1,8 @@
 use std::fmt;
 
 use error::Error;
-use root_system::{CartanMatrix, RootSystem};
+use root::Root;
+use root_system::{self, CartanMatrix, RootSystem};
 
 /// The \\(D_{n}\\) infinite series of Lie groups.
 ///
@@ -23,6 +24,9 @@ use root_system::{CartanMatrix, RootSystem};
 pub struct TypeD {
     rank: usize,
     cartan_matrix: CartanMatrix,
+    simple_roots: Vec<Root>,
+    positive_roots: Vec<Root>,
+    roots: Vec<Root>,
 }
 
 impl TypeD {
@@ -42,7 +46,7 @@ impl TypeD {
     /// assert_eq!(d4.num_roots(), 28);
     ///
     /// println!("The roots of {} are:", d4);
-    /// for r in &d4.roots() {
+    /// for r in d4.roots() {
     ///     println!("level {} | {}", r.level(), r);
     /// }
     /// ```
@@ -59,9 +63,16 @@ impl TypeD {
                 "D3 is isomorphic to A3.  Please use the latter.",
             )),
             rank => {
+                let cartan_matrix = Self::cartan_matrix(rank);
+                let simple_roots = root_system::find_simple_roots(&cartan_matrix);
+                let positive_roots = root_system::find_positive_roots(&simple_roots);
+                let roots = root_system::find_roots_from_positive(&positive_roots);
                 Ok(TypeD {
                     rank,
-                    cartan_matrix: Self::cartan_matrix(rank),
+                    cartan_matrix,
+                    simple_roots,
+                    positive_roots,
+                    roots,
                 })
             }
         }
@@ -89,12 +100,16 @@ impl RootSystem for TypeD {
         &self.cartan_matrix
     }
 
-    fn num_roots(&self) -> usize {
-        self.rank * (2 * self.rank - 1)
+    fn simple_roots(&self) -> &[Root] {
+        &self.simple_roots
     }
 
-    fn num_positive_roots(&self) -> usize {
-        self.rank * (self.rank - 1)
+    fn positive_roots(&self) -> &[Root] {
+        &self.positive_roots
+    }
+
+    fn roots(&self) -> &[Root] {
+        &self.roots
     }
 }
 

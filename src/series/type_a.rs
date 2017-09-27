@@ -1,8 +1,8 @@
 use std::fmt;
 
 use error::Error;
-use root_system::{CartanMatrix, RootSystem};
 use root::Root;
+use root_system::{self, CartanMatrix, RootSystem};
 
 /// The \\(A_{n}\\) infinite series of Lie groups.
 ///
@@ -14,6 +14,9 @@ use root::Root;
 pub struct TypeA {
     rank: usize,
     cartan_matrix: CartanMatrix,
+    simple_roots: Vec<Root>,
+    positive_roots: Vec<Root>,
+    roots: Vec<Root>,
 }
 
 impl TypeA {
@@ -33,7 +36,7 @@ impl TypeA {
     /// assert_eq!(a3.num_roots(), 15);
     ///
     /// println!("The roots of {} are:", a3);
-    /// for r in &a3.roots() {
+    /// for r in a3.roots() {
     ///     println!("level {} | {}", r.level(), r);
     /// }
     /// ```
@@ -41,9 +44,16 @@ impl TypeA {
         match rank {
             0 => Err(Error::new("Rank of a Lie group must be at least 1.")),
             rank => {
+                let cartan_matrix = Self::cartan_matrix(rank);
+                let simple_roots = root_system::find_simple_roots(&cartan_matrix);
+                let positive_roots = self::find_positive_roots(&simple_roots);
+                let roots = root_system::find_roots_from_positive(&positive_roots);
                 Ok(TypeA {
                     rank,
-                    cartan_matrix: Self::cartan_matrix(rank),
+                    cartan_matrix,
+                    simple_roots,
+                    positive_roots,
+                    roots,
                 })
             }
         }
@@ -72,62 +82,63 @@ impl RootSystem for TypeA {
         &self.cartan_matrix
     }
 
-    fn num_roots(&self) -> usize {
-        self.rank * (self.rank + 2)
+    fn simple_roots(&self) -> &[Root] {
+        &self.simple_roots
     }
 
-    fn num_positive_roots(&self) -> usize {
-        self.rank * (self.rank + 1) / 2
+    fn positive_roots(&self) -> &[Root] {
+        &self.positive_roots
     }
 
-    /// Return the positive roots of the Lie group's root system.
-    ///
-    /// This implementation is faster than the naïve implementation to find
-    /// positive roots since, in the \\(\alpha\\) basis, all positive roots take
-    /// the form (grouped for each level):
-    ///
-    /// \\begin{align}
-    ///   \begin{pmatrix}
-    ///     1 0 0 0 \\\\
-    ///     0 1 0 0 \\\\
-    ///     0 0 1 0 \\\\
-    ///     0 0 0 1 \\\\
-    ///   \end{pmatrix} &&
-    ///   \begin{pmatrix}
-    ///     1 1 0 0 \\\\
-    ///     0 1 1 0 \\\\
-    ///     0 0 1 1 \\\\
-    ///   \end{pmatrix} &&
-    ///   \begin{pmatrix}
-    ///     1 1 1 0 \\\\
-    ///     0 1 1 1 \\\\
-    ///   \end{pmatrix} &&
-    ///   \begin{pmatrix}
-    ///     1 1 1 1
-    ///   \end{pmatrix}
-    /// \\end{align}
-    fn positive_roots(&self) -> Vec<Root> {
-        let simple_roots = self.simple_roots();
-
-        let roots: Vec<Vec<_>> = (1..self.rank() + 1)
-            .map(|level| {
-                (0..self.rank() - level + 1)
-                    .map(|offset| {
-                        simple_roots[offset..offset + level].iter().fold(
-                            Root::zero(
-                                self.rank(),
-                            ),
-                            |result, r| {
-                                result + r
-                            },
-                        )
-                    })
-                    .collect()
-            })
-            .collect();
-
-        roots.concat()
+    fn roots(&self) -> &[Root] {
+        &self.roots
     }
+}
+
+/// Return the positive roots of the Lie group's root system.
+///
+/// This implementation is faster than the naïve implementation to find
+/// positive roots since, in the \\(\alpha\\) basis, all positive roots take
+/// the form (grouped for each level):
+///
+/// \\begin{align}
+///   \begin{pmatrix}
+///     1 0 0 0 \\\\
+///     0 1 0 0 \\\\
+///     0 0 1 0 \\\\
+///     0 0 0 1 \\\\
+///   \end{pmatrix} &&
+///   \begin{pmatrix}
+///     1 1 0 0 \\\\
+///     0 1 1 0 \\\\
+///     0 0 1 1 \\\\
+///   \end{pmatrix} &&
+///   \begin{pmatrix}
+///     1 1 1 0 \\\\
+///     0 1 1 1 \\\\
+///   \end{pmatrix} &&
+///   \begin{pmatrix}
+///     1 1 1 1
+///   \end{pmatrix}
+/// \\end{align}
+fn find_positive_roots(simple_roots: &[Root]) -> Vec<Root> {
+    let rank = simple_roots[0].rank();
+    let roots: Vec<Vec<_>> = (1..rank + 1)
+        .map(|level| {
+            (0..rank - level + 1)
+                .map(|offset| {
+                    simple_roots[offset..offset + level].iter().fold(
+                        Root::zero(rank),
+                        |result, r| {
+                            result + r
+                        },
+                    )
+                })
+                .collect()
+        })
+        .collect();
+
+    roots.concat()
 }
 
 ////////////////////////////////////////////////////////////////////////////////

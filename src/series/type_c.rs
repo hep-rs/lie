@@ -1,7 +1,8 @@
 use std::fmt;
 
 use error::Error;
-use root_system::{CartanMatrix, RootSystem};
+use root::Root;
+use root_system::{self, CartanMatrix, RootSystem};
 
 /// The \\(C_{n}\\) infinite series of Lie groups.
 ///
@@ -20,6 +21,9 @@ use root_system::{CartanMatrix, RootSystem};
 pub struct TypeC {
     rank: usize,
     cartan_matrix: CartanMatrix,
+    simple_roots: Vec<Root>,
+    positive_roots: Vec<Root>,
+    roots: Vec<Root>,
 }
 
 impl TypeC {
@@ -39,7 +43,7 @@ impl TypeC {
     /// assert_eq!(c3.num_roots(), 21);
     ///
     /// println!("The roots of {} are:", c3);
-    /// for r in &c3.roots() {
+    /// for r in c3.roots() {
     ///     println!("level {} | {}", r.level(), r);
     /// }
     /// ```
@@ -53,9 +57,16 @@ impl TypeC {
                 "C2 is isomorphic to B1.  Please use the latter.",
             )),
             rank => {
+                let cartan_matrix = Self::cartan_matrix(rank);
+                let simple_roots = root_system::find_simple_roots(&cartan_matrix);
+                let positive_roots = root_system::find_positive_roots(&simple_roots);
+                let roots = root_system::find_roots_from_positive(&positive_roots);
                 Ok(TypeC {
                     rank,
-                    cartan_matrix: Self::cartan_matrix(rank),
+                    cartan_matrix,
+                    simple_roots,
+                    positive_roots,
+                    roots,
                 })
             }
         }
@@ -82,12 +93,16 @@ impl RootSystem for TypeC {
         &self.cartan_matrix
     }
 
-    fn num_roots(&self) -> usize {
-        2 * self.rank * self.rank + self.rank
+    fn simple_roots(&self) -> &[Root] {
+        &self.simple_roots
     }
 
-    fn num_positive_roots(&self) -> usize {
-        self.rank * self.rank
+    fn positive_roots(&self) -> &[Root] {
+        &self.positive_roots
+    }
+
+    fn roots(&self) -> &[Root] {
+        &self.roots
     }
 }
 
