@@ -759,12 +759,12 @@
 <span class="doccomment">///   k_{i} A_{ij}\\).</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// A root on its own makes little sense without the corresponding [root</span>
-<span class="doccomment">/// system](trait.RootSystem.html); however, it is still possible to manipulate</span>
-<span class="doccomment">/// roots in several ways without needing the additional information provided by</span>
-<span class="doccomment">/// the root system.  For this to be possible though, it assumes that the</span>
-<span class="doccomment">/// \\(\omega\\) and \\(\alpha\\) weights have been correctly specified.</span>
-<span class="doccomment">/// **Incorrectly defining \\(\omega\\) or \\(\alpha\\) may result in undefined</span>
-<span class="doccomment">/// behaviour when roots are being manipulated.**</span>
+<span class="doccomment">/// system](root_system/trait.RootSystem.html); however, it is still possible to</span>
+<span class="doccomment">/// manipulate roots in several ways without needing the additional information</span>
+<span class="doccomment">/// provided by the root system.  For this to be possible though, it assumes</span>
+<span class="doccomment">/// that the \\(\omega\\) and \\(\alpha\\) weights have been correctly</span>
+<span class="doccomment">/// specified.  **Incorrectly defining \\(\omega\\) or \\(\alpha\\) may result</span>
+<span class="doccomment">/// in undefined behaviour when roots are being manipulated.**</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Root</span> {
     <span class="ident">omega</span>: <span class="ident">Array1</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>,
