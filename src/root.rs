@@ -139,8 +139,9 @@ impl Root {
         let omega = omega.into();
         let alpha = alpha.into();
 
-        assert!(
-            omega.dim() == alpha.dim(),
+        assert_eq!(
+            omega.dim(),
+            alpha.dim(),
             "The omega and alpha coefficients have to be the same size."
         );
         assert!(
@@ -155,8 +156,9 @@ impl Root {
                 (2, -2),
                 |(min, max), s| (cmp::min(min, s), cmp::max(max, s)),
             );
-        assert!(
-            min == max,
+        assert_eq!(
+            min,
+            max,
             "All coefficients in the alpha basis must have the same sign"
         );
         Root { omega, alpha }

@@ -317,7 +317,7 @@ pub fn find_roots_from_positive(positive_roots: &[Root]) -> Vec<Root> {
         .rev()
         .map(|r| -1 * r)
         .chain((0..rank).map(|_| Root::zero(rank)))
-        .chain(positive_roots.iter().map(|r| r.clone()))
+        .chain(positive_roots.iter().cloned())
         .collect()
 }
 
