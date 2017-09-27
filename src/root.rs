@@ -325,8 +325,8 @@ impl ops::Add<Root> for Root {
 
     fn add(self, other: Root) -> Self::Output {
         Root {
-            omega: &self.omega + &other.omega,
-            alpha: &self.alpha + &other.alpha,
+            omega: self.omega + other.omega,
+            alpha: self.alpha + other.alpha,
         }
     }
 }
@@ -336,8 +336,8 @@ impl<'a> ops::Add<&'a Root> for Root {
 
     fn add(self, other: &Root) -> Self::Output {
         Root {
-            omega: &self.omega + &other.omega,
-            alpha: &self.alpha + &other.alpha,
+            omega: self.omega + &other.omega,
+            alpha: self.alpha + &other.alpha,
         }
     }
 }
@@ -371,8 +371,8 @@ impl ops::Sub<Root> for Root {
 
     fn sub(self, other: Root) -> Self::Output {
         Root {
-            omega: &self.omega - &other.omega,
-            alpha: &self.alpha - &other.alpha,
+            omega: self.omega - other.omega,
+            alpha: self.alpha - other.alpha,
         }
     }
 }
@@ -382,8 +382,8 @@ impl<'a> ops::Sub<&'a Root> for Root {
 
     fn sub(self, other: &Root) -> Self::Output {
         Root {
-            omega: &self.omega - &other.omega,
-            alpha: &self.alpha - &other.alpha,
+            omega: self.omega - &other.omega,
+            alpha: self.alpha - &other.alpha,
         }
     }
 }
