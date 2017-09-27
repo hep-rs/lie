@@ -3,7 +3,7 @@ set -eux
 
 # Run clippy and see if it has anything to say
 clippy() {
-    if [[ "$TRAVIS_RUST_VERSION" == "nightly" && $CLIPPY ]]; then
+    if $CLIPPY ; then
         cargo clippy $FEATURES
     fi
 }
@@ -16,6 +16,7 @@ build_and_test() {
 
 main() {
     build_and_test
+    clippy
 }
 
 main

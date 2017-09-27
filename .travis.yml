@@ -25,10 +25,22 @@ addons:
       - libiberty-dev
 
 before_script:
-  - bash ci/setup.sh
+  - export PATH=$PATH:~/.cargo/bin
+  - |
+    if [[ "$TRAVIS_RUST_VERSION" == "nightly" ]]; then
+        export FEATURES="--all-features";
+    else
+        export FEATURES="";
+    fi
+  - |
+    if [[ "$TRAVIS_RUST_VERSION" == "nightly" ]]; then
+        ( cargo install clippy && export CLIPPY=true ) || export CLIPPY=false;
+    else
+        export CLIPPY=false;
+    fi
 
 script:
-  - bash ci/script.sh
+  - bash ./ci/script.sh
 
 after_success:
-  - bash ci/after_success.sh
+  - bash ./ci/after_success.sh
