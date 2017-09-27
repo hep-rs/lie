@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `series` mod in crate `lie`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, series">
+
+    <title>lie::series - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc mod">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Module series</p><div class="block items"><ul><li><a href="#structs">Structs</a></li></ul></div><p class='location'><a href='../index.html'>lie</a></p><script>window.sidebarCurrent = {name: 'series', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>lie</a>::<wbr><a class="mod" href=''>series</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/lie/series/mod.rs.html#1-67' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Definitions for the 7 families of Lie groups.</p>
+
+<p>Four of the families form infinite series:</p>
+
+<ul>
+<li><p>\(A_{n} = \mathrm{SU}(n+1)\), the <a href="https://en.wikipedia.org/wiki/Special_unitary_group">special unitary
+group</a>;</p></li>
+<li><p>\(B_{n} = \mathrm{SO}(2n + 1)\), the <a href="https://en.wikipedia.org/wiki/Special_orthogonal_group">special orthogonal
+group</a> of odd
+dimension;</p></li>
+<li><p>\(C_{n} = \mathrm{Sp}(2n)\), the group of <a href="https://en.wikipedia.org/wiki/Symplectic_matrix">unitary symplectic
+matrices</a>; and,</p></li>
+<li><p>\(D_{n} = \mathrm{SO}(2n)\), the <a href="https://en.wikipedia.org/wiki/Special_orthogonal_group">special orthogonal
+group</a> of even
+dimension.</p></li>
+</ul>
+
+<p>The last three families contain the 5 exceptional Lie groups:</p>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/G2_(mathematics)">\(G_{2}\)</a>;</li>
+<li><a href="https://en.wikipedia.org/wiki/F4_(mathematics)">\(F_{4}\)</a>;</li>
+<li><a href="https://en.wikipedia.org/wiki/E6_(mathematics)">\(E_{6}\)</a>;</li>
+<li><a href="https://en.wikipedia.org/wiki/E7_(mathematics)">\(E_{7}\)</a>; and,</li>
+<li><a href="https://en.wikipedia.org/wiki/E8_(mathematics)">\(E_{8}\)</a>.</li>
+</ul>
+
+<p>The corresponding Lie algebras are conventionally denoted using fraktur
+symbols: \(\mathfrak{su}_{n}\), \(\mathfrak{so}_{n}\),
+\(\mathfrak{sp}_{n}\), \(\mathfrak{g}_{2}\), \(\mathfrak{f}_{4}\),
+\(\mathfrak{e}_{6}\), \(\mathfrak{e}_{7}\) and \(\mathfrak{e}_{8}\).</p>
+
+<h2 id='exceptional-isomorphisms' class='section-header'><a href='#exceptional-isomorphisms'>Exceptional Isomorphisms</a></h2>
+<p>For low values of \(n\), there are accidental isomorphisms between the
+above categories.  In particular, they are:</p>
+
+<ul>
+<li>\(A_{1} \cong B_{1} \cong C_{1}\),</li>
+<li>\(B_{2} \cong C_{2}\),</li>
+<li>\(D_{2} \cong A_{1} \times A_{1}\),</li>
+<li>\(D_{3} \cong A_{3}\),</li>
+<li>\(E_{3} \cong A_{1} \times A_{2}\)</li>
+<li>\(E_{4} \cong A_{4}\),</li>
+<li>\(E_{5} \cong D_{5}\).</li>
+</ul>
+
+<p>As a result, the indices for \(A_{n}\), \(B_{n}\), \(C_{n}\) and
+\(D_{n}\) start at 1, 2, 3 and 4 respectively.</p>
+
+<p>This library does <em>not</em> handle exceptional isomorphisms, though it might
+return an error indicating what the standard label for the specified group
+is.  For example, trying to create an instance of the \(B_{1} =
+\mathrm{SO}(3)\) group will produce an error and instead one must use the
+isomorphic group \(A_{1} = \mathrm{SU}(2)\).</p>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TypeA.html"
+                                  title='struct lie::series::TypeA'>TypeA</a></td>
+                           <td class='docblock-short'>
+                                <p>The \(A_{n}\) infinite series of Lie groups.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TypeB.html"
+                                  title='struct lie::series::TypeB'>TypeB</a></td>
+                           <td class='docblock-short'>
+                                <p>The \(B_{n}\) infinite series of Lie groups.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TypeC.html"
+                                  title='struct lie::series::TypeC'>TypeC</a></td>
+                           <td class='docblock-short'>
+                                <p>The \(C_{n}\) infinite series of Lie groups.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TypeD.html"
+                                  title='struct lie::series::TypeD'>TypeD</a></td>
+                           <td class='docblock-short'>
+                                <p>The \(D_{n}\) infinite series of Lie groups.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TypeE.html"
+                                  title='struct lie::series::TypeE'>TypeE</a></td>
+                           <td class='docblock-short'>
+                                <p>The \(E_{n}\) exceptional Lie groups.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TypeF.html"
+                                  title='struct lie::series::TypeF'>TypeF</a></td>
+                           <td class='docblock-short'>
+                                <p>The \(F_{n}\) exceptional Lie groups.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TypeG.html"
+                                  title='struct lie::series::TypeG'>TypeG</a></td>
+                           <td class='docblock-short'>
+                                <p>The \(G_{n}\) exceptional Lie groups.</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "lie";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script></body>
+</html>

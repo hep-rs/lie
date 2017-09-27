@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `lie` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, lie">
+
+    <title>lie - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc mod">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Crate lie</p><div class="block items"><ul><li><a href="#reexports">Reexports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'lie', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>lie</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/lie/lib.rs.html#1-134' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p><code>lie-rs</code> provides functionalities to manipulate Lie groups and their
+representations, including the ability to:</p>
+
+<ul>
+<li>Quickly verify whether a product of irreducible representations can form a
+singlet;</li>
+<li>Decompose the product of irreducible representation into sum of
+irreducible representations;</li>
+<li>List how indices of a product of irreducible representations can be
+contracted to form a singlet; and</li>
+<li>Other tools to manipulate root systems and Cartan matrices.</li>
+</ul>
+
+<p><strong>This library is still undergoing development.</strong></p>
+
+<p><a href="https://crates.io/crates/hep-lie"><img src="https://img.shields.io/crates/v/hep-lie.svg" alt="Crates.io"></a>
+<a href="https://travis-ci.org/hep-rs/lie"><img src="https://img.shields.io/travis/hep-rs/lie/master.svg" alt="Travis"></a>
+<a href="https://codecov.io/gh/hep-rs/lie"><img src="https://img.shields.io/codecov/c/github/hep-rs/lie/master.svg" alt="Codecov"></a></p>
+
+<p>Licensed under <a href="https://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>.</p>
+
+<p>The library is primarily developed within the context of particle physics;
+however, this should in no way be a restriction for contributions to this
+library and extensions beyond the initial scope of this library are very
+welcome.</p>
+
+<p>It is hoped that this library will be accessible to people who are not fully
+familiar with all aspects of the study of Lie groups and their
+representations.  The documentation will attempt to provide explanations of
+various definitions.</p>
+
+<h1 id='lie-groups-and-algebra' class='section-header'><a href='#lie-groups-and-algebra'>Lie Groups and Algebra</a></h1>
+<p>A <a href="https://en.wikipedia.org/wiki/Lie_group"><em>Lie group</em></a>, \(G\), is a
+group that is also a differential manifold which ultimately means that all
+elements of the group \(G\) can be describe by a set real parameters.  For
+example, the group of real \(2 \times 2\) unitary matrices with
+determinant 1, \(\mathrm{SU}(2)\), can be described in terms of three
+parameters.</p>
+
+<p>\begin{equation}
+  \mathrm{SU}(2) = \left\{
+    \begin{pmatrix} \alpha &amp; - \beta^{*} \\ \beta &amp; \alpha^{*} \end{pmatrix}
+    \middle|
+    \alpha, \beta \in \mathbb{C}, |\alpha|^2 + |\beta|^{2} = 1
+  \right\}
+\end{equation}</p>
+
+<p>This library will look at handling only compact and simply connected groups.</p>
+
+<p>Very closely related to Lie groups are <a href="https://en.wikipedia.org/wiki/Lie_algebra"><em>Lie
+algebras</em></a> which are denoted
+using lowercase Gothic characters \(\mathfrak{g}\).  Although
+mathematically very different objects, Lie groups and Lie algebras are very
+closely related and the distinction will occasionally be blurred (especially
+in the physics literature).</p>
+
+<p>In particular, given that a Lie group \(G\) forms smooth manifold, one can
+consider the tangent space at the identity.  This tangent space forms
+exactly the group&#39;s Lie algebra and as a result, it is possible to generate
+all elements of a Lie group by exponentiating elements of the Lie algebra.
+As a concrete example, the Lie algebra of \(\mathrm{SU}(2)\),
+\(\mathfrak{su}(2)\), is generated by the three elements:</p>
+
+<p>\begin{align}
+  \begin{pmatrix} 0 &amp; i \\ i &amp; 0 \end{pmatrix} &amp;&amp;
+  \begin{pmatrix} 0 &amp; -1 \\ 1 &amp; 0 \end{pmatrix} &amp;&amp;
+  \begin{pmatrix} i &amp; 0 \\ 0 &amp; 0i \end{pmatrix} &amp;&amp;
+\end{align}</p>
+
+<p>These correspond, through a factor of \(-i\), to the well-known Pauli
+matrices.</p>
+
+<p>All of the compact Lie groups have been categorized and fall into one of 4
+infinity series and 5 exception groups, described <a href="series/index.html">here</a>.</p>
+
+<h2 id='representation' class='section-header'><a href='#representation'>Representation</a></h2>
+<p>A
+<a href="https://en.wikipedia.org/wiki/Representation_of_a_Lie_group"><em>representation</em></a>
+of a Lie group \(G\) is a smooth group homomorphism \(\Pi : G \to
+\mathop{\mathrm{Aut}}(V)\), where \(\mathop{\mathrm{Aut}}(V)\) is the
+group of automorphisms of some vector space \(V\) (where an automorphism
+is a homomorphism mapping \(V\) to itself).  Alternatively, it is possible
+to think of representations as smooth group homomorphisms \(\Pi : G \to
+\mathrm{GL}(n)\) where \(\mathrm{GL}(n)\) is the set of invertible \(n
+\times n\) matrices (such a representation is a <em>matrix representation</em>).</p>
+
+<p>For example, the definition for \(\mathrm{SU}(2)\) above defines the group
+in terms of \(2 \times 2\) matrices, and these matrices in turn can be
+thought of as operators taking \(V = \mathbb{R}^2\) to itself; hence we
+already have one representation of \(\mathrm{SU}(2)\).  There is also the
+trivial representation which maps all elements to the identity matrix which
+is important as the representation leaves everything under \(V\)
+unchanged, but mathematically is not very interesting.</p>
+
+<p>We will be particularly interested in:</p>
+
+<ul>
+<li><p>classifying the various irreducible representations of a group (for
+example, is there a group homomorphism from \(\mathrm{SU}(2)\) to
+\(\mathrm{GL}(3)\)?); and,</p></li>
+<li><p>determining how a product of representations can be decomposed into a sum
+of irreducible representations, where a sum of representations amounts to
+arranging each matrix representation in block-diagonal.</p></li>
+</ul>
+
+<h1 id='root-systems' class='section-header'><a href='#root-systems'>Root Systems</a></h1>
+<p>A <a href="https://en.wikipedia.org/wiki/Root_system">root system</a> is a
+configuration of vectors in Euclidean space which satisfy certain
+geometrical properties.  Although it might not appear that they have much in
+common with the study of Lie groups and their representations, they are in
+fact extremely useful.  The definition for a root system is found
+<a href="trait.RootSystem.html">here</a>.</p>
+
+<h2 id='connection-to-group-representations' class='section-header'><a href='#connection-to-group-representations'>Connection to Group Representations</a></h2></div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
+<table><tr><td><code>pub use root_system::<a class="type" href="../lie/root_system/type.CartanMatrix.html" title="type lie::root_system::CartanMatrix">CartanMatrix</a>;</code></td></tr><tr><td><code>pub use root_system::<a class="trait" href="../lie/root_system/trait.RootSystem.html" title="trait lie::root_system::RootSystem">RootSystem</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="root_system/index.html"
+                                  title='mod lie::root_system'>root_system</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="series/index.html"
+                                  title='mod lie::series'>series</a></td>
+                           <td class='docblock-short'>
+                                <p>Definitions for the 7 families of Lie groups.</p>
+                           </td>
+                       </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Error.html"
+                                  title='struct lie::Error'>Error</a></td>
+                           <td class='docblock-short'>
+                                <p>Generic error type of this library.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Root.html"
+                                  title='struct lie::Root'>Root</a></td>
+                           <td class='docblock-short'>
+                                <p>Instance of a root.</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "lie";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script></body>
+</html>
