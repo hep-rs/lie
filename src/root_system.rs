@@ -1,3 +1,19 @@
+//! Definitions for root systems
+//!
+//! A [root system](https://en.wikipedia.org/wiki/Root_system) is a
+//! configuration of vectors in Euclidean space which satisfy certain
+//! geometrical properties.  The definition for a root system is found
+//! [here](root_system/trait.RootSystem.html).
+//!
+//! This module defines the [`CartanMatrix`](type.CartanMatrix.html) which
+//! describes the root system.  From the Cartan matrix, the simple roots can be
+//! calculated using [`find_simple_roots`](fn.find_simple_roots.html).  From the
+//! simple roots, it is subsequently possible to algorithmically generate all
+//! the roots in the root system with
+//! [`find_positive_roots`](fn.find_positive_roots.html) and finally, all roots
+//! (including negative and zero roots) can be generated with either
+//! [`find_roots_from_positive`](fn.find_roots_from_positive.html) or
+//! [`find_roots_from_simple`](fn.find_roots_from_simple.html).
 use ndarray::{self, Axis};
 use rayon::prelude::*;
 
@@ -274,16 +290,11 @@ pub fn find_roots_from_simple(simple_roots: &[Root]) -> Vec<Root> {
     find_roots_from_positive(&find_positive_roots(simple_roots))
 }
 
-/// Find all the roots given a set of simple roots.
+/// Find all the roots given a set of positive roots.
 ///
 /// This algorithmically finds and creates all of the roots in a root system
 /// given a set of positive roots, returning a sorted vector.  This function
 /// assumes the initial lost of positive roots to already be sorted.
-///
-/// This algorithm can be quite time consuming, especially for very large root
-/// systems (more than 20 simple roots), but will automatically multithread in
-/// such circumstances.  Ideally, this list should be generated once and then
-/// stored for later use as needed.
 ///
 /// # Example
 ///
@@ -321,7 +332,7 @@ pub fn find_roots_from_positive(positive_roots: &[Root]) -> Vec<Root> {
         .collect()
 }
 
-/// Find all the roots given a set of simple roots.
+/// Find all the positive roots given a set of simple roots.
 ///
 /// This algorithmically finds and creates all of the roots in a root system
 /// given a set of simple roots, returning a sorted vector.  This function
