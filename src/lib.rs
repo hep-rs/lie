@@ -63,7 +63,7 @@
 //! \\begin{align}
 //!   \begin{pmatrix} 0 & i \\\\ i & 0 \\end{pmatrix} &&
 //!   \begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix} &&
-//!   \begin{pmatrix} i & 0 \\\\ 0 & 0i \\end{pmatrix} &&
+//!   \begin{pmatrix} i & 0 \\\\ 0 & -i \\end{pmatrix} &&
 //! \\end{align}
 //!
 //! These correspond, through a factor of \\(-i\\), to the well-known Pauli
