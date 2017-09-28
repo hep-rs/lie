@@ -48,16 +48,10 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/lie/series/type_f.rs.html#11-17' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/lie/series/type_f.rs.html#22-28' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct TypeF { /* fields omitted */ }</pre><div class='docblock'><p>The \(F_{n}\) exceptional Lie groups.</p>
 
 <p>The only allows value of \(n\) is 4.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../lie/series/struct.TypeF.html" title="struct lie::series::TypeF">TypeF</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_f.rs.html#19-79' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(rank: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../lie/series/struct.TypeF.html" title="struct lie::series::TypeF">TypeF</a>, <a class="struct" href="../../lie/struct.Error.html" title="struct lie::Error">Error</a>&gt;</code></span></h4>
-<div class='docblock'><p>Create new Lie group \(F_{n}\).</p>
-
-<p>This function will automatic convert the exceptional isomorphisms to
-their corresponding &#39;standard&#39; label.</p>
 
 <p>The Cartan matrix for \(F_{4}\) is:</p>
 
@@ -69,6 +63,12 @@ their corresponding &#39;standard&#39; label.</p>
     0 &amp; 0 &amp; -1 &amp; 2
   \end{pmatrix}
 \end{equation}</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../lie/series/struct.TypeF.html" title="struct lie::series::TypeF">TypeF</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_f.rs.html#30-79' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(rank: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../lie/series/struct.TypeF.html" title="struct lie::series::TypeF">TypeF</a>, <a class="struct" href="../../lie/struct.Error.html" title="struct lie::Error">Error</a>&gt;</code></span></h4>
+<div class='docblock'><p>Create new Lie group \(F_{n}\).</p>
+
+<p>This function will automatic convert the exceptional isomorphisms to
+their corresponding &#39;standard&#39; label.</p>
 
 <h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
 <pre class="rust rust-example-rendered">
@@ -86,7 +86,7 @@ their corresponding &#39;standard&#39; label.</p>
 <span class="kw">for</span> <span class="ident">r</span> <span class="kw">in</span> <span class="ident">f4</span>.<span class="ident">roots</span>() {
     <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;level {} | {}&quot;</span>, <span class="ident">r</span>.<span class="ident">level</span>(), <span class="ident">r</span>);
 }</pre>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../lie/series/struct.TypeF.html" title="struct lie::series::TypeF">TypeF</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_f.rs.html#10' title='goto source code'>[src]</a></span></h3>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../lie/series/struct.TypeF.html" title="struct lie::series::TypeF">TypeF</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_f.rs.html#21' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter.</p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="../../lie/root_system/trait.RootSystem.html" title="trait lie::root_system::RootSystem">RootSystem</a> for <a class="struct" href="../../lie/series/struct.TypeF.html" title="struct lie::series::TypeF">TypeF</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_f.rs.html#81-101' title='goto source code'>[src]</a></span></h3>

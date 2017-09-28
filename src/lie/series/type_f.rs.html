@@ -220,6 +220,17 @@
 <span class="doccomment">/// The \\(F_{n}\\) exceptional Lie groups.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The only allows value of \\(n\\) is 4.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The Cartan matrix for \\(F_{4}\\) is:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// \\begin{equation}</span>
+<span class="doccomment">///   \begin{pmatrix}</span>
+<span class="doccomment">///     2 &amp; -1 &amp; 0 &amp; 0 \\\\</span>
+<span class="doccomment">///     -1 &amp; 2 &amp; -2 &amp; 0 \\\\</span>
+<span class="doccomment">///     0 &amp; -1 &amp; 2 &amp; -1 \\\\</span>
+<span class="doccomment">///     0 &amp; 0 &amp; -1 &amp; 2</span>
+<span class="doccomment">///   \end{pmatrix}</span>
+<span class="doccomment">/// \\end{equation}</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TypeF</span> {
     <span class="ident">rank</span>: <span class="ident">usize</span>,
@@ -234,17 +245,6 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This function will automatic convert the exceptional isomorphisms to</span>
     <span class="doccomment">/// their corresponding &#39;standard&#39; label.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The Cartan matrix for \\(F_{4}\\) is:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// \\begin{equation}</span>
-    <span class="doccomment">///   \begin{pmatrix}</span>
-    <span class="doccomment">///     2 &amp; -1 &amp; 0 &amp; 0 \\\\</span>
-    <span class="doccomment">///     -1 &amp; 2 &amp; -2 &amp; 0 \\\\</span>
-    <span class="doccomment">///     0 &amp; -1 &amp; 2 &amp; -1 \\\\</span>
-    <span class="doccomment">///     0 &amp; 0 &amp; -1 &amp; 2</span>
-    <span class="doccomment">///   \end{pmatrix}</span>
-    <span class="doccomment">/// \\end{equation}</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
