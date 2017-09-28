@@ -7,6 +7,15 @@ use root_system::{self, CartanMatrix, RootSystem};
 /// The \\(G_{n}\\) exceptional Lie groups.
 ///
 /// The only allows value of \\(n\\) is 2.
+///
+/// The Cartan matrix for \\(G_{2}\\) is:
+///
+/// \\begin{equation}
+///   \begin{pmatrix}
+///     2 & -1 \\\\
+///     -3 & 2
+///   \end{pmatrix}
+/// \\end{equation}
 #[derive(Debug)]
 pub struct TypeG {
     rank: usize,

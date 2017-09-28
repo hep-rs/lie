@@ -13,6 +13,18 @@ use root_system::{self, CartanMatrix, RootSystem};
 /// Note that there are two conventions in the literature whereby \\(C_{n} =
 /// \mathrm{Sp}(2n)\\) or \\(C_{n} = \mathrm{Sp}(n)\\).
 ///
+/// The Cartan matrix for \\(C_{n}\\) is of the form
+///
+/// \\begin{equation}
+///   \begin{pmatrix}
+///     2 & -1 & 0 & 0 & 0 \\\\
+///     -1 & 2 & -1 & 0 & 0 \\\\
+///     0 & -1 & 2 & -1 & 0 \\\\
+///     0 & 0 & -1 & 2 & -1 \\\\
+///     0 & 0 & 0 & -2 & 2
+///   \end{pmatrix}
+/// \\end{equation}
+///
 /// ## Exceptional Isomorphisms
 ///
 /// - \\(C_{1} \cong A_{1}\\); and,

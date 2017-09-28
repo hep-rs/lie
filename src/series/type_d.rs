@@ -12,6 +12,18 @@ use root_system::{self, CartanMatrix, RootSystem};
 /// dimension which is the group of \\(2n \times 2n\\) orthogonal matrices with
 /// determinant 1.
 ///
+/// The Cartan matrix for \\(D_{n}\\) is of the form
+///
+/// \\begin{equation}
+///   \begin{pmatrix}
+///     2 & -1 & 0 & 0 & 0 \\\\
+///     -1 & 2 & -1 & 0 & 0 \\\\
+///     0 & -1 & 2 & -1 & -1 \\\\
+///     0 & 0 & -1 & 2 & 0 \\\\
+///     0 & 0 & -1 & 0 & 2
+///   \end{pmatrix}
+/// \\end{equation}
+///
 /// ## Exceptional Isomorphisms
 ///
 /// - (\\(D_{1} \cong A_{1}\\));

@@ -8,13 +8,45 @@ use root_system::{self, CartanMatrix, RootSystem};
 ///
 /// This is only defined for \\(n = 6, 7, 8\\). though through the exceptional
 ///
+/// The three Cartan matrix for \\(n = 6, 7, 8\\) respectively are:
+///
+/// \\begin{align}
+///   &\begin{pmatrix}
+///     2 & -1 & 0 & 0 & 0 & 0 \\\\
+///     -1 & 2 & -1 & 0 & 0 & 0 \\\\
+///     0 & -1 & 2 & -1 & 0 & -1 \\\\
+///     0 & 0 & -1 & 2 & -1 & 0 \\\\
+///     0 & 0 & 0 & -1 & 2 & 0 \\\\
+///     0 & 0 & -1 & 0 & 0 & 2
+///   \end{pmatrix} \\\\
+///   &\begin{pmatrix}
+///     2 & -1 & 0 & 0 & 0 & 0 & 0 \\\\
+///     -1 & 2 & -1 & 0 & 0 & 0 & 0 \\\\
+///     0 & -1 & 2 & -1 & 0 & 0 & -1 \\\\
+///     0 & 0 & -1 & 2 & -1 & 0 & 0 \\\\
+///     0 & 0 & 0 & -1 & 2 & -1 & 0 \\\\
+///     0 & 0 & 0 & 0 & -1 & 2 & 0 \\\\
+///     0 & 0 & -1 & 0 & 0 & 0 & 2
+///   \end{pmatrix} \\\\
+///   &\begin{pmatrix}
+///     2 & -1 & 0 & 0 & 0 & 0 & 0 & 0 \\\\
+///     -1 & 2 & -1 & 0 & 0 & 0 & 0 & 0 \\\\
+///     0 & -1 & 2 & -1 & 0 & 0 & 0 & -1 \\\\
+///     0 & 0 & -1 & 2 & -1 & 0 & 0 & 0 \\\\
+///     0 & 0 & 0 & -1 & 2 & -1 & 0 & 0 \\\\
+///     0 & 0 & 0 & 0 & -1 & 2 & -1 & 0 \\\\
+///     0 & 0 & 0 & 0 & 0 & -1 & 2 & 0 \\\\
+///     0 & 0 & -1 & 0 & 0 & 0 & 0 & 2
+///   \end{pmatrix} \\\\
+/// \\end{align}
+///
 /// ## Exceptional Isomorphisms
 ///
 /// - \\(E_{3} \cong A_{1} \times A_{2}\\);
 /// - \\(E_{4} \cong A_{4}\\); and,
 /// - \\(E_{5} \cong D_{5}\\).
 ///
-/// Since \\(E_{4}\\) is not isomorphic to a simple Lie group, it must be
+/// Since \\(E_{3}\\) is not isomorphic to a simple Lie group, it must be
 /// handled separately.
 #[derive(Debug)]
 pub struct TypeE {

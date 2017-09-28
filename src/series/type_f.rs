@@ -22,6 +22,17 @@ impl TypeF {
     /// This function will automatic convert the exceptional isomorphisms to
     /// their corresponding 'standard' label.
     ///
+    /// The Cartan matrix for \\(F_{4}\\) is:
+    ///
+    /// \\begin{equation}
+    ///   \begin{pmatrix}
+    ///     2 & -1 & 0 & 0 \\\\
+    ///     -1 & 2 & -2 & 0 \\\\
+    ///     0 & -1 & 2 & -1 \\\\
+    ///     0 & 0 & -1 & 2
+    ///   \end{pmatrix}
+    /// \\end{equation}
+    ///
     /// # Examples
     ///
     /// ```

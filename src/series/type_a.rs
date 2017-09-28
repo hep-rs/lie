@@ -10,6 +10,18 @@ use root_system::{self, CartanMatrix, RootSystem};
 /// \\(\mathrm{SU}(n+1)\\) and corresponds to [special unitary
 /// group](https://en.wikipedia.org/wiki/Special_unitary_group) which is the
 /// group of \\(n \times n\\) unitary matrices with determinant 1.
+///
+/// The Cartan matrix for \\(A_{n}\\) is of the form
+///
+/// \\begin{equation}
+///   \begin{pmatrix}
+///     2 & -1 & 0 & 0 & 0 \\\\
+///     -1 & 2 & -1 & 0 & 0 \\\\
+///     0 & -1 & 2 & -1 & 0 \\\\
+///     0 & 0 & -1 & 2 & -1 \\\\
+///     0 & 0 & 0 & -1 & 2
+///   \end{pmatrix}
+/// \\end{equation}
 #[derive(Debug)]
 pub struct TypeA {
     rank: usize,
