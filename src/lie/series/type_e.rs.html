@@ -282,6 +282,38 @@
 <span id="237">237</span>
 <span id="238">238</span>
 <span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 
@@ -293,13 +325,45 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// This is only defined for \\(n = 6, 7, 8\\). though through the exceptional</span>
 <span class="doccomment">///</span>
+<span class="doccomment">/// The three Cartan matrix for \\(n = 6, 7, 8\\) respectively are:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// \\begin{align}</span>
+<span class="doccomment">///   &amp;\begin{pmatrix}</span>
+<span class="doccomment">///     2 &amp; -1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\\\</span>
+<span class="doccomment">///     -1 &amp; 2 &amp; -1 &amp; 0 &amp; 0 &amp; 0 \\\\</span>
+<span class="doccomment">///     0 &amp; -1 &amp; 2 &amp; -1 &amp; 0 &amp; -1 \\\\</span>
+<span class="doccomment">///     0 &amp; 0 &amp; -1 &amp; 2 &amp; -1 &amp; 0 \\\\</span>
+<span class="doccomment">///     0 &amp; 0 &amp; 0 &amp; -1 &amp; 2 &amp; 0 \\\\</span>
+<span class="doccomment">///     0 &amp; 0 &amp; -1 &amp; 0 &amp; 0 &amp; 2</span>
+<span class="doccomment">///   \end{pmatrix} \\\\</span>
+<span class="doccomment">///   &amp;\begin{pmatrix}</span>
+<span class="doccomment">///     2 &amp; -1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\\\</span>
+<span class="doccomment">///     -1 &amp; 2 &amp; -1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\\\</span>
+<span class="doccomment">///     0 &amp; -1 &amp; 2 &amp; -1 &amp; 0 &amp; 0 &amp; -1 \\\\</span>
+<span class="doccomment">///     0 &amp; 0 &amp; -1 &amp; 2 &amp; -1 &amp; 0 &amp; 0 \\\\</span>
+<span class="doccomment">///     0 &amp; 0 &amp; 0 &amp; -1 &amp; 2 &amp; -1 &amp; 0 \\\\</span>
+<span class="doccomment">///     0 &amp; 0 &amp; 0 &amp; 0 &amp; -1 &amp; 2 &amp; 0 \\\\</span>
+<span class="doccomment">///     0 &amp; 0 &amp; -1 &amp; 0 &amp; 0 &amp; 0 &amp; 2</span>
+<span class="doccomment">///   \end{pmatrix} \\\\</span>
+<span class="doccomment">///   &amp;\begin{pmatrix}</span>
+<span class="doccomment">///     2 &amp; -1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\\\</span>
+<span class="doccomment">///     -1 &amp; 2 &amp; -1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\\\</span>
+<span class="doccomment">///     0 &amp; -1 &amp; 2 &amp; -1 &amp; 0 &amp; 0 &amp; 0 &amp; -1 \\\\</span>
+<span class="doccomment">///     0 &amp; 0 &amp; -1 &amp; 2 &amp; -1 &amp; 0 &amp; 0 &amp; 0 \\\\</span>
+<span class="doccomment">///     0 &amp; 0 &amp; 0 &amp; -1 &amp; 2 &amp; -1 &amp; 0 &amp; 0 \\\\</span>
+<span class="doccomment">///     0 &amp; 0 &amp; 0 &amp; 0 &amp; -1 &amp; 2 &amp; -1 &amp; 0 \\\\</span>
+<span class="doccomment">///     0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; -1 &amp; 2 &amp; 0 \\\\</span>
+<span class="doccomment">///     0 &amp; 0 &amp; -1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 2</span>
+<span class="doccomment">///   \end{pmatrix} \\\\</span>
+<span class="doccomment">/// \\end{align}</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// ## Exceptional Isomorphisms</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// - \\(E_{3} \cong A_{1} \times A_{2}\\);</span>
 <span class="doccomment">/// - \\(E_{4} \cong A_{4}\\); and,</span>
 <span class="doccomment">/// - \\(E_{5} \cong D_{5}\\).</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Since \\(E_{4}\\) is not isomorphic to a simple Lie group, it must be</span>
+<span class="doccomment">/// Since \\(E_{3}\\) is not isomorphic to a simple Lie group, it must be</span>
 <span class="doccomment">/// handled separately.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TypeE</span> {

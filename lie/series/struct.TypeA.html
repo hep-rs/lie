@@ -48,14 +48,26 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/lie/series/type_a.rs.html#14-20' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/lie/series/type_a.rs.html#26-32' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct TypeA { /* fields omitted */ }</pre><div class='docblock'><p>The \(A_{n}\) infinite series of Lie groups.</p>
 
 <p>The \(A_{n}\) (\(n \geq 1\)) series is also denoted as
 \(\mathrm{SU}(n+1)\) and corresponds to <a href="https://en.wikipedia.org/wiki/Special_unitary_group">special unitary
 group</a> which is the
 group of \(n \times n\) unitary matrices with determinant 1.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../lie/series/struct.TypeA.html" title="struct lie::series::TypeA">TypeA</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_a.rs.html#22-74' title='goto source code'>[src]</a></span></h3>
+
+<p>The Cartan matrix for \(A_{n}\) is of the form</p>
+
+<p>\begin{equation}
+  \begin{pmatrix}
+    2 &amp; -1 &amp; 0 &amp; 0 &amp; 0 \\
+    -1 &amp; 2 &amp; -1 &amp; 0 &amp; 0 \\
+    0 &amp; -1 &amp; 2 &amp; -1 &amp; 0 \\
+    0 &amp; 0 &amp; -1 &amp; 2 &amp; -1 \\
+    0 &amp; 0 &amp; 0 &amp; -1 &amp; 2
+  \end{pmatrix}
+\end{equation}</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../lie/series/struct.TypeA.html" title="struct lie::series::TypeA">TypeA</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_a.rs.html#34-86' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(rank: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../lie/series/struct.TypeA.html" title="struct lie::series::TypeA">TypeA</a>, <a class="struct" href="../../lie/struct.Error.html" title="struct lie::Error">Error</a>&gt;</code></span></h4>
 <div class='docblock'><p>Create new Lie group \(A_{n}\).</p>
 
@@ -75,10 +87,10 @@ group of \(n \times n\) unitary matrices with determinant 1.</p>
 <span class="kw">for</span> <span class="ident">r</span> <span class="kw">in</span> <span class="ident">a3</span>.<span class="ident">roots</span>() {
     <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;level {} | {}&quot;</span>, <span class="ident">r</span>.<span class="ident">level</span>(), <span class="ident">r</span>);
 }</pre>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../lie/series/struct.TypeA.html" title="struct lie::series::TypeA">TypeA</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_a.rs.html#13' title='goto source code'>[src]</a></span></h3>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../lie/series/struct.TypeA.html" title="struct lie::series::TypeA">TypeA</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_a.rs.html#25' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="../../lie/root_system/trait.RootSystem.html" title="trait lie::root_system::RootSystem">RootSystem</a> for <a class="struct" href="../../lie/series/struct.TypeA.html" title="struct lie::series::TypeA">TypeA</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_a.rs.html#76-96' title='goto source code'>[src]</a></span></h3>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="../../lie/root_system/trait.RootSystem.html" title="trait lie::root_system::RootSystem">RootSystem</a> for <a class="struct" href="../../lie/series/struct.TypeA.html" title="struct lie::series::TypeA">TypeA</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_a.rs.html#88-108' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.rank' class="method"><span id='rank.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#method.rank' class='fnname'>rank</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h4>
 <div class='docblock'><p>Return the rank of the Lie group. <a href="../../lie/root_system/trait.RootSystem.html#method.rank">Read more</a></p>
 </div><h4 id='method.cartan_matrix' class="method"><span id='cartan_matrix.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#tymethod.cartan_matrix' class='fnname'>cartan_matrix</a>(&amp;self) -&gt; &amp;<a class="type" href="../../lie/root_system/type.CartanMatrix.html" title="type lie::root_system::CartanMatrix">CartanMatrix</a></code></span></h4>
@@ -95,7 +107,7 @@ group of \(n \times n\) unitary matrices with determinant 1.</p>
 <div class='docblock'><p>Return the number of positive roots in the Lie group&#39;s root system.</p>
 </div><h4 id='method.num_roots' class="method"><span id='num_roots.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#method.num_roots' class='fnname'>num_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h4>
 <div class='docblock'><p>Return a number of roots in the Lie group&#39;s root system.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html" title="trait core::fmt::Display">Display</a> for <a class="struct" href="../../lie/series/struct.TypeA.html" title="struct lie::series::TypeA">TypeA</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_a.rs.html#148-152' title='goto source code'>[src]</a></span></h3>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html" title="trait core::fmt::Display">Display</a> for <a class="struct" href="../../lie/series/struct.TypeA.html" title="struct lie::series::TypeA">TypeA</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_a.rs.html#160-164' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt-1' class="method"><span id='fmt.v-1' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#tymethod.fmt">Read more</a></p>
 </div></div></section>

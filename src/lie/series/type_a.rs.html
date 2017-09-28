@@ -269,6 +269,18 @@
 <span id="224">224</span>
 <span id="225">225</span>
 <span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 
@@ -282,6 +294,18 @@
 <span class="doccomment">/// \\(\mathrm{SU}(n+1)\\) and corresponds to [special unitary</span>
 <span class="doccomment">/// group](https://en.wikipedia.org/wiki/Special_unitary_group) which is the</span>
 <span class="doccomment">/// group of \\(n \times n\\) unitary matrices with determinant 1.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The Cartan matrix for \\(A_{n}\\) is of the form</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// \\begin{equation}</span>
+<span class="doccomment">///   \begin{pmatrix}</span>
+<span class="doccomment">///     2 &amp; -1 &amp; 0 &amp; 0 &amp; 0 \\\\</span>
+<span class="doccomment">///     -1 &amp; 2 &amp; -1 &amp; 0 &amp; 0 \\\\</span>
+<span class="doccomment">///     0 &amp; -1 &amp; 2 &amp; -1 &amp; 0 \\\\</span>
+<span class="doccomment">///     0 &amp; 0 &amp; -1 &amp; 2 &amp; -1 \\\\</span>
+<span class="doccomment">///     0 &amp; 0 &amp; 0 &amp; -1 &amp; 2</span>
+<span class="doccomment">///   \end{pmatrix}</span>
+<span class="doccomment">/// \\end{equation}</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TypeA</span> {
     <span class="ident">rank</span>: <span class="ident">usize</span>,
