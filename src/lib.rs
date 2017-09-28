@@ -17,6 +17,10 @@
 //!
 //! Licensed under [GPLv3](https://www.gnu.org/licenses/gpl-3.0.html).
 //!
+//! The documentation makes use of [MathJax](https://www.mathjax.org/) in order
+//! to display mathematics.  A version of the documentation with MathJax
+//! integrated is available [here](https://hep.rs/lie/lie).
+//!
 //! The library is primarily developed within the context of particle physics;
 //! however, this should in no way be a restriction for contributions to this
 //! library and extensions beyond the initial scope of this library are very
