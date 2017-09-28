@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.10.8/src/indexes.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.10.9/src/indexes.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>indexes.rs.html -- source</title>
@@ -548,7 +548,7 @@
     <span class="kw">let</span> <span class="ident">dim</span> <span class="op">=</span> <span class="ident">shape</span>.<span class="ident">into_dimension</span>();
     <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="ident">dim</span>.<span class="ident">zero_index</span>();
     <span class="ident">IndicesIterF</span> {
-        <span class="ident">has_remaining</span>: <span class="ident">zero</span> <span class="op">!=</span> <span class="ident">dim</span>,
+        <span class="ident">has_remaining</span>: <span class="ident">dim</span>.<span class="ident">size_checked</span>() <span class="op">!=</span> <span class="prelude-val">Some</span>(<span class="number">0</span>),
         <span class="ident">index</span>: <span class="ident">zero</span>,
         <span class="ident">dim</span>: <span class="ident">dim</span>,
     }

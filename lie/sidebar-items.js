@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["root_system",""],["series","Definitions for the 7 families of Lie groups."]],"struct":[["Error","Generic error type of this library."],["Root","Instance of a root."]]});
+initSidebarItems({"mod":[["root_system","Definitions for root systems"],["series","Definitions for the 7 families of Lie groups."]],"struct":[["Error","Generic error type of this library."],["Root","Instance of a root."]]});
