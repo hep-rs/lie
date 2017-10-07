@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head><!-- Google Tag Manager --><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'<head>l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-N9HX7G4');</script><!-- End Google Tag Manager -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.10.9/src/linalg/impl_linalg.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.10.10/src/linalg/impl_linalg.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>impl_linalg.rs.html -- source</title>
@@ -730,6 +730,11 @@
 <span id="685">685</span>
 <span id="686">686</span>
 <span id="687">687</span>
+<span id="688">688</span>
+<span id="689">689</span>
+<span id="690">690</span>
+<span id="691">691</span>
+<span id="692">692</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2014-2016 bluss and ndarray developers.</span>
 <span class="comment">//</span>
@@ -1172,6 +1177,11 @@
             );
         }
     } <span class="kw">else</span> {
+        <span class="comment">// It&#39;s a no-op if `c` has zero length.</span>
+        <span class="kw">if</span> <span class="ident">c</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">0</span> {
+            <span class="kw">return</span>;
+        }
+
         <span class="comment">// initialize memory if beta is zero</span>
         <span class="kw">if</span> <span class="ident">beta</span>.<span class="ident">is_zero</span>() {
             <span class="ident">c</span>.<span class="ident">fill</span>(<span class="ident">beta</span>);

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head><!-- Google Tag Manager --><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'<head>l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-N9HX7G4');</script><!-- End Google Tag Manager -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/ndarray/linalg/impl_linalg.rs.html#507-582' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/ndarray/linalg/impl_linalg.rs.html#512-587' title='goto source code'>[src]</a></span></h1>
 <pre class='rust fn'>pub fn general_mat_vec_mul&lt;A, S1, S2, S3&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;alpha: A, <br>&nbsp;&nbsp;&nbsp;&nbsp;a: &amp;<a class="struct" href="../../ndarray/struct.ArrayBase.html" title="struct ndarray::ArrayBase">ArrayBase</a>&lt;S1, <a class="type" href="../../ndarray/type.Ix2.html" title="type ndarray::Ix2">Ix2</a>&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;x: &amp;<a class="struct" href="../../ndarray/struct.ArrayBase.html" title="struct ndarray::ArrayBase">ArrayBase</a>&lt;S2, <a class="type" href="../../ndarray/type.Ix1.html" title="type ndarray::Ix1">Ix1</a>&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;beta: A, <br>&nbsp;&nbsp;&nbsp;&nbsp;y: &amp;mut <a class="struct" href="../../ndarray/struct.ArrayBase.html" title="struct ndarray::ArrayBase">ArrayBase</a>&lt;S3, <a class="type" href="../../ndarray/type.Ix1.html" title="type ndarray::Ix1">Ix1</a>&gt;<br>) <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;S1: <a class="trait" href="../../ndarray/trait.Data.html" title="trait ndarray::Data">Data</a>&lt;Elem = A&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;S2: <a class="trait" href="../../ndarray/trait.Data.html" title="trait ndarray::Data">Data</a>&lt;Elem = A&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;S3: <a class="trait" href="../../ndarray/trait.DataMut.html" title="trait ndarray::DataMut">DataMut</a>&lt;Elem = A&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;A: <a class="trait" href="../../ndarray/trait.LinalgScalar.html" title="trait ndarray::LinalgScalar">LinalgScalar</a>,&nbsp;</span></pre><div class='docblock'><p>General matrix-vector multiplication.</p>
 
 <p>Compute y ← α A x + β y</p>
