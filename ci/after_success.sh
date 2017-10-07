@@ -52,11 +52,22 @@ make_doc() {
 
         cargo doc $FEATURES
 
-        SED_SUB='s|</body>|<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script></body>|'
+        read -r GTM_HEADER <<EOF
+s#<head>#<head><!-- Google Tag Manager --><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-N9HX7G4');</script><!-- End Google Tag Manager -->#
+EOF
+        read -r GTM_BODY <<EOF
+s#<body class="rustdoc mod">#<body class="rustdoc mod"><!-- Google Tag Manager (noscript) --><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N9HX7G4" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><!-- End Google Tag Manager (noscript) -->#
+EOF
+        read -r MATHJAX <<EOF
+s#</body>#<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script></body>#
+EOF
+
         find ./target/doc \
              -type f \
              -name "*.html" \
-             -exec sed -i "$SED_SUB" '{}' +
+             -exec sed -i "$GTM_HEADER" '{}' + \
+             -exec sed -i "$GTM_BODY" '{}' + \
+             -exec sed -i "$MATHJAX" '{}' +
 
         setup_git
         git clone --depth=1 --branch=gh-pages https://${GH_TOKEN}@github.com/$TRAVIS_REPO_SLUG.git ./target/doc-git
