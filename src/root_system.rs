@@ -176,15 +176,15 @@ pub trait RootSystem {
     /// \mathrm{SO}(7)\\) are:
     ///
     /// \\begin{equation}
-    ///   \left( 1, 1, \frac{1}{2} \right)
+    ///   \left( 2, 2, 1 \right)
     /// \\end{equation}
     ///
     /// The three roots in Euclidean space are:
     ///
     /// \\begin{align}
-    ///   \alpha_{1} &= \frac{1}{\sqrt{2}} (1, -1,  0) \\\\
-    ///   \alpha_{2} &= \frac{1}{\sqrt{2}} (0,  1, -1) \\\\
-    ///   \alpha_{3} &= \frac{1}{\sqrt{2}} (0,  0,  1)
+    ///   \alpha_{1} &= (1, -1,  0) \\\\
+    ///   \alpha_{2} &= (0,  1, -1) \\\\
+    ///   \alpha_{3} &= (0,  0,  1)
     /// \\end{align}
     fn basis_lengths(&self) -> &BasisLengths;
 
@@ -300,9 +300,9 @@ pub trait RootSystem {
     /// The roots of \\(B_{3}\\) in Euclidean space are
     ///
     /// \\begin{align}
-    ///   \alpha_{1} &= \frac{1}{\sqrt{2}} (1, -1,  0) \\\\
-    ///   \alpha_{2} &= \frac{1}{\sqrt{2}} (0,  1, -1) \\\\
-    ///   \alpha_{3} &= \frac{1}{\sqrt{2}} (0,  0,  1)
+    ///   \alpha_{1} &= (1, -1,  0) \\\\
+    ///   \alpha_{2} &= (0,  1, -1) \\\\
+    ///   \alpha_{3} &= (0,  0,  1)
     /// \\end{align}
     ///
     /// So for example \\(\langle \alpha_{1}, \alpha_{2} \rangle = 2\\), and
