@@ -72,6 +72,15 @@ pub type CartanMatrix = ndarray::Array2<i64>;
 /// Note that in order to simplify the numerical computations, all roots should
 /// be scaled such that \\(\langle \alpha_{i}, \alpha_{j} \rangle\\) returns an
 /// integer.
+///
+/// This array is closely related to the \\(D_{ij}\\) matrix defined by
+///
+/// \\begin{equation}
+///   D_{ij} = \frac{\delta_{ij}}{\langle\alpha_{i}, \alpha_{i}\rangle}
+/// \\end{equation}
+///
+/// but it isn't used here in order to avoid requiring the use of rational
+/// numbers.
 pub type BasisLengths = ndarray::Array1<i64>;
 
 
