@@ -48,8 +48,8 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/lie/root_system.rs.html#70' title='goto source code'>[src]</a></span></h1>
-<pre class='rust typedef'>type BasisLengths = <a class="type" href="../../ndarray/aliases/type.Array1.html" title="type ndarray::aliases::Array1">Array1</a>&lt;<a class="struct" href="../../num_rational/struct.Ratio.html" title="struct num_rational::Ratio">Ratio</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>&gt;&gt;;</pre><div class='docblock'><p>Type definition for a basis lengths.</p>
+               </span><a class='srclink' href='../../src/lie/root_system.rs.html#84' title='goto source code'>[src]</a></span></h1>
+<pre class='rust typedef'>type BasisLengths = <a class="type" href="../../ndarray/aliases/type.Array1.html" title="type ndarray::aliases::Array1">Array1</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>&gt;;</pre><div class='docblock'><p>Type definition for a basis lengths.</p>
 
 <h1 id='definition' class='section-header'><a href='#definition'>Definition</a></h1>
 <p>The array is defined as</p>
@@ -59,8 +59,12 @@
 \end{equation}</p>
 
 <p>and must use the same labelling convention for \(\alpha_{i}\) as used in
-the Cartan matrix.  In combination with the Cartan matrix, this allows for
-the inner product of any two simple roots to be evaluated,</p>
+the Cartan matrix.  Although the roots can be arbitrarily rescaled by a
+common factor, they should be chosen such that each \(D_{i}\) is an
+integer and such that the inner product below always produces an integer.</p>
+
+<p>In combination with the Cartan matrix, this allows for the inner product of
+any two simple roots to be evaluated,</p>
 
 <p>\begin{equation}
   \langle \alpha_{i}, \alpha_{j} \rangle = \frac{1}{2} A_{ij} D_{i},
@@ -72,6 +76,19 @@ the inner product of any two simple roots to be evaluated,</p>
 <p>\begin{equation}
   \langle \beta_{n}, \beta_{m} \rangle = \sum_{ij} a_{ni} b_{mj} \langle \alpha_{i}, \alpha_{j} \rangle.
 \end{equation}</p>
+
+<p>Note that in order to simplify the numerical computations, all roots should
+be scaled such that \(\langle \alpha_{i}, \alpha_{j} \rangle\) returns an
+integer.</p>
+
+<p>This array is closely related to the \(D_{ij}\) matrix defined by</p>
+
+<p>\begin{equation}
+  D_{ij} = \frac{\delta_{ij}}{\langle\alpha_{i}, \alpha_{i}\rangle}
+\end{equation}</p>
+
+<p>but it isn&#39;t used here in order to avoid requiring the use of rational
+numbers.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 

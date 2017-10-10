@@ -279,9 +279,11 @@
 <span id="234">234</span>
 <span id="235">235</span>
 <span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
 </pre><pre class="rust ">
-<span class="kw">use</span> <span class="ident">num</span>;
-
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 
 <span class="kw">use</span> <span class="ident">error</span>::<span class="ident">Error</span>;
@@ -379,14 +381,10 @@
 
     <span class="doccomment">/// Generate the basis lengths in \\(B_{n}\\).</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// For \\(B_{n}\\), the first \\(n - 1\\) simple roots are of unit lengths,</span>
-    <span class="doccomment">/// the last one has squared length of \\(\frac{1}{2}\\).</span>
+    <span class="doccomment">/// For \\(B_{n}\\), the first \\(n - 1\\) simple roots have lengths</span>
+    <span class="doccomment">/// \\(\sqrt{2}\\), the last one is unit length.</span>
     <span class="kw">fn</span> <span class="ident">basis_lengths</span>(<span class="ident">rank</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">BasisLengths</span> {
-        <span class="ident">BasisLengths</span>::<span class="ident">from_shape_fn</span>(<span class="ident">rank</span>, <span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">&lt;</span> <span class="ident">rank</span> <span class="op">-</span> <span class="number">1</span> {
-            <span class="ident">num</span>::<span class="ident">One</span>::<span class="ident">one</span>()
-        } <span class="kw">else</span> {
-            <span class="ident">num</span>::<span class="ident">rational</span>::<span class="ident">Ratio</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">2</span>)
-        })
+        <span class="ident">BasisLengths</span>::<span class="ident">from_shape_fn</span>(<span class="ident">rank</span>, <span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">&lt;</span> <span class="ident">rank</span> <span class="op">-</span> <span class="number">1</span> { <span class="number">2</span> } <span class="kw">else</span> { <span class="number">1</span> })
     }
 }
 
@@ -435,8 +433,7 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;nightly&quot;</span>)]</span>
     <span class="kw">use</span> <span class="ident">test</span>::<span class="ident">Bencher</span>;
 
-    <span class="kw">use</span> <span class="ident">num</span>::<span class="ident">One</span>;
-    <span class="kw">use</span> <span class="ident">num</span>::<span class="ident">rational</span>::<span class="ident">Ratio</span>;
+    <span class="kw">use</span> <span class="ident">ndarray</span>::<span class="ident">Array2</span>;
     <span class="kw">use</span> <span class="ident">root_system</span>::<span class="ident">RootSystem</span>;
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">TypeB</span>;
 
@@ -478,16 +475,27 @@
     <span class="kw">fn</span> <span class="ident">basis_lengths</span>() {
         <span class="kw">let</span> <span class="ident">g</span> <span class="op">=</span> <span class="ident">TypeB</span>::<span class="ident">new</span>(<span class="number">5</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">g</span>.<span class="ident">basis_lengths</span>().<span class="ident">len</span>(), <span class="ident">g</span>.<span class="ident">num_simple_roots</span>());
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">g</span>.<span class="ident">basis_lengths</span>(), <span class="kw-2">&amp;</span><span class="macro">array</span><span class="macro">!</span>[<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>]);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">inner_product</span>() {
+        <span class="kw">let</span> <span class="ident">g</span> <span class="op">=</span> <span class="ident">TypeB</span>::<span class="ident">new</span>(<span class="number">5</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">sij</span> <span class="op">=</span> <span class="ident">Array2</span>::<span class="ident">from_shape_fn</span>((<span class="ident">g</span>.<span class="ident">rank</span>(), <span class="ident">g</span>.<span class="ident">rank</span>()), <span class="op">|</span>(<span class="ident">i</span>, <span class="ident">j</span>)<span class="op">|</span> {
+            <span class="ident">g</span>.<span class="ident">inner_product</span>(<span class="kw-2">&amp;</span><span class="ident">g</span>.<span class="ident">simple_roots</span>()[<span class="ident">i</span>], <span class="kw-2">&amp;</span><span class="ident">g</span>.<span class="ident">simple_roots</span>()[<span class="ident">j</span>])
+        });
+
         <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="ident">g</span>.<span class="ident">basis_lengths</span>(),
-            <span class="kw-2">&amp;</span><span class="macro">array</span><span class="macro">!</span>[
-                <span class="ident">One</span>::<span class="ident">one</span>(),
-                <span class="ident">One</span>::<span class="ident">one</span>(),
-                <span class="ident">One</span>::<span class="ident">one</span>(),
-                <span class="ident">One</span>::<span class="ident">one</span>(),
-                <span class="ident">Ratio</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">2</span>),
+            <span class="ident">sij</span>,
+            <span class="macro">array</span><span class="macro">!</span>[
+                [<span class="number">2</span>, <span class="op">-</span><span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],
+                [<span class="op">-</span><span class="number">1</span>, <span class="number">2</span>, <span class="op">-</span><span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>],
+                [<span class="number">0</span>, <span class="op">-</span><span class="number">1</span>, <span class="number">2</span>, <span class="op">-</span><span class="number">1</span>, <span class="number">0</span>],
+                [<span class="number">0</span>, <span class="number">0</span>, <span class="op">-</span><span class="number">1</span>, <span class="number">2</span>, <span class="op">-</span><span class="number">1</span>],
+                [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="op">-</span><span class="number">1</span>, <span class="number">1</span>],
             ]
         );
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">sij</span>.<span class="ident">diag</span>(), <span class="ident">g</span>.<span class="ident">basis_lengths</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>

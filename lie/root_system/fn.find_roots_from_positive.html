@@ -48,12 +48,12 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/lie/root_system.rs.html#352-365' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/lie/root_system.rs.html#423-436' title='goto source code'>[src]</a></span></h1>
 <pre class='rust fn'>pub fn find_roots_from_positive(positive_roots: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>&gt;</pre><div class='docblock'><p>Find all the roots given a set of positive roots.</p>
 
 <p>This algorithmically finds and creates all of the roots in a root system
-given a set of positive roots, returning a sorted vector.  This function
-assumes the initial lost of positive roots to already be sorted.</p>
+given a set of positive roots.  The resulting list will be sorted by level
+provided that the positive roots passed in were initially sorted by level.</p>
 
 <h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
 <pre class="rust rust-example-rendered">
