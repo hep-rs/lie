@@ -1,8 +1,10 @@
+use num;
+
 use std::fmt;
 
 use error::Error;
 use root::Root;
-use root_system::{self, CartanMatrix, RootSystem};
+use root_system::{self, CartanMatrix, RootSystem, BasisLengths};
 
 /// The \\(F_{n}\\) exceptional Lie groups.
 ///
@@ -22,6 +24,7 @@ use root_system::{self, CartanMatrix, RootSystem};
 pub struct TypeF {
     rank: usize,
     cartan_matrix: CartanMatrix,
+    basis_lengths: BasisLengths,
     simple_roots: Vec<Root>,
     positive_roots: Vec<Root>,
     roots: Vec<Root>,
@@ -62,12 +65,20 @@ impl TypeF {
                     [0, -1, 2, -1],
                     [0, 0, -1, 2],
                 ];
+                let basis_lengths =
+                    array![
+                    num::One::one(),
+                    num::One::one(),
+                    num::rational::Ratio::new(1, 2),
+                    num::rational::Ratio::new(1, 2),
+                ];
                 let simple_roots = root_system::find_simple_roots(&cartan_matrix);
                 let positive_roots = root_system::find_positive_roots(&simple_roots);
                 let roots = root_system::find_roots_from_positive(&positive_roots);
                 Ok(TypeF {
                     rank,
                     cartan_matrix,
+                    basis_lengths,
                     simple_roots,
                     positive_roots,
                     roots,
@@ -85,6 +96,10 @@ impl RootSystem for TypeF {
 
     fn cartan_matrix(&self) -> &CartanMatrix {
         &self.cartan_matrix
+    }
+
+    fn basis_lengths(&self) -> &BasisLengths {
+        &self.basis_lengths
     }
 
     fn simple_roots(&self) -> &[Root] {
@@ -119,6 +134,8 @@ mod test {
     #[cfg(feature = "nightly")]
     use test::Bencher;
 
+    use num::One;
+    use num::rational::Ratio;
     use root_system::RootSystem;
     use super::TypeF;
 
@@ -148,6 +165,16 @@ mod test {
         assert_eq!(g.num_simple_roots(), g.simple_roots().len());
         assert_eq!(g.num_positive_roots(), g.positive_roots().len());
         assert_eq!(g.num_roots(), g.roots().len());
+    }
+
+    #[test]
+    fn basis_lengths() {
+        let g = TypeF::new(4).unwrap();
+        assert_eq!(g.basis_lengths().len(), g.num_simple_roots());
+        assert_eq!(
+            g.basis_lengths(),
+            &array![One::one(), One::one(), Ratio::new(1, 2), Ratio::new(1, 2)]
+        );
     }
 
     #[test]

@@ -1,8 +1,10 @@
+use num;
+
 use std::fmt;
 
 use error::Error;
 use root::Root;
-use root_system::{self, CartanMatrix, RootSystem};
+use root_system::{self, CartanMatrix, RootSystem, BasisLengths};
 
 /// The \\(G_{n}\\) exceptional Lie groups.
 ///
@@ -20,6 +22,7 @@ use root_system::{self, CartanMatrix, RootSystem};
 pub struct TypeG {
     rank: usize,
     cartan_matrix: CartanMatrix,
+    basis_lengths: BasisLengths,
     simple_roots: Vec<Root>,
     positive_roots: Vec<Root>,
     roots: Vec<Root>,
@@ -52,12 +55,14 @@ impl TypeG {
             0 => Err(Error::new("Rank of a Lie group must be at least 1.")),
             rank if rank == 2 => {
                 let cartan_matrix = array![[2, -1], [-3, 2]];
+                let basis_lengths = array![num::rational::Ratio::new(1, 3), num::One::one()];
                 let simple_roots = root_system::find_simple_roots(&cartan_matrix);
                 let positive_roots = root_system::find_positive_roots(&simple_roots);
                 let roots = root_system::find_roots_from_positive(&positive_roots);
                 Ok(TypeG {
                     rank,
                     cartan_matrix,
+                    basis_lengths,
                     simple_roots,
                     positive_roots,
                     roots,
@@ -75,6 +80,10 @@ impl RootSystem for TypeG {
 
     fn cartan_matrix(&self) -> &CartanMatrix {
         &self.cartan_matrix
+    }
+
+    fn basis_lengths(&self) -> &BasisLengths {
+        &self.basis_lengths
     }
 
     fn simple_roots(&self) -> &[Root] {
@@ -109,6 +118,8 @@ mod test {
     #[cfg(feature = "nightly")]
     use test::Bencher;
 
+    use num::One;
+    use num::rational::Ratio;
     use super::TypeG;
     use root_system::RootSystem;
 
@@ -136,6 +147,13 @@ mod test {
         assert_eq!(g.num_simple_roots(), g.simple_roots().len());
         assert_eq!(g.num_positive_roots(), g.positive_roots().len());
         assert_eq!(g.num_roots(), g.roots().len());
+    }
+
+    #[test]
+    fn basis_lengths() {
+        let g = TypeG::new(2).unwrap();
+        assert_eq!(g.basis_lengths().len(), g.num_simple_roots());
+        assert_eq!(g.basis_lengths(), &array![Ratio::new(1, 3), One::one()]);
     }
 
     #[test]

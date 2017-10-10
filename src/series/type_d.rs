@@ -1,8 +1,10 @@
+use num;
+
 use std::fmt;
 
 use error::Error;
 use root::Root;
-use root_system::{self, CartanMatrix, RootSystem};
+use root_system::{self, CartanMatrix, RootSystem, BasisLengths};
 
 /// The \\(D_{n}\\) infinite series of Lie groups.
 ///
@@ -36,6 +38,7 @@ use root_system::{self, CartanMatrix, RootSystem};
 pub struct TypeD {
     rank: usize,
     cartan_matrix: CartanMatrix,
+    basis_lengths: BasisLengths,
     simple_roots: Vec<Root>,
     positive_roots: Vec<Root>,
     roots: Vec<Root>,
@@ -76,12 +79,14 @@ impl TypeD {
             )),
             rank => {
                 let cartan_matrix = Self::cartan_matrix(rank);
+                let basis_lengths = Self::basis_lengths(rank);
                 let simple_roots = root_system::find_simple_roots(&cartan_matrix);
                 let positive_roots = root_system::find_positive_roots(&simple_roots);
                 let roots = root_system::find_roots_from_positive(&positive_roots);
                 Ok(TypeD {
                     rank,
                     cartan_matrix,
+                    basis_lengths,
                     simple_roots,
                     positive_roots,
                     roots,
@@ -101,6 +106,13 @@ impl TypeD {
             _ => 0,
         })
     }
+
+    /// Generate the basis lengths in \\(D_{n}\\).
+    ///
+    /// For \\(D_{n}\\), all simple roots are of unit lengths.
+    fn basis_lengths(rank: usize) -> BasisLengths {
+        BasisLengths::from_shape_fn(rank, |_| num::One::one())
+    }
 }
 
 impl RootSystem for TypeD {
@@ -110,6 +122,10 @@ impl RootSystem for TypeD {
 
     fn cartan_matrix(&self) -> &CartanMatrix {
         &self.cartan_matrix
+    }
+
+    fn basis_lengths(&self) -> &BasisLengths {
+        &self.basis_lengths
     }
 
     fn simple_roots(&self) -> &[Root] {
@@ -144,6 +160,7 @@ mod test {
     #[cfg(feature = "nightly")]
     use test::Bencher;
 
+    use num::One;
     use root_system::RootSystem;
     use super::TypeD;
 
@@ -181,6 +198,16 @@ mod test {
             assert_eq!(g.num_positive_roots(), g.positive_roots().len());
             assert_eq!(g.num_roots(), g.roots().len());
         }
+    }
+
+    #[test]
+    fn basis_lengths() {
+        let g = TypeD::new(5).unwrap();
+        assert_eq!(g.basis_lengths().len(), g.num_simple_roots());
+        assert_eq!(
+            g.basis_lengths(),
+            &array![One::one(), One::one(), One::one(), One::one(), One::one()]
+        );
     }
 
     #[test]

@@ -1,8 +1,10 @@
+use num;
+
 use std::fmt;
 
 use error::Error;
 use root::Root;
-use root_system::{self, CartanMatrix, RootSystem};
+use root_system::{self, CartanMatrix, RootSystem, BasisLengths};
 
 /// The \\(B_{n}\\) infinite series of Lie groups.
 ///
@@ -31,6 +33,7 @@ use root_system::{self, CartanMatrix, RootSystem};
 pub struct TypeB {
     rank: usize,
     cartan_matrix: CartanMatrix,
+    basis_lengths: BasisLengths,
     simple_roots: Vec<Root>,
     positive_roots: Vec<Root>,
     roots: Vec<Root>,
@@ -65,12 +68,14 @@ impl TypeB {
             )),
             rank => {
                 let cartan_matrix = Self::cartan_matrix(rank);
+                let basis_lengths = Self::basis_lengths(rank);
                 let simple_roots = root_system::find_simple_roots(&cartan_matrix);
                 let positive_roots = root_system::find_positive_roots(&simple_roots);
                 let roots = root_system::find_roots_from_positive(&positive_roots);
                 Ok(TypeB {
                     rank,
                     cartan_matrix,
+                    basis_lengths,
                     simple_roots,
                     positive_roots,
                     roots,
@@ -89,6 +94,18 @@ impl TypeB {
             _ => 0,
         })
     }
+
+    /// Generate the basis lengths in \\(B_{n}\\).
+    ///
+    /// For \\(B_{n}\\), the first \\(n - 1\\) simple roots are of unit lengths,
+    /// the last one has squared length of \\(\frac{1}{2}\\).
+    fn basis_lengths(rank: usize) -> BasisLengths {
+        BasisLengths::from_shape_fn(rank, |i| if i < rank - 1 {
+            num::One::one()
+        } else {
+            num::rational::Ratio::new(1, 2)
+        })
+    }
 }
 
 impl RootSystem for TypeB {
@@ -98,6 +115,10 @@ impl RootSystem for TypeB {
 
     fn cartan_matrix(&self) -> &CartanMatrix {
         &self.cartan_matrix
+    }
+
+    fn basis_lengths(&self) -> &BasisLengths {
+        &self.basis_lengths
     }
 
     fn simple_roots(&self) -> &[Root] {
@@ -132,6 +153,8 @@ mod test {
     #[cfg(feature = "nightly")]
     use test::Bencher;
 
+    use num::One;
+    use num::rational::Ratio;
     use root_system::RootSystem;
     use super::TypeB;
 
@@ -167,6 +190,22 @@ mod test {
             assert_eq!(g.num_positive_roots(), g.positive_roots().len());
             assert_eq!(g.num_roots(), g.roots().len());
         }
+    }
+
+    #[test]
+    fn basis_lengths() {
+        let g = TypeB::new(5).unwrap();
+        assert_eq!(g.basis_lengths().len(), g.num_simple_roots());
+        assert_eq!(
+            g.basis_lengths(),
+            &array![
+                One::one(),
+                One::one(),
+                One::one(),
+                One::one(),
+                Ratio::new(1, 2),
+            ]
+        );
     }
 
     #[test]
