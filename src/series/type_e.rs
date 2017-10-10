@@ -322,6 +322,27 @@ mod test {
     }
 
     #[test]
+    fn scalar_product() {
+        let g = TypeE::new(6).unwrap();
+        let aij = Array2::from_shape_fn((g.rank(), g.rank()), |(i, j)| {
+            g.scalar_product(&g.simple_roots()[i], &g.simple_roots()[j])
+        });
+        assert_eq!(g.cartan_matrix(), &aij);
+
+        let g = TypeE::new(7).unwrap();
+        let aij = Array2::from_shape_fn((g.rank(), g.rank()), |(i, j)| {
+            g.scalar_product(&g.simple_roots()[i], &g.simple_roots()[j])
+        });
+        assert_eq!(g.cartan_matrix(), &aij);
+
+        let g = TypeE::new(8).unwrap();
+        let aij = Array2::from_shape_fn((g.rank(), g.rank()), |(i, j)| {
+            g.scalar_product(&g.simple_roots()[i], &g.simple_roots()[j])
+        });
+        assert_eq!(g.cartan_matrix(), &aij);
+    }
+
+    #[test]
     fn fmt() {
         for rank in 6..9 {
             let g = TypeE::new(rank).unwrap();

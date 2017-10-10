@@ -26,7 +26,8 @@ use root::Root;
 /// The Cartan matrix of a Lie group is the matrix
 ///
 /// \\begin{equation}
-///   A_{ij} = 2 \frac{\langle \alpha_{i}, \alpha_{j} \rangle}{\langle \alpha_{i}, \alpha_{i} \rangle}
+///   A_{ij} = \langle \alpha_{i}, \alpha_{i} \rangle
+///          = 2 \frac{( \alpha_{j}, \alpha_{i} )}{( \alpha_{i}, \alpha_{i} )}
 /// \\end{equation}
 ///
 /// Where \\(\alpha_{i}\\) are the simple roots of the root system of the Lie
@@ -47,7 +48,7 @@ pub type CartanMatrix = ndarray::Array2<i64>;
 /// The array is defined as
 ///
 /// \\begin{equation}
-///   D_{i} = \langle \alpha_{i}, \alpha_{i} \rangle
+///   D_{i} = (\alpha_{i}, \alpha_{i})
 /// \\end{equation}
 ///
 /// and must use the same labelling convention for \\(\alpha_{i}\\) as used in
@@ -59,14 +60,14 @@ pub type CartanMatrix = ndarray::Array2<i64>;
 /// any two simple roots to be evaluated,
 ///
 /// \\begin{equation}
-///   \langle \alpha_{i}, \alpha_{j} \rangle = \frac{1}{2} A_{ij} D_{i},
+///   ( \alpha_{i}, \alpha_{j} ) = \frac{1}{2} A_{ji} D_{i},
 /// \\end{equation}
 ///
 /// which can then be further generalized for any two roots \\(\beta_{n} =
 /// \sum_{i} a_{ni} \alpha_{i}\\):
 ///
 /// \\begin{equation}
-///   \langle \beta_{n}, \beta_{m} \rangle = \sum_{ij} a_{ni} b_{mj} \langle \alpha_{i}, \alpha_{j} \rangle.
+///   ( \beta_{n}, \beta_{m} ) = \sum_{ij} a_{ni} b_{mj} ( \alpha_{i}, \alpha_{j} ).
 /// \\end{equation}
 ///
 /// Note that in order to simplify the numerical computations, all roots should
@@ -76,7 +77,7 @@ pub type CartanMatrix = ndarray::Array2<i64>;
 /// This array is closely related to the \\(D_{ij}\\) matrix defined by
 ///
 /// \\begin{equation}
-///   D_{ij} = \frac{\delta_{ij}}{\langle\alpha_{i}, \alpha_{i}\rangle}
+///   D_{ij} = \frac{\delta_{ij}}{(\alpha_{i}, \alpha_{i})}
 /// \\end{equation}
 ///
 /// but it isn't used here in order to avoid requiring the use of rational
@@ -290,10 +291,13 @@ pub trait RootSystem {
         self.roots().len()
     }
 
-    /// Evaluate the inner product between two roots of the system.
+    /// Evaluate the Euclidean inner product between two roots of the system.
     ///
-    /// The roots are scaled such that the inner product is always an integer.
-    /// See [`BasisLengths`](type.BasisLengths.html) for more information.
+    /// The Euclidean product, denoted by \\(( \cdot, \cdot)\\), is the usual
+    /// inner product from Euclidean space.
+    ///
+    /// The roots are scaled such that the product is always an integer.  See
+    /// [`BasisLengths`](type.BasisLengths.html) for more information.
     ///
     /// # Example
     ///
@@ -305,13 +309,13 @@ pub trait RootSystem {
     ///   \alpha_{3} &= (0,  0,  1)
     /// \\end{align}
     ///
-    /// So for example \\(\langle \alpha_{1}, \alpha_{2} \rangle = 2\\), and
-    /// \\(\langle \alpha_{1}, \alpha_{2} \rangle = -1\\).
+    /// So for example \\(( \alpha_{1}, \alpha_{2} ) = 2\\), and
+    /// \\(( \alpha_{1}, \alpha_{2} ) = -1\\).
     ///
     /// # Panics
     ///
     /// Panics if the roots do not have the same rank as the root system.
-    fn inner_product(&self, a: &Root, b: &Root) -> i64 {
+    fn inner_product<'a, 'b>(&'a self, a: &'b Root, b: &'b Root) -> i64 {
         assert_eq!(a.rank(), b.rank(), "Rank of two roots do not match.");
         assert_eq!(
             a.rank(),
@@ -328,6 +332,31 @@ pub trait RootSystem {
             "The inner product was not a multiple of two before being divided by two."
         );
         result / 2
+    }
+
+    /// Evaluate the scalar product between two roots of the system.
+    ///
+    /// The scalar product between roots is defined as
+    ///
+    /// \\begin{equation}
+    ///   \rangle{\beta, \alpha} \equiv 2 \frac{(\alpha, \beta)}{(\alpha, \alpha)}
+    /// \\end{equation}
+    ///
+    /// where \\((\cdot, \cdot)\\) is the usual Euclidean inner product between
+    /// the roots in Euclidean space.  This should always evaluate to an integer
+    /// in a root system.
+    ///
+    /// Note that this scalar product is only linear in its first argument.  It
+    /// is *not* an inner product.
+    fn scalar_product(&self, b: &Root, a: &Root) -> i64 {
+        let numerator = 2 * self.inner_product(a, b);
+        let denominator = self.inner_product(a, a);
+        debug_assert_eq!(
+            numerator % denominator,
+            0,
+            "The scalar product did not evaluate to an integer."
+        );
+        numerator / denominator
     }
 }
 

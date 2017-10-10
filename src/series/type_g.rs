@@ -171,6 +171,15 @@ mod test {
     }
 
     #[test]
+    fn scalar_product() {
+        let g = TypeG::new(2).unwrap();
+        let aij = Array2::from_shape_fn((g.rank(), g.rank()), |(i, j)| {
+            g.scalar_product(&g.simple_roots()[i], &g.simple_roots()[j])
+        });
+        assert_eq!(g.cartan_matrix(), &aij);
+    }
+
+    #[test]
     fn fmt() {
         let g = TypeG::new(2).unwrap();
         assert_eq!(format!("{}", g), "G2");

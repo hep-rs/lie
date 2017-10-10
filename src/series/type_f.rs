@@ -184,6 +184,15 @@ mod test {
     }
 
     #[test]
+    fn scalar_product() {
+        let g = TypeF::new(4).unwrap();
+        let aij = Array2::from_shape_fn((g.rank(), g.rank()), |(i, j)| {
+            g.scalar_product(&g.simple_roots()[i], &g.simple_roots()[j])
+        });
+        assert_eq!(g.cartan_matrix(), &aij);
+    }
+
+    #[test]
     fn fmt() {
         let g = TypeF::new(4).unwrap();
         assert_eq!(format!("{}", g), "F4");
