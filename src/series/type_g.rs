@@ -1,5 +1,3 @@
-use num;
-
 use std::fmt;
 
 use error::Error;
@@ -55,7 +53,7 @@ impl TypeG {
             0 => Err(Error::new("Rank of a Lie group must be at least 1.")),
             rank if rank == 2 => {
                 let cartan_matrix = array![[2, -1], [-3, 2]];
-                let basis_lengths = array![num::rational::Ratio::new(1, 3), num::One::one()];
+                let basis_lengths = array![2, 6];
                 let simple_roots = root_system::find_simple_roots(&cartan_matrix);
                 let positive_roots = root_system::find_positive_roots(&simple_roots);
                 let roots = root_system::find_roots_from_positive(&positive_roots);
@@ -118,8 +116,6 @@ mod test {
     #[cfg(feature = "nightly")]
     use test::Bencher;
 
-    use num::One;
-    use num::rational::Ratio;
     use super::TypeG;
     use root_system::RootSystem;
 
@@ -153,7 +149,7 @@ mod test {
     fn basis_lengths() {
         let g = TypeG::new(2).unwrap();
         assert_eq!(g.basis_lengths().len(), g.num_simple_roots());
-        assert_eq!(g.basis_lengths(), &array![Ratio::new(1, 3), One::one()]);
+        assert_eq!(g.basis_lengths(), &array![2, 6]);
     }
 
     #[test]

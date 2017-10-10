@@ -15,7 +15,6 @@
 //! [`find_roots_from_positive`](fn.find_roots_from_positive.html) or
 //! [`find_roots_from_simple`](fn.find_roots_from_simple.html).
 use ndarray::{self, Axis};
-use num::rational::Ratio;
 use rayon::prelude::*;
 
 use root::Root;
@@ -41,7 +40,6 @@ use root::Root;
 /// are integers.
 pub type CartanMatrix = ndarray::Array2<i64>;
 
-
 /// Type definition for a basis lengths.
 ///
 /// # Definition
@@ -53,8 +51,12 @@ pub type CartanMatrix = ndarray::Array2<i64>;
 /// \\end{equation}
 ///
 /// and must use the same labelling convention for \\(\alpha_{i}\\) as used in
-/// the Cartan matrix.  In combination with the Cartan matrix, this allows for
-/// the inner product of any two simple roots to be evaluated,
+/// the Cartan matrix.  Although the roots can be arbitrarily rescaled by a
+/// common factor, they should be chosen such that each \\(D_{i}\\) is an
+/// integer and such that the inner product below always produces an integer.
+///
+/// In combination with the Cartan matrix, this allows for the inner product of
+/// any two simple roots to be evaluated,
 ///
 /// \\begin{equation}
 ///   \langle \alpha_{i}, \alpha_{j} \rangle = \frac{1}{2} A_{ij} D_{i},
@@ -66,8 +68,12 @@ pub type CartanMatrix = ndarray::Array2<i64>;
 /// \\begin{equation}
 ///   \langle \beta_{n}, \beta_{m} \rangle = \sum_{ij} a_{ni} b_{mj} \langle \alpha_{i}, \alpha_{j} \rangle.
 /// \\end{equation}
+///
+/// Note that in order to simplify the numerical computations, all roots should
+/// be scaled such that \\(\langle \alpha_{i}, \alpha_{j} \rangle\\) returns an
+/// integer.
+pub type BasisLengths = ndarray::Array1<i64>;
 
-pub type BasisLengths = ndarray::Array1<Ratio<i64>>;
 
 /// Trait for root systems.
 ///
@@ -154,6 +160,23 @@ pub trait RootSystem {
     fn cartan_matrix(&self) -> &CartanMatrix;
 
     /// Return the squared norm of each simple roots.
+    ///
+    /// # Example
+    ///
+    /// The squared norms of the three simple roots in \\(B_{3} =
+    /// \mathrm{SO}(7)\\) are:
+    ///
+    /// \\begin{equation}
+    ///   \left( 1, 1, \frac{1}{2} \right)
+    /// \\end{equation}
+    ///
+    /// The three roots in Euclidean space are:
+    ///
+    /// \\begin{align}
+    ///   \alpha_{1} &= \frac{1}{\sqrt{2}} (1, -1,  0) \\\\
+    ///   \alpha_{2} &= \frac{1}{\sqrt{2}} (0,  1, -1) \\\\
+    ///   \alpha_{3} &= \frac{1}{\sqrt{2}} (0,  0,  1)
+    /// \\end{align}
     fn basis_lengths(&self) -> &BasisLengths;
 
     /// Return the simple roots of the Lie group's root system.

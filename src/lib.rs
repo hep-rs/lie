@@ -123,7 +123,6 @@
 
 #[macro_use]
 extern crate ndarray;
-extern crate num;
 extern crate rayon;
 
 #[cfg(feature = "nightly")]

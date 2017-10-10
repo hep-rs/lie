@@ -1,5 +1,3 @@
-use num;
-
 use std::fmt;
 
 use error::Error;
@@ -109,9 +107,9 @@ impl TypeD {
 
     /// Generate the basis lengths in \\(D_{n}\\).
     ///
-    /// For \\(D_{n}\\), all simple roots are of unit lengths.
+    /// For \\(D_{n}\\), all simple roots have length \\(\sqrt{2}\\).
     fn basis_lengths(rank: usize) -> BasisLengths {
-        BasisLengths::from_shape_fn(rank, |_| num::One::one())
+        BasisLengths::from_shape_fn(rank, |_| 2)
     }
 }
 
@@ -160,7 +158,6 @@ mod test {
     #[cfg(feature = "nightly")]
     use test::Bencher;
 
-    use num::One;
     use root_system::RootSystem;
     use super::TypeD;
 
@@ -204,10 +201,7 @@ mod test {
     fn basis_lengths() {
         let g = TypeD::new(5).unwrap();
         assert_eq!(g.basis_lengths().len(), g.num_simple_roots());
-        assert_eq!(
-            g.basis_lengths(),
-            &array![One::one(), One::one(), One::one(), One::one(), One::one()]
-        );
+        assert_eq!(g.basis_lengths(), &array![2, 2, 2, 2, 2]);
     }
 
     #[test]

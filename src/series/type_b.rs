@@ -1,5 +1,3 @@
-use num;
-
 use std::fmt;
 
 use error::Error;
@@ -97,14 +95,10 @@ impl TypeB {
 
     /// Generate the basis lengths in \\(B_{n}\\).
     ///
-    /// For \\(B_{n}\\), the first \\(n - 1\\) simple roots are of unit lengths,
-    /// the last one has squared length of \\(\frac{1}{2}\\).
+    /// For \\(B_{n}\\), the first \\(n - 1\\) simple roots have lengths
+    /// \\(\sqrt{2}\\), the last one is unit length.
     fn basis_lengths(rank: usize) -> BasisLengths {
-        BasisLengths::from_shape_fn(rank, |i| if i < rank - 1 {
-            num::One::one()
-        } else {
-            num::rational::Ratio::new(1, 2)
-        })
+        BasisLengths::from_shape_fn(rank, |i| if i < rank - 1 { 2 } else { 1 })
     }
 }
 
@@ -153,8 +147,6 @@ mod test {
     #[cfg(feature = "nightly")]
     use test::Bencher;
 
-    use num::One;
-    use num::rational::Ratio;
     use root_system::RootSystem;
     use super::TypeB;
 
@@ -196,16 +188,7 @@ mod test {
     fn basis_lengths() {
         let g = TypeB::new(5).unwrap();
         assert_eq!(g.basis_lengths().len(), g.num_simple_roots());
-        assert_eq!(
-            g.basis_lengths(),
-            &array![
-                One::one(),
-                One::one(),
-                One::one(),
-                One::one(),
-                Ratio::new(1, 2),
-            ]
-        );
+        assert_eq!(g.basis_lengths(), &array![2, 2, 2, 2, 1]);
     }
 
     #[test]

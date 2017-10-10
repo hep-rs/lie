@@ -1,5 +1,3 @@
-use num;
-
 use std::fmt;
 
 use error::Error;
@@ -65,13 +63,7 @@ impl TypeF {
                     [0, -1, 2, -1],
                     [0, 0, -1, 2],
                 ];
-                let basis_lengths =
-                    array![
-                    num::One::one(),
-                    num::One::one(),
-                    num::rational::Ratio::new(1, 2),
-                    num::rational::Ratio::new(1, 2),
-                ];
+                let basis_lengths = array![2, 2, 1, 1];
                 let simple_roots = root_system::find_simple_roots(&cartan_matrix);
                 let positive_roots = root_system::find_positive_roots(&simple_roots);
                 let roots = root_system::find_roots_from_positive(&positive_roots);
@@ -134,8 +126,6 @@ mod test {
     #[cfg(feature = "nightly")]
     use test::Bencher;
 
-    use num::One;
-    use num::rational::Ratio;
     use root_system::RootSystem;
     use super::TypeF;
 
@@ -171,10 +161,7 @@ mod test {
     fn basis_lengths() {
         let g = TypeF::new(4).unwrap();
         assert_eq!(g.basis_lengths().len(), g.num_simple_roots());
-        assert_eq!(
-            g.basis_lengths(),
-            &array![One::one(), One::one(), Ratio::new(1, 2), Ratio::new(1, 2)]
-        );
+        assert_eq!(g.basis_lengths(), &array![2, 2, 1, 1]);
     }
 
     #[test]

@@ -1,5 +1,3 @@
-use num;
-
 use std::fmt;
 
 use error::Error;
@@ -91,9 +89,9 @@ impl TypeA {
 
     /// Generate the basis lengths in \\(A_{n}\\).
     ///
-    /// For \\(A_{n}\\), all simple roots are of unit lengths.
+    /// For \\(A_{n}\\), all simple roots are of length \\(\sqrt{2}\\).
     fn basis_lengths(rank: usize) -> BasisLengths {
-        BasisLengths::from_shape_fn(rank, |_| num::One::one())
+        BasisLengths::from_shape_fn(rank, |_| 2)
     }
 }
 
@@ -188,7 +186,6 @@ mod test {
     #[cfg(feature = "nightly")]
     use test::Bencher;
 
-    use num::One;
     use root_system::RootSystem;
     use super::TypeA;
 
@@ -231,10 +228,7 @@ mod test {
     fn basis_lengths() {
         let g = TypeA::new(5).unwrap();
         assert_eq!(g.basis_lengths().len(), g.num_simple_roots());
-        assert_eq!(
-            g.basis_lengths(),
-            &array![One::one(), One::one(), One::one(), One::one(), One::one()]
-        );
+        assert_eq!(g.basis_lengths(), &array![2, 2, 2, 2, 2]);
     }
 
     #[test]
