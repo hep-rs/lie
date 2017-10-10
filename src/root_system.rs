@@ -289,6 +289,46 @@ pub trait RootSystem {
     fn num_roots(&self) -> usize {
         self.roots().len()
     }
+
+    /// Evaluate the inner product between two roots of the system.
+    ///
+    /// The roots are scaled such that the inner product is always an integer.
+    /// See [`BasisLengths`](type.BasisLengths.html) for more information.
+    ///
+    /// # Example
+    ///
+    /// The roots of \\(B_{3}\\) in Euclidean space are
+    ///
+    /// \\begin{align}
+    ///   \alpha_{1} &= \frac{1}{\sqrt{2}} (1, -1,  0) \\\\
+    ///   \alpha_{2} &= \frac{1}{\sqrt{2}} (0,  1, -1) \\\\
+    ///   \alpha_{3} &= \frac{1}{\sqrt{2}} (0,  0,  1)
+    /// \\end{align}
+    ///
+    /// So for example \\(\langle \alpha_{1}, \alpha_{2} \rangle = 2\\), and
+    /// \\(\langle \alpha_{1}, \alpha_{2} \rangle = -1\\).
+    ///
+    /// # Panics
+    ///
+    /// Panics if the roots do not have the same rank as the root system.
+    fn inner_product(&self, a: &Root, b: &Root) -> i64 {
+        assert_eq!(a.rank(), b.rank(), "Rank of two roots do not match.");
+        assert_eq!(
+            a.rank(),
+            self.rank(),
+            "Rank of roots does not match rank of root system."
+        );
+
+        let ad = a.alpha() * self.basis_lengths();
+        let result = b.alpha().dot(&self.cartan_matrix().dot(&ad));
+
+        debug_assert_eq!(
+            result % 2,
+            0,
+            "The inner product was not a multiple of two before being divided by two."
+        );
+        result / 2
+    }
 }
 
 /// Find all the simple roots from the Cartan matrix, returning them in the same

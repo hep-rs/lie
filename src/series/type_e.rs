@@ -183,6 +183,7 @@ mod test {
     #[cfg(feature = "nightly")]
     use test::Bencher;
 
+    use ndarray::Array2;
     use root_system::RootSystem;
     use super::TypeE;
 
@@ -261,6 +262,63 @@ mod test {
         let g = TypeE::new(8).unwrap();
         assert_eq!(g.basis_lengths().len(), g.num_simple_roots());
         assert_eq!(g.basis_lengths(), &array![2, 2, 2, 2, 2, 2, 2, 2]);
+    }
+
+    #[test]
+    fn inner_product() {
+        let g = TypeE::new(6).unwrap();
+        let sij = Array2::from_shape_fn((g.rank(), g.rank()), |(i, j)| {
+            g.inner_product(&g.simple_roots()[i], &g.simple_roots()[j])
+        });
+        assert_eq!(
+            sij,
+            array![
+                [2, -1, 0, 0, 0, 0],
+                [-1, 2, -1, 0, 0, 0],
+                [0, -1, 2, -1, 0, -1],
+                [0, 0, -1, 2, -1, 0],
+                [0, 0, 0, -1, 2, 0],
+                [0, 0, -1, 0, 0, 2],
+            ]
+        );
+        assert_eq!(&sij.diag(), g.basis_lengths());
+
+        let g = TypeE::new(7).unwrap();
+        let sij = Array2::from_shape_fn((g.rank(), g.rank()), |(i, j)| {
+            g.inner_product(&g.simple_roots()[i], &g.simple_roots()[j])
+        });
+        assert_eq!(
+            sij,
+            array![
+                [2, -1, 0, 0, 0, 0, 0],
+                [-1, 2, -1, 0, 0, 0, 0],
+                [0, -1, 2, -1, 0, 0, -1],
+                [0, 0, -1, 2, -1, 0, 0],
+                [0, 0, 0, -1, 2, -1, 0],
+                [0, 0, 0, 0, -1, 2, 0],
+                [0, 0, -1, 0, 0, 0, 2],
+            ]
+        );
+        assert_eq!(&sij.diag(), g.basis_lengths());
+
+        let g = TypeE::new(8).unwrap();
+        let sij = Array2::from_shape_fn((g.rank(), g.rank()), |(i, j)| {
+            g.inner_product(&g.simple_roots()[i], &g.simple_roots()[j])
+        });
+        assert_eq!(
+            sij,
+            array![
+                [2, -1, 0, 0, 0, 0, 0, 0],
+                [-1, 2, -1, 0, 0, 0, 0, 0],
+                [0, -1, 2, -1, 0, 0, 0, -1],
+                [0, 0, -1, 2, -1, 0, 0, 0],
+                [0, 0, 0, -1, 2, -1, 0, 0],
+                [0, 0, 0, 0, -1, 2, -1, 0],
+                [0, 0, 0, 0, 0, -1, 2, 0],
+                [0, 0, -1, 0, 0, 0, 0, 2],
+            ]
+        );
+        assert_eq!(&sij.diag(), g.basis_lengths());
     }
 
     #[test]

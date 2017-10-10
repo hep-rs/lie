@@ -116,6 +116,7 @@ mod test {
     #[cfg(feature = "nightly")]
     use test::Bencher;
 
+    use ndarray::Array2;
     use super::TypeG;
     use root_system::RootSystem;
 
@@ -150,6 +151,23 @@ mod test {
         let g = TypeG::new(2).unwrap();
         assert_eq!(g.basis_lengths().len(), g.num_simple_roots());
         assert_eq!(g.basis_lengths(), &array![2, 6]);
+    }
+
+    #[test]
+    fn inner_product() {
+        let g = TypeG::new(2).unwrap();
+        let sij = Array2::from_shape_fn((g.rank(), g.rank()), |(i, j)| {
+            g.inner_product(&g.simple_roots()[i], &g.simple_roots()[j])
+        });
+
+        assert_eq!(
+            sij,
+            array![
+                [2, -3],
+                [-3, 6],
+            ]
+        );
+        assert_eq!(&sij.diag(), g.basis_lengths());
     }
 
     #[test]
