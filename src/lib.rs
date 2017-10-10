@@ -53,9 +53,9 @@
 //! Very closely related to Lie groups are [*Lie
 //! algebras*](https://en.wikipedia.org/wiki/Lie_algebra) which are denoted
 //! using lowercase Gothic characters \\(\mathfrak{g}\\).  Although
-//! mathematically very different objects, Lie groups and Lie algebras are very
-//! closely related and the distinction will occasionally be blurred (especially
-//! in the physics literature).
+//! mathematically very different objects, the distinction between Lie groups
+//! and Lie algebras is occasionally be blurred (especially in the physics
+//! literature).
 //!
 //! In particular, given that a Lie group \\(G\\) forms smooth manifold, one can
 //! consider the tangent space at the identity.  This tangent space forms
