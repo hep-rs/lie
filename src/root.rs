@@ -458,6 +458,41 @@ impl<'a> ops::Mul<&'a Root> for i64 {
     }
 }
 
+impl ops::AddAssign<Root> for Root {
+    fn add_assign(&mut self, other: Root) {
+        self.omega += &other.omega;
+        self.alpha += &other.alpha;
+    }
+}
+
+impl<'a> ops::AddAssign<&'a Root> for Root {
+    fn add_assign(&mut self, other: &Root) {
+        self.omega += &other.omega;
+        self.alpha += &other.alpha;
+    }
+}
+
+impl ops::SubAssign<Root> for Root {
+    fn sub_assign(&mut self, other: Root) {
+        self.omega -= &other.omega;
+        self.alpha -= &other.alpha;
+    }
+}
+
+impl<'a> ops::SubAssign<&'a Root> for Root {
+    fn sub_assign(&mut self, other: &Root) {
+        self.omega -= &other.omega;
+        self.alpha -= &other.alpha;
+    }
+}
+
+impl ops::MulAssign<i64> for Root {
+    fn mul_assign(&mut self, other: i64) {
+        self.omega *= other;
+        self.alpha *= other;
+    }
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Tests
 ////////////////////////////////////////////////////////////////////////////////
@@ -683,5 +718,40 @@ mod test {
         let a1 = Root::simple(vec![2, -1, 0], 0);
         let r = a1 * 2;
         assert_eq!(r.alpha().as_slice().unwrap(), &[2, 0, 0]);
+    }
+
+    #[test]
+    fn add_sub_assign() {
+        let mut a1 = Root::simple(vec![2, -1, 0], 0);
+        let a2 = Root::simple(vec![-1, 2, -1], 1);
+        let r = &a1 + &a2;
+        a1 += a2;
+        assert_eq!(r, a1);
+
+        let mut a1 = Root::simple(vec![2, -1, 0], 0);
+        let a2 = Root::simple(vec![-1, 2, -1], 1);
+        let r = &a1 + &a2;
+        a1 += &a2;
+        assert_eq!(r, a1);
+
+        let mut a1 = Root::simple(vec![2, -1, 0], 0);
+        let a2 = Root::simple(vec![-1, 2, -1], 1);
+        let r = &a1 - &a2;
+        a1 -= a2;
+        assert_eq!(r, a1);
+
+        let mut a1 = Root::simple(vec![2, -1, 0], 0);
+        let a2 = Root::simple(vec![-1, 2, -1], 1);
+        let r = &a1 - &a2;
+        a1 -= &a2;
+        assert_eq!(r, a1);
+    }
+
+    #[test]
+    fn scalar_mul_assign() {
+        let mut a1 = Root::simple(vec![2, -1, 0], 0);
+        let r = 2 * &a1;
+        a1 *= 2;
+        assert_eq!(r, a1);
     }
 }
