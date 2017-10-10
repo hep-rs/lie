@@ -339,7 +339,7 @@ pub trait RootSystem {
     /// The scalar product between roots is defined as
     ///
     /// \\begin{equation}
-    ///   \rangle{\beta, \alpha} \equiv 2 \frac{(\alpha, \beta)}{(\alpha, \alpha)}
+    ///   \langle \beta, \alpha \rangle \equiv 2 \frac{(\alpha, \beta)}{(\alpha, \alpha)}
     /// \\end{equation}
     ///
     /// where \\((\cdot, \cdot)\\) is the usual Euclidean inner product between
