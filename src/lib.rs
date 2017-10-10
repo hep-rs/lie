@@ -123,6 +123,7 @@
 
 #[macro_use]
 extern crate ndarray;
+extern crate num;
 extern crate rayon;
 
 #[cfg(feature = "nightly")]
@@ -135,4 +136,4 @@ pub mod series;
 
 pub use root::Root;
 pub use error::Error;
-pub use root_system::{CartanMatrix, RootSystem};
+pub use root_system::{CartanMatrix, RootSystem, BasisLengths};

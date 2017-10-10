@@ -15,6 +15,7 @@
 //! [`find_roots_from_positive`](fn.find_roots_from_positive.html) or
 //! [`find_roots_from_simple`](fn.find_roots_from_simple.html).
 use ndarray::{self, Axis};
+use num::rational::Ratio;
 use rayon::prelude::*;
 
 use root::Root;
@@ -39,6 +40,34 @@ use root::Root;
 /// multiple of the latter root, it follows that all entries inside the matrix
 /// are integers.
 pub type CartanMatrix = ndarray::Array2<i64>;
+
+
+/// Type definition for a basis lengths.
+///
+/// # Definition
+///
+/// The array is defined as
+///
+/// \\begin{equation}
+///   D_{i} = \langle \alpha_{i}, \alpha_{i} \rangle
+/// \\end{equation}
+///
+/// and must use the same labelling convention for \\(\alpha_{i}\\) as used in
+/// the Cartan matrix.  In combination with the Cartan matrix, this allows for
+/// the inner product of any two simple roots to be evaluated,
+///
+/// \\begin{equation}
+///   \langle \alpha_{i}, \alpha_{j} \rangle = \frac{1}{2} A_{ij} D_{i},
+/// \\end{equation}
+///
+/// which can then be further generalized for any two roots \\(\beta_{n} =
+/// \sum_{i} a_{ni} \alpha_{i}\\):
+///
+/// \\begin{equation}
+///   \langle \beta_{n}, \beta_{m} \rangle = \sum_{ij} a_{ni} b_{mj} \langle \alpha_{i}, \alpha_{j} \rangle.
+/// \\end{equation}
+
+pub type BasisLengths = ndarray::Array1<Ratio<i64>>;
 
 /// Trait for root systems.
 ///
@@ -123,6 +152,9 @@ pub trait RootSystem {
     ///   \begin{pmatrix} 2 & -1 \\\\ -1 & 2 \end{pmatrix}
     /// \\end{equation}
     fn cartan_matrix(&self) -> &CartanMatrix;
+
+    /// Return the squared norm of each simple roots.
+    fn basis_lengths(&self) -> &BasisLengths;
 
     /// Return the simple roots of the Lie group's root system.
     ///

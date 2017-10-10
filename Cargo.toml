@@ -16,7 +16,8 @@ license = "GPL-3.0"
 
 [dependencies]
 ndarray = "^0.10"
-rayon = "0.8.2"
+num = "^0.1.40"
+rayon = "^0.8.2"
 
 [features]
 
