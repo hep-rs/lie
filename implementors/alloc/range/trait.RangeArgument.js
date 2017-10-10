@@ -1,6 +1,7 @@
 (function() {var implementors = {};
 implementors["itertools"] = [];
 implementors["libc"] = [];
+implementors["num"] = [];
 implementors["rayon"] = [];
 
             if (window.register_implementors) {

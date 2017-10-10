@@ -48,9 +48,10 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/lie/root_system.rs.html#84-226' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/lie/root_system.rs.html#113-258' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait RootSystem {
     fn <a href='#tymethod.cartan_matrix' class='fnname'>cartan_matrix</a>(&amp;self) -&gt; &amp;<a class="type" href="../../lie/root_system/type.CartanMatrix.html" title="type lie::root_system::CartanMatrix">CartanMatrix</a>;
+<div class='item-spacer'></div>    fn <a href='#tymethod.basis_lengths' class='fnname'>basis_lengths</a>(&amp;self) -&gt; &amp;<a class="type" href="../../lie/root_system/type.BasisLengths.html" title="type lie::root_system::BasisLengths">BasisLengths</a>;
 <div class='item-spacer'></div>    fn <a href='#tymethod.simple_roots' class='fnname'>simple_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>;
 <div class='item-spacer'></div>    fn <a href='#tymethod.positive_roots' class='fnname'>positive_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>;
 <div class='item-spacer'></div>    fn <a href='#tymethod.roots' class='fnname'>roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>;
@@ -114,6 +115,7 @@ matrix</a>.</p>
 <p>\begin{equation}
   \begin{pmatrix} 2 &amp; -1 \\ -1 &amp; 2 \end{pmatrix}
 \end{equation}</p>
+</div><h3 id='tymethod.basis_lengths' class='method'><span id='basis_lengths.v' class='invisible'><code>fn <a href='#tymethod.basis_lengths' class='fnname'>basis_lengths</a>(&amp;self) -&gt; &amp;<a class="type" href="../../lie/root_system/type.BasisLengths.html" title="type lie::root_system::BasisLengths">BasisLengths</a></code></span></h3><div class='docblock'><p>Return the squared norm of each simple roots.</p>
 </div><h3 id='tymethod.simple_roots' class='method'><span id='simple_roots.v' class='invisible'><code>fn <a href='#tymethod.simple_roots' class='fnname'>simple_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span></h3><div class='docblock'><p>Return the simple roots of the Lie group&#39;s root system.</p>
 
 <p>The roots are returned sorted as per the root&#39;s ordering scheme.</p>
