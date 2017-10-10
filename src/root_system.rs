@@ -190,7 +190,7 @@ pub trait RootSystem {
 
     /// Return the simple roots of the Lie group's root system.
     ///
-    /// The roots are returned sorted as per the root's ordering scheme.
+    /// The roots are sorted such that they correspond with the Cartan matrix.
     ///
     /// This can be algorithmically created using the `find_simple_roots`
     /// function.
@@ -224,7 +224,8 @@ pub trait RootSystem {
 
     /// Return the positive roots of the Lie group's root system.
     ///
-    /// The roots are returned sorted as per the root's ordering scheme.
+    /// The roots should be ordered by level, but no particular ordering should
+    /// be assumed within each level.
     ///
     /// This can be algorithmically created using the `find_positive_roots`
     /// function.
@@ -257,7 +258,8 @@ pub trait RootSystem {
 
     /// Return the roots in the Lie group's root system.
     ///
-    /// The roots are returned sorted as per the root's ordering scheme.
+    /// The roots should be ordered by level, but no particular ordering should
+    /// be assumed within each level.
     ///
     /// This can be algorithmically created using the `find_roots_from_simple`
     /// or `find_roots_from_positive` functions.
@@ -289,7 +291,8 @@ pub trait RootSystem {
     }
 }
 
-/// Find all the simple roots from the Cartan matrix.
+/// Find all the simple roots from the Cartan matrix, returning them in the same
+/// order as defined in the Cartan matrix.
 ///
 /// # Example
 ///
@@ -312,20 +315,16 @@ pub fn find_simple_roots(cm: &CartanMatrix) -> Vec<Root> {
         _ => (),
     }
 
-    let mut roots: Vec<_> = cm.axis_iter(Axis(0))
+    cm.axis_iter(Axis(0))
         .enumerate()
         .map(|(i, w)| Root::simple(w.to_owned(), i))
-        .rev()
-        .collect();
-    roots.sort_unstable();
-    roots
+        .collect()
 }
 
 /// Find all the roots given a set of simple roots.
 ///
 /// This algorithmically finds and creates all of the roots in a root system
-/// given a set of simple roots, returning a sorted vector.  This function
-/// assumes the initial lost of simple roots to already be sorted.
+/// given a set of simple roots.  The resulting list is sorted by level.
 ///
 /// This algorithm can be quite time consuming, especially for very large root
 /// systems (more than 20 simple roots), but will automatically multithread in
@@ -357,8 +356,8 @@ pub fn find_roots_from_simple(simple_roots: &[Root]) -> Vec<Root> {
 /// Find all the roots given a set of positive roots.
 ///
 /// This algorithmically finds and creates all of the roots in a root system
-/// given a set of positive roots, returning a sorted vector.  This function
-/// assumes the initial lost of positive roots to already be sorted.
+/// given a set of positive roots.  The resulting list will be sorted by level
+/// provided that the positive roots passed in were initially sorted by level.
 ///
 /// # Example
 ///
@@ -399,8 +398,7 @@ pub fn find_roots_from_positive(positive_roots: &[Root]) -> Vec<Root> {
 /// Find all the positive roots given a set of simple roots.
 ///
 /// This algorithmically finds and creates all of the roots in a root system
-/// given a set of simple roots, returning a sorted vector.  This function
-/// assumes the initial lost of simple roots to already be sorted.
+/// given a set of simple roots.  The resulting list will be sorted by level.
 ///
 /// This algorithm can be quite time consuming, especially for very large root
 /// systems (more than 20 simple roots), but will automatically multithread in
@@ -458,6 +456,7 @@ pub fn find_positive_roots(simple_roots: &[Root]) -> Vec<Root> {
 fn find_positive_roots_multithread(simple_roots: &[Root]) -> Vec<Root> {
     // We can immediately add all the simple roots to the positive roots.
     let mut roots = simple_roots.to_vec();
+    roots.sort_unstable();
     // We want to know the index of each simple root.  We *assume* that we have
     // simple roots and don't verify this.
     let simple_roots: Vec<_> = simple_roots
@@ -510,6 +509,7 @@ fn find_positive_roots_multithread(simple_roots: &[Root]) -> Vec<Root> {
 fn find_positive_roots_single_thread(simple_roots: &[Root]) -> Vec<Root> {
     // We can immediately add all the simple roots to the positive roots.
     let mut roots = simple_roots.to_vec();
+    roots.sort_unstable();
     // We want to know the index of each simple root.  We *assume* that we have
     // simple roots and don't verify this.
     let simple_roots: Vec<_> = simple_roots
@@ -568,8 +568,8 @@ mod test {
         let cm = CartanMatrix::from(vec![[2, -1], [-3, 2]]);
         let simple_roots = super::find_simple_roots(&cm);
         assert_eq!(simple_roots.len(), 2);
-        assert_eq!(simple_roots[0], Root::simple(vec![-3, 2], 1));
-        assert_eq!(simple_roots[1], Root::simple(vec![2, -1], 0));
+        assert_eq!(simple_roots[0], Root::simple(vec![2, -1], 0));
+        assert_eq!(simple_roots[1], Root::simple(vec![-3, 2], 1));
     }
 
     #[test]
