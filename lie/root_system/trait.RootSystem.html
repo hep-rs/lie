@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/lie/root_system.rs.html#128-332' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/lie/root_system.rs.html#129-361' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait RootSystem {
     fn <a href='#tymethod.cartan_matrix' class='fnname'>cartan_matrix</a>(&amp;self) -&gt; &amp;<a class="type" href="../../lie/root_system/type.CartanMatrix.html" title="type lie::root_system::CartanMatrix">CartanMatrix</a>;
 <div class='item-spacer'></div>    fn <a href='#tymethod.basis_lengths' class='fnname'>basis_lengths</a>(&amp;self) -&gt; &amp;<a class="type" href="../../lie/root_system/type.BasisLengths.html" title="type lie::root_system::BasisLengths">BasisLengths</a>;
@@ -60,7 +60,8 @@
 <div class='item-spacer'></div>    fn <a href='#method.num_simple_roots' class='fnname'>num_simple_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> { ... }
 <div class='item-spacer'></div>    fn <a href='#method.num_positive_roots' class='fnname'>num_positive_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> { ... }
 <div class='item-spacer'></div>    fn <a href='#method.num_roots' class='fnname'>num_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> { ... }
-<div class='item-spacer'></div>    fn <a href='#method.inner_product' class='fnname'>inner_product</a>(&amp;self, a: &amp;<a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>, b: &amp;<a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a> { ... }
+<div class='item-spacer'></div>    fn <a href='#method.inner_product' class='fnname'>inner_product</a>&lt;'a, 'b&gt;(&amp;'a self, a: &amp;'b <a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>, b: &amp;'b <a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a> { ... }
+<div class='item-spacer'></div>    fn <a href='#method.scalar_product' class='fnname'>scalar_product</a>(&amp;self, b: &amp;<a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>, a: &amp;<a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a> { ... }
 }</pre><div class='docblock'><p>Trait for root systems.</p>
 
 <h2 id='definition' class='section-header'><a href='#definition'>Definition</a></h2>
@@ -240,10 +241,13 @@ corresponding vector.  If there exists a simple closed form for the
 number of simple roots, it should be implemented.</p>
 </div><h3 id='method.num_positive_roots' class='method'><span id='num_positive_roots.v' class='invisible'><code>fn <a href='#method.num_positive_roots' class='fnname'>num_positive_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h3><div class='docblock'><p>Return the number of positive roots in the Lie group&#39;s root system.</p>
 </div><h3 id='method.num_roots' class='method'><span id='num_roots.v' class='invisible'><code>fn <a href='#method.num_roots' class='fnname'>num_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h3><div class='docblock'><p>Return a number of roots in the Lie group&#39;s root system.</p>
-</div><h3 id='method.inner_product' class='method'><span id='inner_product.v' class='invisible'><code>fn <a href='#method.inner_product' class='fnname'>inner_product</a>(&amp;self, a: &amp;<a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>, b: &amp;<a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a></code></span></h3><div class='docblock'><p>Evaluate the inner product between two roots of the system.</p>
+</div><h3 id='method.inner_product' class='method'><span id='inner_product.v' class='invisible'><code>fn <a href='#method.inner_product' class='fnname'>inner_product</a>&lt;'a, 'b&gt;(&amp;'a self, a: &amp;'b <a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>, b: &amp;'b <a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a></code></span></h3><div class='docblock'><p>Evaluate the Euclidean inner product between two roots of the system.</p>
 
-<p>The roots are scaled such that the inner product is always an integer.
-See <a href="type.BasisLengths.html"><code>BasisLengths</code></a> for more information.</p>
+<p>The Euclidean product, denoted by \(( \cdot, \cdot)\), is the usual
+inner product from Euclidean space.</p>
+
+<p>The roots are scaled such that the product is always an integer.  See
+<a href="type.BasisLengths.html"><code>BasisLengths</code></a> for more information.</p>
 
 <h1 id='example-6' class='section-header'><a href='#example-6'>Example</a></h1>
 <p>The roots of \(B_{3}\) in Euclidean space are</p>
@@ -254,11 +258,25 @@ See <a href="type.BasisLengths.html"><code>BasisLengths</code></a> for more info
   \alpha_{3} &amp;= (0,  0,  1)
 \end{align}</p>
 
-<p>So for example \(\langle \alpha_{1}, \alpha_{2} \rangle = 2\), and
-\(\langle \alpha_{1}, \alpha_{2} \rangle = -1\).</p>
+<p>So for example \(( \alpha_{1}, \alpha_{2} ) = 2\), and
+\(( \alpha_{1}, \alpha_{2} ) = -1\).</p>
 
 <h1 id='panics' class='section-header'><a href='#panics'>Panics</a></h1>
 <p>Panics if the roots do not have the same rank as the root system.</p>
+</div><h3 id='method.scalar_product' class='method'><span id='scalar_product.v' class='invisible'><code>fn <a href='#method.scalar_product' class='fnname'>scalar_product</a>(&amp;self, b: &amp;<a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>, a: &amp;<a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a></code></span></h3><div class='docblock'><p>Evaluate the scalar product between two roots of the system.</p>
+
+<p>The scalar product between roots is defined as</p>
+
+<p>\begin{equation}
+  \rangle{\beta, \alpha} \equiv 2 \frac{(\alpha, \beta)}{(\alpha, \alpha)}
+\end{equation}</p>
+
+<p>where \((\cdot, \cdot)\) is the usual Euclidean inner product between
+the roots in Euclidean space.  This should always evaluate to an integer
+in a root system.</p>
+
+<p>Note that this scalar product is only linear in its first argument.  It
+is <em>not</em> an inner product.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>

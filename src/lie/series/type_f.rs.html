@@ -243,6 +243,15 @@
 <span id="198">198</span>
 <span id="199">199</span>
 <span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 
@@ -427,6 +436,15 @@
             ]
         );
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">sij</span>.<span class="ident">diag</span>(), <span class="ident">g</span>.<span class="ident">basis_lengths</span>());
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">scalar_product</span>() {
+        <span class="kw">let</span> <span class="ident">g</span> <span class="op">=</span> <span class="ident">TypeF</span>::<span class="ident">new</span>(<span class="number">4</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">aij</span> <span class="op">=</span> <span class="ident">Array2</span>::<span class="ident">from_shape_fn</span>((<span class="ident">g</span>.<span class="ident">rank</span>(), <span class="ident">g</span>.<span class="ident">rank</span>()), <span class="op">|</span>(<span class="ident">i</span>, <span class="ident">j</span>)<span class="op">|</span> {
+            <span class="ident">g</span>.<span class="ident">scalar_product</span>(<span class="kw-2">&amp;</span><span class="ident">g</span>.<span class="ident">simple_roots</span>()[<span class="ident">i</span>], <span class="kw-2">&amp;</span><span class="ident">g</span>.<span class="ident">simple_roots</span>()[<span class="ident">j</span>])
+        });
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">g</span>.<span class="ident">cartan_matrix</span>(), <span class="kw-2">&amp;</span><span class="ident">aij</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
