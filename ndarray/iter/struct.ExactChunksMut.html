@@ -28,8 +28,9 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Struct ExactChunksMut</p><div class="block items"><ul><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>ndarray</a>::<wbr><a href='index.html'>iter</a></p><script>window.sidebarCurrent = {name: 'ExactChunksMut', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct ExactChunksMut</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-NdProducer">NdProducer</a><a href="#impl-IntoIterator">IntoIterator</a></div></div><p class='location'><a href='../index.html'>ndarray</a>::<wbr><a href='index.html'>iter</a></p><script>window.sidebarCurrent = {name: 'ExactChunksMut', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
     <nav class="sub">
@@ -53,21 +54,25 @@
 
 <p>See <a href="../struct.ArrayBase.html#method.exact_chunks_mut"><code>.exact_chunks_mut()</code></a>
 for more information.</p>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a, A, D:&nbsp;<a class="trait" href="../../ndarray/trait.Dimension.html" title="trait ndarray::Dimension">Dimension</a>&gt; <a class="trait" href="../../ndarray/trait.NdProducer.html" title="trait ndarray::NdProducer">NdProducer</a> for <a class="struct" href="../../ndarray/iter/struct.ExactChunksMut.html" title="struct ndarray::iter::ExactChunksMut">ExactChunksMut</a>&lt;'a, A, D&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ndarray/iterators/macros.rs.html#40-99' title='goto source code'>[src]</a></span></h3>
+</div>
+            <h2 id='implementations' class='small-section-header'>
+              Trait Implementations<a href='#implementations' class='anchor'></a>
+            </h2>
+        <h3 id='impl-NdProducer' class='impl'><span class='in-band'><code>impl&lt;'a, A, D:&nbsp;<a class="trait" href="../../ndarray/trait.Dimension.html" title="trait ndarray::Dimension">Dimension</a>&gt; <a class="trait" href="../../ndarray/trait.NdProducer.html" title="trait ndarray::NdProducer">NdProducer</a> for <a class="struct" href="../../ndarray/iter/struct.ExactChunksMut.html" title="struct ndarray::iter::ExactChunksMut">ExactChunksMut</a>&lt;'a, A, D&gt;</code><a href='#impl-NdProducer' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ndarray/iterators/macros.rs.html#40-99' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='associatedtype.Item' class="type"><span id='Item.t' class='invisible'><code>type <a href='../../ndarray/trait.NdProducer.html#associatedtype.Item' class="type">Item</a> = <a class="type" href="../../ndarray/type.ArrayViewMut.html" title="type ndarray::ArrayViewMut">ArrayViewMut</a>&lt;'a, A, D&gt;</code></span></h4>
 <div class='docblock'><p>The element produced per iteration.</p>
 </div><h4 id='associatedtype.Dim' class="type"><span id='Dim.t' class='invisible'><code>type <a href='../../ndarray/trait.NdProducer.html#associatedtype.Dim' class="type">Dim</a> = D</code></span></h4>
 <div class='docblock'><p>Dimension type</p>
 </div><h4 id='associatedtype.Ptr' class="type"><span id='Ptr.t' class='invisible'><code>type <a href='../../ndarray/trait.NdProducer.html#associatedtype.Ptr' class="type">Ptr</a> = <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut A</a></code></span></h4>
 <h4 id='associatedtype.Stride' class="type"><span id='Stride.t' class='invisible'><code>type <a href='../../ndarray/trait.NdProducer.html#associatedtype.Stride' class="type">Stride</a> = <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.isize.html">isize</a></code></span></h4>
-<h4 id='tymethod.__private__' class="tymethod"><span id='__private__.v' class='invisible'><code>fn <a href='../../ndarray/trait.NdProducer.html#tymethod.__private__' class='fnname'>__private__</a>(&amp;self) -&gt; PrivateMarker</code></span></h4>
+<h4 id='tymethod.__private__' class="tymethod"><span id='__private__.v' class='invisible'><code>fn <a href='../../ndarray/trait.NdProducer.html#tymethod.__private__' class='fnname'>__private__</a>(&amp;self) -&gt; PrivateMarker</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ndarray/private.rs.html#15' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This trait is private to implement; this method exists to make it impossible to implement outside the crate. <a href="../../ndarray/trait.NdProducer.html#tymethod.__private__">Read more</a></p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a, A, D&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a> for <a class="struct" href="../../ndarray/iter/struct.ExactChunksMut.html" title="struct ndarray::iter::ExactChunksMut">ExactChunksMut</a>&lt;'a, A, D&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;D: <a class="trait" href="../../ndarray/trait.Dimension.html" title="trait ndarray::Dimension">Dimension</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;A: 'a,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ndarray/iterators/chunks.rs.html#144-157' title='goto source code'>[src]</a></span></h3>
+</div></div><h3 id='impl-IntoIterator' class='impl'><span class='in-band'><code>impl&lt;'a, A, D&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a> for <a class="struct" href="../../ndarray/iter/struct.ExactChunksMut.html" title="struct ndarray::iter::ExactChunksMut">ExactChunksMut</a>&lt;'a, A, D&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;D: <a class="trait" href="../../ndarray/trait.Dimension.html" title="trait ndarray::Dimension">Dimension</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;A: 'a,&nbsp;</span></code><a href='#impl-IntoIterator' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ndarray/iterators/chunks.rs.html#144-157' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='associatedtype.Item-1' class="type"><span id='Item.t-1' class='invisible'><code>type <a href='https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html#associatedtype.Item' class="type">Item</a> = &lt;Self::<a class="type" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html#associatedtype.IntoIter" title="type core::iter::traits::IntoIterator::IntoIter">IntoIter</a> as <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a>&gt;::<a class="type" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html#associatedtype.Item" title="type core::iter::iterator::Iterator::Item">Item</a></code></span></h4>
 <div class='docblock'><p>The type of the elements being iterated over.</p>
 </div><h4 id='associatedtype.IntoIter' class="type"><span id='IntoIter.t' class='invisible'><code>type <a href='https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html#associatedtype.IntoIter' class="type">IntoIter</a> = <a class="struct" href="../../ndarray/iter/struct.ExactChunksIterMut.html" title="struct ndarray::iter::ExactChunksIterMut">ExactChunksIterMut</a>&lt;'a, A, D&gt;</code></span></h4>
 <div class='docblock'><p>Which kind of iterator are we turning this into?</p>
-</div><h4 id='method.into_iter' class="method"><span id='into_iter.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html#tymethod.into_iter' class='fnname'>into_iter</a>(self) -&gt; Self::<a class="type" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html#associatedtype.IntoIter" title="type core::iter::traits::IntoIterator::IntoIter">IntoIter</a></code></span></h4>
+</div><h4 id='method.into_iter' class="method"><span id='into_iter.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html#tymethod.into_iter' class='fnname'>into_iter</a>(self) -&gt; Self::<a class="type" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html#associatedtype.IntoIter" title="type core::iter::traits::IntoIterator::IntoIter">IntoIter</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ndarray/iterators/chunks.rs.html#150-156' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Creates an iterator from a value. <a href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html#tymethod.into_iter">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
@@ -86,13 +91,15 @@ for more information.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

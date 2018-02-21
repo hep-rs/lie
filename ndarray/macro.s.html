@@ -28,6 +28,7 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         <p class='location'><a href='index.html'>ndarray</a></p><script>window.sidebarCurrent = {name: 's', ty: 'macro', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
@@ -48,42 +49,58 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/ndarray/si.rs.html#144-176' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/ndarray/slice.rs.html#535-611' title='goto source code'>[src]</a></span></h1>
 <pre class="rust macro">
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">s</span> {
-    (@<span class="ident">parse</span> [$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stack</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>] <span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">expr</span>;<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> { ... };
-    (@<span class="ident">parse</span> [$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stack</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>] <span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> { ... };
-    (@<span class="ident">parse</span> [$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stack</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>] <span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">expr</span>;<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">expr</span> ,) <span class="op">=&gt;</span> { ... };
-    (@<span class="ident">parse</span> [$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stack</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>] <span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">expr</span> ,) <span class="op">=&gt;</span> { ... };
-    (@<span class="ident">parse</span> [$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stack</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>] <span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">expr</span>;<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">expr</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) <span class="op">=&gt;</span> { ... };
-    (@<span class="ident">parse</span> [$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stack</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>] <span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">expr</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) <span class="op">=&gt;</span> { ... };
-    (@<span class="ident">step</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> { ... };
+    (@<span class="ident">parse</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dim</span>:<span class="ident">expr</span>, [$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stack</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>] <span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">expr</span>;<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> { ... };
+    (@<span class="ident">parse</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dim</span>:<span class="ident">expr</span>, [$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stack</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>] <span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> { ... };
+    (@<span class="ident">parse</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dim</span>:<span class="ident">expr</span>, [$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stack</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>] <span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">expr</span>;<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">expr</span> ,) <span class="op">=&gt;</span> { ... };
+    (@<span class="ident">parse</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dim</span>:<span class="ident">expr</span>, [$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stack</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>] <span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">expr</span> ,) <span class="op">=&gt;</span> { ... };
+    (@<span class="ident">parse</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dim</span>:<span class="ident">expr</span>, [$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stack</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>] <span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">expr</span>;<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">expr</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) <span class="op">=&gt;</span> { ... };
+    (@<span class="ident">parse</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dim</span>:<span class="ident">expr</span>, [$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">stack</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>] <span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">expr</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) <span class="op">=&gt;</span> { ... };
+    (@<span class="ident">convert</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> { ... };
+    (@<span class="ident">convert</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> { ... };
     ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) <span class="op">=&gt;</span> { ... };
 }</pre>
 <div class='docblock'><p>Slice argument constructor.</p>
 
-<p><code>s![]</code> takes a list of ranges, separated by comma, with optional strides
-that are separated from the range by a semicolon.
-It is converted into a slice argument with type <code>&amp;[Si; N]</code>.</p>
+<p><code>s![]</code> takes a list of ranges/slices/indices, separated by comma, with
+optional step sizes that are separated from the range by a semicolon. It is
+converted into a <a href="struct.SliceInfo.html"><code>&amp;SliceInfo</code></a> instance.</p>
 
-<p>Each range uses signed indices, where a negative value is counted from
-the end of the axis. Strides are also signed and may be negative, but
-must not be zero.</p>
+<p>Each range/slice/index uses signed indices, where a negative value is
+counted from the end of the axis. Step sizes are also signed and may be
+negative, but must not be zero.</p>
 
-<p>The syntax is <code>s![</code> <em>[ axis-slice [, axis-slice [ , ... ] ] ]</em> <code>]</code>.
-Where <em>axis-slice</em> is either <em>i</em> <code>..</code> <em>j</em> or <em>i</em> <code>..</code> <em>j</em> <code>;</code> <em>step</em>,
-and <em>i</em> is the start index, <em>j</em> end index and <em>step</em> the element step
-size (which defaults to 1). The number of <em>axis-slice</em> must match the
-number of axes in the array.</p>
+<p>The syntax is <code>s![</code> <em>[ axis-slice-or-index [, axis-slice-or-index [ , ... ]
+] ]</em> <code>]</code>, where <em>axis-slice-or-index</em> is any of the following:</p>
 
-<p>For example <code>s![0..4;2, 1..5]</code> is a slice of rows 0..4 with step size 2,
-and columns 1..5 with default step size 1. The slice would have
-shape <code>[2, 4]</code>.</p>
+<ul>
+<li><em>index</em>: an index to use for taking a subview with respect to that axis</li>
+<li><em>range</em>: a range with step size 1 to use for slicing that axis</li>
+<li><em>range</em> <code>;</code> <em>step</em>: a range with step size <em>step</em> to use for slicing that axis</li>
+<li><em>slice</em>: a <a href="struct.Slice.html"><code>Slice</code></a> instance to use for slicing that axis</li>
+<li><em>slice</em> <code>;</code> <em>step</em>: a range constructed from the start and end of a <a href="struct.Slice.html"><code>Slice</code></a>
+instance, with new step size <em>step</em>, to use for slicing that axis</li>
+</ul>
 
-<p>If an array has two axes, the slice argument is passed as
-type <code>&amp;[Si; 2]</code>.  The macro expansion of <code>s![a..b;c, d..e]</code>
-is equivalent to <code>&amp;[Si(a, Some(b), c), Si(d, Some(e), 1)]</code>.</p>
+<p>The number of <em>axis-slice-or-index</em> must match the number of axes in the
+array. <em>index</em>, <em>range</em>, <em>slice</em>, and <em>step</em> can be expressions. <em>index</em>
+must be of type <code>isize</code>, <code>usize</code>, or <code>i32</code>. <em>range</em> must be of type
+<code>Range&lt;I&gt;</code>, <code>RangeTo&lt;I&gt;</code>, <code>RangeFrom&lt;I&gt;</code>, or <code>RangeFull</code> where <code>I</code> is
+<code>isize</code>, <code>usize</code>, or <code>i32</code>. <em>step</em> must be a type that can be converted to
+<code>isize</code> with the <code>as</code> keyword.</p>
 
+<p>For example <code>s![0..4;2, 6, 1..5]</code> is a slice of the first axis for 0..4
+with step size 2, a subview of the second axis at index 6, and a slice of
+the third axis for 1..5 with default step size 1. The input array must have
+3 dimensions. The resulting slice would have shape <code>[2, 4]</code> for
+<a href="struct.ArrayBase.html#method.slice"><code>.slice()</code></a>, <a href="struct.ArrayBase.html#method.slice_mut"><code>.slice_mut()</code></a>, and <a href="struct.ArrayBase.html#method.slice_move"><code>.slice_move()</code></a>, and shape
+<code>[2, 1, 4]</code> for <a href="struct.ArrayBase.html#method.slice_inplace"><code>.slice_inplace()</code></a>.</p>
+
+<p>See also <a href="struct.ArrayBase.html#slicing"><em>Slicing</em></a>.</p>
+
+<h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">ndarray</span>;
@@ -114,13 +131,15 @@ is equivalent to <code>&amp;[Si(a, Some(b), c), Si(d, Some(e), 1)]</code>.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

@@ -1,5 +1,4 @@
 (function() {var implementors = {};
-implementors["rayon"] = [];
 implementors["scopeguard"] = [];
 
             if (window.register_implementors) {

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.10.10/src/dimension/dimension_trait.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.11.1/src/dimension/dimension_trait.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>dimension_trait.rs.html -- source</title>
@@ -28,6 +28,7 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
@@ -906,33 +907,6 @@
 <span id="861">861</span>
 <span id="862">862</span>
 <span id="863">863</span>
-<span id="864">864</span>
-<span id="865">865</span>
-<span id="866">866</span>
-<span id="867">867</span>
-<span id="868">868</span>
-<span id="869">869</span>
-<span id="870">870</span>
-<span id="871">871</span>
-<span id="872">872</span>
-<span id="873">873</span>
-<span id="874">874</span>
-<span id="875">875</span>
-<span id="876">876</span>
-<span id="877">877</span>
-<span id="878">878</span>
-<span id="879">879</span>
-<span id="880">880</span>
-<span id="881">881</span>
-<span id="882">882</span>
-<span id="883">883</span>
-<span id="884">884</span>
-<span id="885">885</span>
-<span id="886">886</span>
-<span id="887">887</span>
-<span id="888">888</span>
-<span id="889">889</span>
-<span id="890">890</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2014-2016 bluss and ndarray developers.</span>
 <span class="comment">//</span>
@@ -949,11 +923,10 @@
 
 <span class="kw">use</span> <span class="ident">itertools</span>::{<span class="ident">enumerate</span>, <span class="ident">zip</span>};
 
-<span class="kw">use</span> {<span class="ident">Ix</span>, <span class="ident">Ixs</span>, <span class="ident">Ix0</span>, <span class="ident">Ix1</span>, <span class="ident">Ix2</span>, <span class="ident">Ix3</span>, <span class="ident">Ix4</span>, <span class="ident">Ix5</span>, <span class="ident">Ix6</span>, <span class="ident">IxDyn</span>, <span class="ident">Dim</span>, <span class="ident">Si</span>, <span class="ident">IxDynImpl</span>};
+<span class="kw">use</span> {<span class="ident">Ix</span>, <span class="ident">Ixs</span>, <span class="ident">Ix0</span>, <span class="ident">Ix1</span>, <span class="ident">Ix2</span>, <span class="ident">Ix3</span>, <span class="ident">Ix4</span>, <span class="ident">Ix5</span>, <span class="ident">Ix6</span>, <span class="ident">IxDyn</span>, <span class="ident">Dim</span>, <span class="ident">SliceOrIndex</span>, <span class="ident">IxDynImpl</span>};
 <span class="kw">use</span> <span class="ident">IntoDimension</span>;
 <span class="kw">use</span> <span class="ident">RemoveAxis</span>;
 <span class="kw">use</span> {<span class="ident">ArrayView1</span>, <span class="ident">ArrayViewMut1</span>};
-<span class="kw">use</span> {<span class="ident">zipsl</span>, <span class="ident">zipsl_mut</span>, <span class="ident">ZipExt</span>};
 <span class="kw">use</span> <span class="ident">Axis</span>;
 <span class="kw">use</span> <span class="kw">super</span>::{
     <span class="ident">stride_offset</span>,
@@ -978,6 +951,10 @@
     <span class="ident">MulAssign</span> <span class="op">+</span> <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;x</span><span class="op">&gt;</span> <span class="ident">MulAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;x</span> <span class="self">Self</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">MulAssign</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>
 
 {
+    <span class="doccomment">/// For fixed-size dimension representations (e.g. `Ix2`), this should be</span>
+    <span class="doccomment">/// `Some(ndim)`, and for variable-size dimension representations (e.g.</span>
+    <span class="doccomment">/// `IxDyn`), this should be `None`.</span>
+    <span class="kw">const</span> <span class="ident">NDIM</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>;
     <span class="doccomment">/// `SliceArg` is the type which is used to specify slicing for this</span>
     <span class="doccomment">/// dimension.</span>
     <span class="doccomment">///</span>
@@ -985,14 +962,14 @@
     <span class="doccomment">/// size, which you pass by reference. For the dynamic dimension it is</span>
     <span class="doccomment">/// a slice.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// - For `Ix1`: `[Si; 1]`</span>
-    <span class="doccomment">/// - For `Ix2`: `[Si; 2]`</span>
+    <span class="doccomment">/// - For `Ix1`: `[SliceOrIndex; 1]`</span>
+    <span class="doccomment">/// - For `Ix2`: `[SliceOrIndex; 2]`</span>
     <span class="doccomment">/// - and so on..</span>
-    <span class="doccomment">/// - For `IxDyn`: `[Si]`</span>
+    <span class="doccomment">/// - For `IxDyn`: `[SliceOrIndex]`</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// The easiest way to create a `&amp;SliceArg` is using the macro</span>
-    <span class="doccomment">/// [`s![]`](macro.s!.html).</span>
-    <span class="kw">type</span> <span class="ident">SliceArg</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">Si</span>]<span class="op">&gt;</span>;
+    <span class="doccomment">/// The easiest way to create a `&amp;SliceInfo&lt;SliceArg, Do&gt;` is using the</span>
+    <span class="doccomment">/// [`s![]`](macro.s!.html) macro.</span>
+    <span class="kw">type</span> <span class="ident">SliceArg</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">SliceOrIndex</span>]<span class="op">&gt;</span>;
     <span class="doccomment">/// Pattern matching friendly form of the dimension value.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// - For `Ix1`: `usize`,</span>
@@ -1090,6 +1067,15 @@
     }
 
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="doccomment">/// Return an index of same type and with the specified dimensionality.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This method is useful for generalizing over fixed-size and</span>
+    <span class="doccomment">/// variable-size dimension representations.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// **Panics** if `Self` has a fixed size that is not `ndim`.</span>
+    <span class="kw">fn</span> <span class="ident">zero_index_with_ndim</span>(<span class="ident">ndim</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">first_index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">for</span> <span class="ident">ax</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">slice</span>().<span class="ident">iter</span>() {
@@ -1153,7 +1139,7 @@
     <span class="doccomment">/// Return stride offset for index.</span>
     <span class="kw">fn</span> <span class="ident">stride_offset</span>(<span class="ident">index</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">strides</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">isize</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="kw">for</span> (<span class="kw-2">&amp;</span><span class="ident">i</span>, <span class="kw-2">&amp;</span><span class="ident">s</span>) <span class="kw">in</span> <span class="ident">zipsl</span>(<span class="ident">index</span>.<span class="ident">slice</span>(), <span class="ident">strides</span>.<span class="ident">slice</span>()) {
+        <span class="kw">for</span> (<span class="kw-2">&amp;</span><span class="ident">i</span>, <span class="kw-2">&amp;</span><span class="ident">s</span>) <span class="kw">in</span> <span class="macro">izip</span><span class="macro">!</span>(<span class="ident">index</span>.<span class="ident">slice</span>(), <span class="ident">strides</span>.<span class="ident">slice</span>()) {
             <span class="ident">offset</span> <span class="op">+=</span> <span class="ident">stride_offset</span>(<span class="ident">i</span>, <span class="ident">s</span>);
         }
         <span class="ident">offset</span>
@@ -1174,70 +1160,6 @@
     <span class="kw">fn</span> <span class="ident">set_last_elem</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) {
         <span class="kw">let</span> <span class="ident">nd</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">ndim</span>();
         <span class="self">self</span>.<span class="ident">slice_mut</span>()[<span class="ident">nd</span> <span class="op">-</span> <span class="number">1</span>] <span class="op">=</span> <span class="ident">i</span>;
-    }
-
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="doccomment">/// Modify dimension, strides and return data pointer offset</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **Panics** if `slices` does not correspond to the number of axes,</span>
-    <span class="doccomment">/// if any stride is 0, or if any index is out of bounds.</span>
-    <span class="kw">fn</span> <span class="ident">do_slices</span>(<span class="ident">dim</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>, <span class="ident">strides</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>, <span class="ident">slices</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">SliceArg</span>) <span class="op">-&gt;</span> <span class="ident">isize</span> {
-        <span class="kw">let</span> <span class="ident">slices</span> <span class="op">=</span> <span class="ident">slices</span>.<span class="ident">as_ref</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="macro">ndassert</span><span class="macro">!</span>(<span class="ident">slices</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="ident">dim</span>.<span class="ident">slice</span>().<span class="ident">len</span>(),
-                  <span class="string">&quot;SliceArg {:?}&#39;s length does not match dimension {:?}&quot;</span>,
-                  <span class="ident">slices</span>, <span class="ident">dim</span>);
-        <span class="kw">for</span> (<span class="ident">dr</span>, <span class="ident">sr</span>, <span class="kw-2">&amp;</span><span class="ident">slc</span>) <span class="kw">in</span> <span class="ident">zipsl_mut</span>(<span class="ident">dim</span>.<span class="ident">slice_mut</span>(), <span class="ident">strides</span>.<span class="ident">slice_mut</span>()).<span class="ident">zip_cons</span>(<span class="ident">slices</span>)
-        {
-            <span class="kw">let</span> <span class="ident">m</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">dr</span>;
-            <span class="kw">let</span> <span class="ident">mi</span> <span class="op">=</span> <span class="ident">m</span> <span class="kw">as</span> <span class="ident">Ixs</span>;
-            <span class="kw">let</span> <span class="ident">Si</span>(<span class="ident">b1</span>, <span class="ident">opt_e1</span>, <span class="ident">s1</span>) <span class="op">=</span> <span class="ident">slc</span>;
-            <span class="kw">let</span> <span class="ident">e1</span> <span class="op">=</span> <span class="ident">opt_e1</span>.<span class="ident">unwrap_or</span>(<span class="ident">mi</span>);
-
-            <span class="kw">let</span> <span class="ident">b1</span> <span class="op">=</span> <span class="ident">abs_index</span>(<span class="ident">mi</span>, <span class="ident">b1</span>);
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">e1</span> <span class="op">=</span> <span class="ident">abs_index</span>(<span class="ident">mi</span>, <span class="ident">e1</span>);
-            <span class="kw">if</span> <span class="ident">e1</span> <span class="op">&lt;</span> <span class="ident">b1</span> { <span class="ident">e1</span> <span class="op">=</span> <span class="ident">b1</span>; }
-
-            <span class="macro">ndassert</span><span class="macro">!</span>(<span class="ident">b1</span> <span class="op">&lt;=</span> <span class="ident">m</span>,
-                      <span class="macro">concat</span><span class="macro">!</span>(<span class="string">&quot;Slice begin {} is past end of axis of length {}&quot;</span>,
-                              <span class="string">&quot; (for SliceArg {:?})&quot;</span>),
-                      <span class="ident">b1</span>, <span class="ident">m</span>, <span class="ident">slices</span>);
-            <span class="macro">ndassert</span><span class="macro">!</span>(<span class="ident">e1</span> <span class="op">&lt;=</span> <span class="ident">m</span>,
-                      <span class="macro">concat</span><span class="macro">!</span>(<span class="string">&quot;Slice end {} is past end of axis of length {}&quot;</span>,
-                              <span class="string">&quot; (for SliceArg {:?})&quot;</span>),
-                      <span class="ident">e1</span>, <span class="ident">m</span>, <span class="ident">slices</span>);
-
-            <span class="kw">let</span> <span class="ident">m</span> <span class="op">=</span> <span class="ident">e1</span> <span class="op">-</span> <span class="ident">b1</span>;
-            <span class="comment">// stride</span>
-            <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">sr</span>) <span class="kw">as</span> <span class="ident">Ixs</span>;
-
-            <span class="comment">// Data pointer offset</span>
-            <span class="ident">offset</span> <span class="op">+=</span> <span class="ident">stride_offset</span>(<span class="ident">b1</span>, <span class="kw-2">*</span><span class="ident">sr</span>);
-            <span class="comment">// Adjust for strides</span>
-            <span class="macro">ndassert</span><span class="macro">!</span>(<span class="ident">s1</span> <span class="op">!=</span> <span class="number">0</span>,
-                      <span class="macro">concat</span><span class="macro">!</span>(<span class="string">&quot;Slice stride must not be none&quot;</span>, 
-                              <span class="string">&quot;(for SliceArg {:?})&quot;</span>),
-                      <span class="ident">slices</span>);
-            <span class="comment">// How to implement negative strides:</span>
-            <span class="comment">//</span>
-            <span class="comment">// Increase start pointer by</span>
-            <span class="comment">// old stride * (old dim - 1)</span>
-            <span class="comment">// to put the pointer completely in the other end</span>
-            <span class="kw">if</span> <span class="ident">s1</span> <span class="op">&lt;</span> <span class="number">0</span> {
-                <span class="ident">offset</span> <span class="op">+=</span> <span class="ident">stride_offset</span>(<span class="ident">m</span> <span class="op">-</span> <span class="number">1</span>, <span class="kw-2">*</span><span class="ident">sr</span>);
-            }
-
-            <span class="kw">let</span> <span class="ident">s_prim</span> <span class="op">=</span> <span class="ident">s</span> <span class="op">*</span> <span class="ident">s1</span>;
-
-            <span class="kw">let</span> <span class="ident">d</span> <span class="op">=</span> <span class="ident">m</span> <span class="op">/</span> <span class="ident">s1</span>.<span class="ident">abs</span>() <span class="kw">as</span> <span class="ident">Ix</span>;
-            <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">m</span> <span class="op">%</span> <span class="ident">s1</span>.<span class="ident">abs</span>() <span class="kw">as</span> <span class="ident">Ix</span>;
-            <span class="kw">let</span> <span class="ident">m_prim</span> <span class="op">=</span> <span class="ident">d</span> <span class="op">+</span> <span class="kw">if</span> <span class="ident">r</span> <span class="op">&gt;</span> <span class="number">0</span> { <span class="number">1</span> } <span class="kw">else</span> { <span class="number">0</span> };
-
-            <span class="comment">// Update dimension and stride coordinate</span>
-            <span class="kw-2">*</span><span class="ident">dr</span> <span class="op">=</span> <span class="ident">m_prim</span>;
-            <span class="kw-2">*</span><span class="ident">sr</span> <span class="op">=</span> <span class="ident">s_prim</span> <span class="kw">as</span> <span class="ident">Ix</span>;
-        }
-        <span class="ident">offset</span>
     }
 
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
@@ -1336,18 +1258,6 @@
     <span class="macro">private_decl</span><span class="macro">!</span>{}
 }
 
-<span class="comment">// utility functions</span>
-
-<span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">fn</span> <span class="ident">abs_index</span>(<span class="ident">len</span>: <span class="ident">Ixs</span>, <span class="ident">index</span>: <span class="ident">Ixs</span>) <span class="op">-&gt;</span> <span class="ident">Ix</span> {
-    <span class="kw">if</span> <span class="ident">index</span> <span class="op">&lt;</span> <span class="number">0</span> {
-        (<span class="ident">len</span> <span class="op">+</span> <span class="ident">index</span>) <span class="kw">as</span> <span class="ident">Ix</span>
-    } <span class="kw">else</span> {
-        <span class="ident">index</span> <span class="kw">as</span> <span class="ident">Ix</span>
-    }
-}
-
-
 <span class="comment">// Dimension impls</span>
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_insert_axis_array</span>(
@@ -1363,7 +1273,8 @@
 );
 
 <span class="kw">impl</span> <span class="ident">Dimension</span> <span class="kw">for</span> <span class="ident">Dim</span><span class="op">&lt;</span>[<span class="ident">Ix</span>; <span class="number">0</span>]<span class="op">&gt;</span> {
-    <span class="kw">type</span> <span class="ident">SliceArg</span> <span class="op">=</span> [<span class="ident">Si</span>; <span class="number">0</span>];
+    <span class="kw">const</span> <span class="ident">NDIM</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="number">0</span>);
+    <span class="kw">type</span> <span class="ident">SliceArg</span> <span class="op">=</span> [<span class="ident">SliceOrIndex</span>; <span class="number">0</span>];
     <span class="kw">type</span> <span class="ident">Pattern</span> <span class="op">=</span> ();
     <span class="kw">type</span> <span class="ident">Smaller</span> <span class="op">=</span> <span class="self">Self</span>;
     <span class="kw">type</span> <span class="ident">Larger</span> <span class="op">=</span> <span class="ident">Ix1</span>;
@@ -1378,6 +1289,11 @@
     <span class="kw">fn</span> <span class="ident">_fastest_varying_stride_order</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> { <span class="ident">Ix0</span>() }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">into_pattern</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Pattern</span> { }
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">zero_index_with_ndim</span>(<span class="ident">ndim</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ndim</span>, <span class="number">0</span>);
+        <span class="self">Self</span>::<span class="ident">default</span>()
+    }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">next_for</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">_index</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="prelude-val">None</span>
@@ -1394,7 +1310,8 @@
 
 
 <span class="kw">impl</span> <span class="ident">Dimension</span> <span class="kw">for</span> <span class="ident">Dim</span><span class="op">&lt;</span>[<span class="ident">Ix</span>; <span class="number">1</span>]<span class="op">&gt;</span> {
-    <span class="kw">type</span> <span class="ident">SliceArg</span> <span class="op">=</span> [<span class="ident">Si</span>; <span class="number">1</span>];
+    <span class="kw">const</span> <span class="ident">NDIM</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="number">1</span>);
+    <span class="kw">type</span> <span class="ident">SliceArg</span> <span class="op">=</span> [<span class="ident">SliceOrIndex</span>; <span class="number">1</span>];
     <span class="kw">type</span> <span class="ident">Pattern</span> <span class="op">=</span> <span class="ident">Ix</span>;
     <span class="kw">type</span> <span class="ident">Smaller</span> <span class="op">=</span> <span class="ident">Ix0</span>;
     <span class="kw">type</span> <span class="ident">Larger</span> <span class="op">=</span> <span class="ident">Ix2</span>;
@@ -1407,6 +1324,11 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">into_pattern</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Pattern</span> {
         <span class="macro">get</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="number">0</span>)
+    }
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">zero_index_with_ndim</span>(<span class="ident">ndim</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ndim</span>, <span class="number">1</span>);
+        <span class="self">Self</span>::<span class="ident">default</span>()
     }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">next_for</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">index</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
@@ -1482,7 +1404,8 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Dimension</span> <span class="kw">for</span> <span class="ident">Dim</span><span class="op">&lt;</span>[<span class="ident">Ix</span>; <span class="number">2</span>]<span class="op">&gt;</span> {
-    <span class="kw">type</span> <span class="ident">SliceArg</span> <span class="op">=</span> [<span class="ident">Si</span>; <span class="number">2</span>];
+    <span class="kw">const</span> <span class="ident">NDIM</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="number">2</span>);
+    <span class="kw">type</span> <span class="ident">SliceArg</span> <span class="op">=</span> [<span class="ident">SliceOrIndex</span>; <span class="number">2</span>];
     <span class="kw">type</span> <span class="ident">Pattern</span> <span class="op">=</span> (<span class="ident">Ix</span>, <span class="ident">Ix</span>);
     <span class="kw">type</span> <span class="ident">Smaller</span> <span class="op">=</span> <span class="ident">Ix1</span>;
     <span class="kw">type</span> <span class="ident">Larger</span> <span class="op">=</span> <span class="ident">Ix3</span>;
@@ -1496,6 +1419,11 @@
     <span class="kw">fn</span> <span class="ident">slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Ix</span>] { <span class="self">self</span>.<span class="ident">ix</span>() }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">slice_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">Ix</span>] { <span class="self">self</span>.<span class="ident">ixm</span>() }
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">zero_index_with_ndim</span>(<span class="ident">ndim</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ndim</span>, <span class="number">2</span>);
+        <span class="self">Self</span>::<span class="ident">default</span>()
+    }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">next_for</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">index</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="macro">get</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">index</span>, <span class="number">0</span>);
@@ -1612,7 +1540,8 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Dimension</span> <span class="kw">for</span> <span class="ident">Dim</span><span class="op">&lt;</span>[<span class="ident">Ix</span>; <span class="number">3</span>]<span class="op">&gt;</span> {
-    <span class="kw">type</span> <span class="ident">SliceArg</span> <span class="op">=</span> [<span class="ident">Si</span>; <span class="number">3</span>];
+    <span class="kw">const</span> <span class="ident">NDIM</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="number">3</span>);
+    <span class="kw">type</span> <span class="ident">SliceArg</span> <span class="op">=</span> [<span class="ident">SliceOrIndex</span>; <span class="number">3</span>];
     <span class="kw">type</span> <span class="ident">Pattern</span> <span class="op">=</span> (<span class="ident">Ix</span>, <span class="ident">Ix</span>, <span class="ident">Ix</span>);
     <span class="kw">type</span> <span class="ident">Smaller</span> <span class="op">=</span> <span class="ident">Ix2</span>;
     <span class="kw">type</span> <span class="ident">Larger</span> <span class="op">=</span> <span class="ident">Ix4</span>;
@@ -1633,6 +1562,12 @@
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="macro">get</span><span class="macro">!</span>(<span class="self">self</span>, <span class="number">1</span>);
         <span class="kw">let</span> <span class="ident">o</span> <span class="op">=</span> <span class="macro">get</span><span class="macro">!</span>(<span class="self">self</span>, <span class="number">2</span>);
         <span class="ident">m</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">*</span> <span class="ident">n</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">*</span> <span class="ident">o</span> <span class="kw">as</span> <span class="ident">usize</span>
+    }
+
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">zero_index_with_ndim</span>(<span class="ident">ndim</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ndim</span>, <span class="number">3</span>);
+        <span class="self">Self</span>::<span class="ident">default</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
@@ -1723,7 +1658,8 @@
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">large_dim</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">pattern</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">larger</span>:<span class="ident">ty</span>, { $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">insert_axis</span>:<span class="ident">tt</span>)<span class="op">*</span> }) <span class="op">=&gt;</span> (
         <span class="kw">impl</span> <span class="ident">Dimension</span> <span class="kw">for</span> <span class="ident">Dim</span><span class="op">&lt;</span>[<span class="ident">Ix</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>]<span class="op">&gt;</span> {
-            <span class="kw">type</span> <span class="ident">SliceArg</span> <span class="op">=</span> [<span class="ident">Si</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>];
+            <span class="kw">const</span> <span class="ident">NDIM</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>);
+            <span class="kw">type</span> <span class="ident">SliceArg</span> <span class="op">=</span> [<span class="ident">SliceOrIndex</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>];
             <span class="kw">type</span> <span class="ident">Pattern</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">pattern</span>;
             <span class="kw">type</span> <span class="ident">Smaller</span> <span class="op">=</span> <span class="ident">Dim</span><span class="op">&lt;</span>[<span class="ident">Ix</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span> <span class="op">-</span> <span class="number">1</span>]<span class="op">&gt;</span>;
             <span class="kw">type</span> <span class="ident">Larger</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">larger</span>;
@@ -1737,6 +1673,11 @@
             <span class="kw">fn</span> <span class="ident">slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Ix</span>] { <span class="self">self</span>.<span class="ident">ix</span>() }
             <span class="attribute">#[<span class="ident">inline</span>]</span>
             <span class="kw">fn</span> <span class="ident">slice_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">Ix</span>] { <span class="self">self</span>.<span class="ident">ixm</span>() }
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">zero_index_with_ndim</span>(<span class="ident">ndim</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ndim</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>);
+                <span class="self">Self</span>::<span class="ident">default</span>()
+            }
             <span class="attribute">#[<span class="ident">inline</span>]</span>
             $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">insert_axis</span>)<span class="op">*</span>
             <span class="attribute">#[<span class="ident">inline</span>]</span>
@@ -1769,7 +1710,8 @@
 <span class="doccomment">/// and memory wasteful, but it allows an arbitrary and dynamic number of axes.</span>
 <span class="kw">impl</span> <span class="ident">Dimension</span> <span class="kw">for</span> <span class="ident">IxDyn</span>
 {
-    <span class="kw">type</span> <span class="ident">SliceArg</span> <span class="op">=</span> [<span class="ident">Si</span>];
+    <span class="kw">const</span> <span class="ident">NDIM</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+    <span class="kw">type</span> <span class="ident">SliceArg</span> <span class="op">=</span> [<span class="ident">SliceOrIndex</span>];
     <span class="kw">type</span> <span class="ident">Pattern</span> <span class="op">=</span> <span class="self">Self</span>;
     <span class="kw">type</span> <span class="ident">Smaller</span> <span class="op">=</span> <span class="self">Self</span>;
     <span class="kw">type</span> <span class="ident">Larger</span> <span class="op">=</span> <span class="self">Self</span>;
@@ -1787,6 +1729,11 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">zero_index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">IxDyn</span>::<span class="ident">zeros</span>(<span class="self">self</span>.<span class="ident">ndim</span>())
+    }
+
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">zero_index_with_ndim</span>(<span class="ident">ndim</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">IxDyn</span>::<span class="ident">zeros</span>(<span class="ident">ndim</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
@@ -1842,13 +1789,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

@@ -28,6 +28,7 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         <p class='location'><a href='index.html'>ndarray</a></p><script>window.sidebarCurrent = {name: 'stack', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
@@ -48,7 +49,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/ndarray/stacking.rs.html#32-72' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/ndarray/stacking.rs.html#32-71' title='goto source code'>[src]</a></span></h1>
 <pre class='rust fn'>pub fn stack&lt;'a, A, D&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;axis: <a class="struct" href="../ndarray/struct.Axis.html" title="struct ndarray::Axis">Axis</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;arrays: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="type" href="../ndarray/type.ArrayView.html" title="type ndarray::ArrayView">ArrayView</a>&lt;'a, A, D&gt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="type" href="../ndarray/type.Array.html" title="type ndarray::Array">Array</a>&lt;A, D&gt;, <a class="struct" href="../ndarray/struct.ShapeError.html" title="struct ndarray::ShapeError">ShapeError</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;A: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;D: <a class="trait" href="../ndarray/trait.RemoveAxis.html" title="trait ndarray::RemoveAxis">RemoveAxis</a>,&nbsp;</span></pre><div class='docblock'><p>Stack arrays along the given axis.</p>
 
 <p><strong><em>Errors</em></strong> if the arrays have mismatching shapes, apart from along <code>axis</code>.
@@ -85,13 +86,15 @@ if the result is larger than is possible to represent.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

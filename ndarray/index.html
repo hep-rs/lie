@@ -28,8 +28,9 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Crate ndarray</p><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'ndarray', ty: 'mod', relpath: '../'};</script>
+        <p class='location'>Crate ndarray</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'ndarray', ty: 'mod', relpath: '../'};</script></div>
     </nav>
 
     <nav class="sub">
@@ -48,7 +49,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/ndarray/lib.rs.html#8-855' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/ndarray/lib.rs.html#8-885' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>The <code>ndarray</code> crate provides an <em>n</em>-dimensional container for general elements
 and for numerics.</p>
 
@@ -58,11 +59,11 @@ dimensions, then an element in the array is accessed by using that many indices.
 Each dimension is also called an <em>axis</em>.</p>
 
 <ul>
-<li><a href="struct.ArrayBase.html"><strong><code>ArrayBase</code></strong></a>:
+<li><strong><a href="struct.ArrayBase.html"><code>ArrayBase</code></a></strong>:
 The <em>n</em>-dimensional array type itself.<br>
 It is used to implement both the owned arrays and the views; see its docs
 for an overview of all array features.<br></li>
-<li>The main specific array type is <a href="type.Array.html"><strong><code>Array</code></strong></a>, which owns
+<li>The main specific array type is <strong><a href="type.Array.html"><code>Array</code></a></strong>, which owns
 its elements.</li>
 </ul>
 
@@ -75,6 +76,8 @@ elements from the end of the axis.</li>
 <li>Higher order operations and arithmetic are performant</li>
 <li>Array views can be used to slice and mutate any <code>[T]</code> data using
 <code>ArrayView::from</code> and <code>ArrayViewMut::from</code>.</li>
+<li><code>Zip</code> for lock step function application across two or more arrays or other
+item producers (<code>NdProducer</code> trait).</li>
 </ul>
 
 <h2 id='crate-status' class='section-header'><a href='#crate-status'>Crate Status</a></h2>
@@ -101,7 +104,7 @@ needs matching memory layout to be efficient (with some exceptions).</li>
 matrices; can optionally use BLAS to improve it further.</li>
 <li>See also the <a href="https://docs.rs/ndarray-parallel"><code>ndarray-parallel</code></a> crate for integration with rayon.</li>
 </ul></li>
-<li><strong>Requires Rust 1.18</strong></li>
+<li><strong>Requires Rust 1.22</strong></li>
 </ul>
 
 <h2 id='crate-feature-flags' class='section-header'><a href='#crate-feature-flags'>Crate Feature Flags</a></h2>
@@ -126,7 +129,7 @@ matrices; can optionally use BLAS to improve it further.</li>
 <ul>
 <li>Optional and experimental, compatible with Rust stable</li>
 <li>Enable transparent BLAS support for matrix multiplication.
-Uses <code>blas-sys</code> for pluggable backend, which needs to be configured
+Uses <code>blas-src</code> for pluggable backend, which needs to be configured
 separately.</li>
 </ul></li>
 </ul>
@@ -249,10 +252,17 @@ producers.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Si.html"
-                                  title='struct ndarray::Si'>Si</a></td>
+                           <td><a class="struct" href="struct.Slice.html"
+                                  title='struct ndarray::Slice'>Slice</a></td>
                            <td class='docblock-short'>
-                                <p>A slice, a description of a range of an array axis.</p>
+                                <p>A slice (range with step size).</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.SliceInfo.html"
+                                  title='struct ndarray::SliceInfo'>SliceInfo</a></td>
+                           <td class='docblock-short'>
+                                <p>Represents all of the necessary information to perform a slice.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -290,13 +300,12 @@ producers.</p>
                            <td class='docblock-short'>
                                 <p>Value controlling the execution of <code>.fold_while</code> on <code>Zip</code>.</p>
                            </td>
-                       </tr></table><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
-<table>
+                       </tr>
                        <tr class=' module-item'>
-                           <td><a class="constant" href="constant.S.html"
-                                  title='constant ndarray::S'>S</a></td>
+                           <td><a class="enum" href="enum.SliceOrIndex.html"
+                                  title='enum ndarray::SliceOrIndex'>SliceOrIndex</a></td>
                            <td class='docblock-short'>
-                                <p>Slice value for the full range of an axis.</p>
+                                <p>A slice (range with step) or an index.</p>
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
@@ -354,6 +363,13 @@ producers.</p>
                                   title='trait ndarray::FixedInitializer'>FixedInitializer</a></td>
                            <td class='docblock-short'>
                                 <p>Fixed-size array used for array initialization</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.IndexLonger.html"
+                                  title='trait ndarray::IndexLonger'>IndexLonger</a></td>
+                           <td class='docblock-short'>
+                                <p>Extra indexing methods for array views</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -540,6 +556,13 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::aview_mut1'>aview_mut1</a></td>
                            <td class='docblock-short'>
                                 <p>Create a one-dimensional read-write array view with elements borrowing <code>xs</code>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.aview_mut2.html"
+                                  title='fn ndarray::aview_mut2'>aview_mut2</a></td>
+                           <td class='docblock-short'>
+                                <p>Create a two-dimensional read-write array view with elements borrowing <code>xs</code>.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -883,13 +906,15 @@ like).</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

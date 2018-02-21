@@ -28,8 +28,9 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module structs</p><div class="block items"><ul><li><a href="#structs">Structs</a></li></ul></div><p class='location'><a href='../index.html'>itertools</a></p><script>window.sidebarCurrent = {name: 'structs', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module structs</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li></ul></div><p class='location'><a href='../index.html'>itertools</a></p><script>window.sidebarCurrent = {name: 'structs', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
     <nav class="sub">
@@ -48,7 +49,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/itertools/lib.rs.html#32-73' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/itertools/lib.rs.html#50-102' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>The concrete iterator types.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
@@ -61,31 +62,10 @@ and may pick off as many elements as it likes, to produce the next iterator elem
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Chunk.html"
-                                  title='struct itertools::structs::Chunk'>Chunk</a></td>
-                           <td class='docblock-short'>
-                                <p>An iterator for the elements in a single chunk.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Chunks.html"
-                                  title='struct itertools::structs::Chunks'>Chunks</a></td>
-                           <td class='docblock-short'>
-                                <p>An iterator that yields the Chunk iterators.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
                            <td><a class="struct" href="struct.Coalesce.html"
                                   title='struct itertools::structs::Coalesce'>Coalesce</a></td>
                            <td class='docblock-short'>
                                 <p>An iterator adaptor that may join together adjacent elements.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Combinations.html"
-                                  title='struct itertools::structs::Combinations'>Combinations</a></td>
-                           <td class='docblock-short'>
-                                <p>An iterator to iterate through all the <code>n</code>-length combinations in an iterator.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -125,27 +105,6 @@ and may pick off as many elements as it likes, to produce the next iterator elem
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Group.html"
-                                  title='struct itertools::structs::Group'>Group</a></td>
-                           <td class='docblock-short'>
-                                <p>An iterator for the elements in a single group.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.GroupBy.html"
-                                  title='struct itertools::structs::GroupBy'>GroupBy</a></td>
-                           <td class='docblock-short'>
-                                <p><code>GroupBy</code> is the storage for the lazy grouping operation.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Groups.html"
-                                  title='struct itertools::structs::Groups'>Groups</a></td>
-                           <td class='docblock-short'>
-                                <p>An iterator that yields the Group iterators.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
                            <td><a class="struct" href="struct.Interleave.html"
                                   title='struct itertools::structs::Interleave'>Interleave</a></td>
                            <td class='docblock-short'>
@@ -170,33 +129,10 @@ between each element of the adapted iterator.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="struct" href="struct.IntoChunks.html"
-                                  title='struct itertools::structs::IntoChunks'>IntoChunks</a></td>
-                           <td class='docblock-short'>
-                                <p><code>ChunkLazy</code> is the storage for a lazy chunking operation.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
                            <td><a class="struct" href="struct.Iterate.html"
                                   title='struct itertools::structs::Iterate'>Iterate</a></td>
                            <td class='docblock-short'>
                                 <p>An iterator that infinitely applies function to value and yields results.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.KMerge.html"
-                                  title='struct itertools::structs::KMerge'>KMerge</a></td>
-                           <td class='docblock-short'>
-                                <p>An iterator adaptor that merges an abitrary number of base iterators in ascending order.
-If all base iterators are sorted (ascending), the result is sorted.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.KMergeBy.html"
-                                  title='struct itertools::structs::KMergeBy'>KMergeBy</a></td>
-                           <td class='docblock-short'>
-                                <p>An iterator adaptor that merges an abitrary number of base iterators
-according to an ordering function.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -223,10 +159,10 @@ If both base iterators are sorted (ascending), the result is sorted.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="struct" href="struct.MultiPeek.html"
-                                  title='struct itertools::structs::MultiPeek'>MultiPeek</a></td>
+                           <td><a class="struct" href="struct.MergeJoinBy.html"
+                                  title='struct itertools::structs::MergeJoinBy'>MergeJoinBy</a></td>
                            <td class='docblock-short'>
-                                <p>See <a href="../fn.multipeek.html"><code>multipeek()</code></a> for more information.</p>
+                                <p>An iterator adaptor that merge-joins items from the two base iterators in ascending order.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -276,21 +212,6 @@ item to the front of the iterator.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="struct" href="struct.PutBackN.html"
-                                  title='struct itertools::structs::PutBackN'>PutBackN</a></td>
-                           <td class='docblock-short'>
-                                <p>An iterator adaptor that allows putting multiple
-items in front of the iterator.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.RcIter.html"
-                                  title='struct itertools::structs::RcIter'>RcIter</a></td>
-                           <td class='docblock-short'>
-                                <p>A wrapper for <code>Rc&lt;RefCell&lt;I&gt;&gt;</code>, that implements the <code>Iterator</code> trait.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
                            <td><a class="struct" href="struct.RepeatCall.html"
                                   title='struct itertools::structs::RepeatCall'>RepeatCall</a></td>
                            <td class='docblock-short'>
@@ -318,13 +239,6 @@ for each iteration.</p>
                            <td class='docblock-short'>
                                 <p>An iterator adaptor that borrows from a <code>Clone</code>-able iterator
 to only pick off elements while the predicate returns <code>true</code>.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Tee.html"
-                                  title='struct itertools::structs::Tee'>Tee</a></td>
-                           <td class='docblock-short'>
-                                <p>One half of an iterator pair where both return the same elements.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -364,17 +278,10 @@ of a specific size.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Unique.html"
-                                  title='struct itertools::structs::Unique'>Unique</a></td>
+                           <td><a class="struct" href="struct.Update.html"
+                                  title='struct itertools::structs::Update'>Update</a></td>
                            <td class='docblock-short'>
-                                <p>An iterator adapter to filter out duplicate elements.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.UniqueBy.html"
-                                  title='struct itertools::structs::UniqueBy'>UniqueBy</a></td>
-                           <td class='docblock-short'>
-                                <p>An iterator adapter to filter out duplicate elements.</p>
+                                <p>An iterator adapter to apply a mutating function to each element before yielding it.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -429,13 +336,15 @@ and produces <code>A</code>. Stops on the first <code>None</code> encountered.</
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

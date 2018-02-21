@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.10.10/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.11.1/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -28,6 +28,7 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
@@ -898,6 +899,36 @@
 <span id="853">853</span>
 <span id="854">854</span>
 <span id="855">855</span>
+<span id="856">856</span>
+<span id="857">857</span>
+<span id="858">858</span>
+<span id="859">859</span>
+<span id="860">860</span>
+<span id="861">861</span>
+<span id="862">862</span>
+<span id="863">863</span>
+<span id="864">864</span>
+<span id="865">865</span>
+<span id="866">866</span>
+<span id="867">867</span>
+<span id="868">868</span>
+<span id="869">869</span>
+<span id="870">870</span>
+<span id="871">871</span>
+<span id="872">872</span>
+<span id="873">873</span>
+<span id="874">874</span>
+<span id="875">875</span>
+<span id="876">876</span>
+<span id="877">877</span>
+<span id="878">878</span>
+<span id="879">879</span>
+<span id="880">880</span>
+<span id="881">881</span>
+<span id="882">882</span>
+<span id="883">883</span>
+<span id="884">884</span>
+<span id="885">885</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2014-2016 bluss and ndarray developers.</span>
 <span class="comment">//</span>
@@ -906,8 +937,8 @@
 <span class="comment">// &lt;LICENSE-MIT or http://opensource.org/licenses/MIT&gt;, at your</span>
 <span class="comment">// option. This file may not be copied, modified, or distributed</span>
 <span class="comment">// except according to those terms.</span>
-<span class="attribute">#<span class="op">!</span>[<span class="ident">crate_name</span><span class="op">=</span><span class="string">&quot;ndarray&quot;</span>]</span>
-<span class="attribute">#<span class="op">!</span>[<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/ndarray/0.10/&quot;</span>)]</span>
+<span class="attribute">#![<span class="ident">crate_name</span><span class="op">=</span><span class="string">&quot;ndarray&quot;</span>]</span>
+<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/ndarray/0.11/&quot;</span>)]</span>
 
 <span class="doccomment">//! The `ndarray` crate provides an *n*-dimensional container for general elements</span>
 <span class="doccomment">//! and for numerics.</span>
@@ -917,11 +948,11 @@
 <span class="doccomment">//! dimensions, then an element in the array is accessed by using that many indices.</span>
 <span class="doccomment">//! Each dimension is also called an *axis*.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! - [**`ArrayBase`**](struct.ArrayBase.html):</span>
+<span class="doccomment">//! - **[`ArrayBase`](struct.ArrayBase.html)**:</span>
 <span class="doccomment">//!   The *n*-dimensional array type itself.&lt;br&gt;</span>
 <span class="doccomment">//!   It is used to implement both the owned arrays and the views; see its docs</span>
-<span class="doccomment">//!   for an overview of all array features.  </span>
-<span class="doccomment">//! - The main specific array type is [**`Array`**](type.Array.html), which owns</span>
+<span class="doccomment">//!   for an overview of all array features.&lt;br&gt;</span>
+<span class="doccomment">//! - The main specific array type is **[`Array`](type.Array.html)**, which owns</span>
 <span class="doccomment">//! its elements.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Highlights</span>
@@ -933,6 +964,8 @@
 <span class="doccomment">//! - Higher order operations and arithmetic are performant</span>
 <span class="doccomment">//! - Array views can be used to slice and mutate any `[T]` data using</span>
 <span class="doccomment">//!   `ArrayView::from` and `ArrayViewMut::from`.</span>
+<span class="doccomment">//! - `Zip` for lock step function application across two or more arrays or other</span>
+<span class="doccomment">//!   item producers (`NdProducer` trait).</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Crate Status</span>
 <span class="doccomment">//!</span>
@@ -952,7 +985,7 @@
 <span class="doccomment">//!   + Efficient floating point matrix multiplication even for very large</span>
 <span class="doccomment">//!     matrices; can optionally use BLAS to improve it further.</span>
 <span class="doccomment">//!   + See also the [`ndarray-parallel`] crate for integration with rayon.</span>
-<span class="doccomment">//! - **Requires Rust 1.18**</span>
+<span class="doccomment">//! - **Requires Rust 1.22**</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [`ndarray-parallel`]: https://docs.rs/ndarray-parallel</span>
 <span class="doccomment">//!</span>
@@ -970,7 +1003,7 @@
 <span class="doccomment">//! - `blas`</span>
 <span class="doccomment">//!   - Optional and experimental, compatible with Rust stable</span>
 <span class="doccomment">//!   - Enable transparent BLAS support for matrix multiplication.</span>
-<span class="doccomment">//!     Uses ``blas-sys`` for pluggable backend, which needs to be configured</span>
+<span class="doccomment">//!     Uses ``blas-src`` for pluggable backend, which needs to be configured</span>
 <span class="doccomment">//!     separately.</span>
 <span class="doccomment">//!</span>
 
@@ -980,18 +1013,18 @@
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">rustc_serialize</span> <span class="kw">as</span> <span class="ident">serialize</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;blas&quot;</span>)]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">blas_sys</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">cblas_sys</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;blas&quot;</span>)]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">blas_src</span>;
 
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">matrixmultiply</span>;
 
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">itertools</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>(<span class="ident">izip</span>)]</span> <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">itertools</span>;
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">num_traits</span> <span class="kw">as</span> <span class="ident">libnum</span>;
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">num_complex</span>;
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">Zip</span> <span class="kw">as</span> <span class="ident">ZipIter</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">slice</span>::{<span class="ident">Iter</span> <span class="kw">as</span> <span class="ident">SliceIter</span>, <span class="ident">IterMut</span> <span class="kw">as</span> <span class="ident">SliceIterMut</span>};
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">dimension</span>::{
     <span class="ident">Dimension</span>,
@@ -1006,7 +1039,7 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">dimension</span>::<span class="ident">IxDynImpl</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">indexes</span>::{<span class="ident">indices</span>, <span class="ident">indices_of</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">error</span>::{<span class="ident">ShapeError</span>, <span class="ident">ErrorKind</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">si</span>::{<span class="ident">Si</span>, <span class="ident">S</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">slice</span>::{<span class="ident">Slice</span>, <span class="ident">SliceInfo</span>, <span class="ident">SliceNextDim</span>, <span class="ident">SliceOrIndex</span>};
 
 <span class="kw">use</span> <span class="ident">iterators</span>::<span class="ident">Baseiter</span>;
 <span class="kw">use</span> <span class="ident">iterators</span>::{<span class="ident">ElementsBase</span>, <span class="ident">ElementsBaseMut</span>, <span class="ident">Iter</span>, <span class="ident">IterMut</span>};
@@ -1016,6 +1049,7 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">stacking</span>::<span class="ident">stack</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">shape_builder</span>::{ <span class="ident">ShapeBuilder</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">impl_views</span>::<span class="ident">IndexLonger</span>;
 
 <span class="attribute">#[<span class="ident">macro_use</span>]</span> <span class="kw">mod</span> <span class="ident">macro_utils</span>;
 <span class="attribute">#[<span class="ident">macro_use</span>]</span> <span class="kw">mod</span> <span class="ident">private</span>;
@@ -1044,7 +1078,7 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">free_functions</span>::<span class="kw-2">*</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">iterators</span>::<span class="ident">iter</span>;
 
-<span class="kw">mod</span> <span class="ident">si</span>;
+<span class="kw">mod</span> <span class="ident">slice</span>;
 <span class="kw">mod</span> <span class="ident">layout</span>;
 <span class="kw">mod</span> <span class="ident">indexes</span>;
 <span class="kw">mod</span> <span class="ident">iterators</span>;
@@ -1322,20 +1356,31 @@
 <span class="doccomment">/// ## Slicing</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// You can use slicing to create a view of a subset of the data in</span>
-<span class="doccomment">/// the array. Slicing methods include `.slice()`, `.islice()`,</span>
-<span class="doccomment">/// `.slice_mut()`.</span>
+<span class="doccomment">/// the array. Slicing methods include [`.slice()`], [`.slice_mut()`],</span>
+<span class="doccomment">/// [`.slice_move()`], and [`.slice_inplace()`].</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The slicing argument can be passed using the macro [`s![]`](macro.s!.html),</span>
-<span class="doccomment">/// which will be used in all examples. (The explicit form is a reference</span>
-<span class="doccomment">/// to a fixed size array of [`Si`]; see its docs for more information.)</span>
-<span class="doccomment">/// [`Si`]: struct.Si.html</span>
+<span class="doccomment">/// which will be used in all examples. (The explicit form is an instance of</span>
+<span class="doccomment">/// [`&amp;SliceInfo`]; see its docs for more information.)</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`&amp;SliceInfo`]: struct.SliceInfo.html</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// If a range is used, the axis is preserved. If an index is used, a subview</span>
+<span class="doccomment">/// is taken with respect to the axis. See [*Subviews*](#subviews) for more</span>
+<span class="doccomment">/// information about subviews. Note that [`.slice_inplace()`] behaves like</span>
+<span class="doccomment">/// [`.subview_inplace()`] by preserving the number of dimensions.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`.slice()`]: #method.slice</span>
+<span class="doccomment">/// [`.slice_mut()`]: #method.slice_mut</span>
+<span class="doccomment">/// [`.slice_move()`]: #method.slice_move</span>
+<span class="doccomment">/// [`.slice_inplace()`]: #method.slice_inplace</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// // import the s![] macro</span>
 <span class="doccomment">/// #[macro_use(s)]</span>
 <span class="doccomment">/// extern crate ndarray;</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// use ndarray::arr3;</span>
+<span class="doccomment">/// use ndarray::{arr2, arr3};</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// fn main() {</span>
 <span class="doccomment">///</span>
@@ -1356,8 +1401,6 @@
 <span class="doccomment">/// // - Every element in each row: `..`</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let b = a.slice(s![.., 0..1, ..]);</span>
-<span class="doccomment">/// // without the macro, the explicit argument is `&amp;[S, Si(0, Some(1), 1), S]`</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// let c = arr3(&amp;[[[ 1,  2,  3]],</span>
 <span class="doccomment">///                [[ 7,  8,  9]]]);</span>
 <span class="doccomment">/// assert_eq!(b, c);</span>
@@ -1372,19 +1415,42 @@
 <span class="doccomment">/// let e = arr3(&amp;[[[ 6,  5,  4]],</span>
 <span class="doccomment">///                [[12, 11, 10]]]);</span>
 <span class="doccomment">/// assert_eq!(d, e);</span>
+<span class="doccomment">/// assert_eq!(d.shape(), &amp;[2, 1, 3]);</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// // Let’s create a slice while taking a subview with</span>
+<span class="doccomment">/// //</span>
+<span class="doccomment">/// // - Both submatrices of the greatest dimension: `..`</span>
+<span class="doccomment">/// // - The last row in each submatrix, removing that axis: `-1`</span>
+<span class="doccomment">/// // - Row elements in reverse order: `..;-1`</span>
+<span class="doccomment">/// let f = a.slice(s![.., -1, ..;-1]);</span>
+<span class="doccomment">/// let g = arr2(&amp;[[ 6,  5,  4],</span>
+<span class="doccomment">///                [12, 11, 10]]);</span>
+<span class="doccomment">/// assert_eq!(f, g);</span>
+<span class="doccomment">/// assert_eq!(f.shape(), &amp;[2, 3]);</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Subviews</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Subview methods allow you to restrict the array view while removing</span>
-<span class="doccomment">/// one axis from the array. Subview methods include `.subview()`,</span>
-<span class="doccomment">/// `.isubview()`, `.subview_mut()`.</span>
+<span class="doccomment">/// Subview methods allow you to restrict the array view while removing one</span>
+<span class="doccomment">/// axis from the array. Subview methods include [`.subview()`],</span>
+<span class="doccomment">/// [`.subview_mut()`], [`.into_subview()`], and [`.subview_inplace()`]. You</span>
+<span class="doccomment">/// can also take a subview by using a single index instead of a range when</span>
+<span class="doccomment">/// slicing.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Subview takes two arguments: `axis` and `index`.</span>
 <span class="doccomment">///</span>
+<span class="doccomment">/// [`.subview()`]: #method.subview</span>
+<span class="doccomment">/// [`.subview_mut()`]: #method.subview_mut</span>
+<span class="doccomment">/// [`.into_subview()`]: #method.into_subview</span>
+<span class="doccomment">/// [`.subview_inplace()`]: #method.subview_inplace</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// use ndarray::{arr3, aview2, Axis};</span>
+<span class="doccomment">/// #[macro_use(s)] extern crate ndarray;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// use ndarray::{arr3, aview1, aview2, Axis};</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # fn main() {</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // 2 submatrices of 2 rows with 3 elements per row, means a shape of `[2, 2, 3]`.</span>
 <span class="doccomment">///</span>
@@ -1414,10 +1480,15 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// assert_eq!(sub_col, aview2(&amp;[[ 1,  4],</span>
 <span class="doccomment">///                              [ 7, 10]]));</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// // You can take multiple subviews at once (and slice at the same time)</span>
+<span class="doccomment">/// let double_sub = a.slice(s![1, .., 0]);</span>
+<span class="doccomment">/// assert_eq!(double_sub, aview1(&amp;[7, 10]));</span>
+<span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// `.isubview()` modifies the view in the same way as `subview()`, but</span>
-<span class="doccomment">/// since it is *in place*, it cannot remove the collapsed axis. It becomes</span>
+<span class="doccomment">/// [`.subview_inplace()`] modifies the view in the same way as [`.subview()`],</span>
+<span class="doccomment">/// but since it is *in place*, it cannot remove the collapsed axis. It becomes</span>
 <span class="doccomment">/// an axis of length 1.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// `.outer_iter()` is an iterator of every subview along the zeroth (outer)</span>
@@ -1429,6 +1500,8 @@
 <span class="doccomment">/// Arrays support all arithmetic operations the same way: they apply elementwise.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Since the trait implementations are hard to overview, here is a summary.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ### Binary Operators with Two Arrays</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Let `A` be an array or view of any kind. Let `B` be an array</span>
 <span class="doccomment">/// with owned storage (either `Array` or `RcArray`).</span>
@@ -1443,6 +1516,8 @@
 <span class="doccomment">/// - `B @ &amp;A` which consumes `B`, updates it with the result, and returns it</span>
 <span class="doccomment">/// - `C @= &amp;A` which performs an arithmetic operation in place</span>
 <span class="doccomment">///</span>
+<span class="doccomment">/// ### Binary Operators with Array and Scalar</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// The trait [`ScalarOperand`](trait.ScalarOperand.html) marks types that can be used in arithmetic</span>
 <span class="doccomment">/// with arrays directly. For a scalar `K` the following combinations of operands</span>
 <span class="doccomment">/// are supported (scalar can be on either the left or right side, but</span>
@@ -1451,6 +1526,15 @@
 <span class="doccomment">/// - `&amp;A @ K` or `K @ &amp;A` which produces a new `Array`</span>
 <span class="doccomment">/// - `B @ K` or `K @ B` which consumes `B`, updates it with the result and returns it</span>
 <span class="doccomment">/// - `C @= K` which performs an arithmetic operation in place</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ### Unary Operators</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Let `A` be an array or view of any kind. Let `B` be an array with owned</span>
+<span class="doccomment">/// storage (either `Array` or `RcArray`). The following operands are supported</span>
+<span class="doccomment">/// for an arbitrary unary operator denoted by `@` (it can be `-` or `!`).</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// - `@&amp;A` which produces a new `Array`</span>
+<span class="doccomment">/// - `@B` which consumes `B`, updates it with the result, and returns it</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Broadcasting</span>
 <span class="doccomment">///</span>
@@ -1715,29 +1799,6 @@
 <span class="comment">// Array view methods</span>
 <span class="kw">mod</span> <span class="ident">impl_views</span>;
 
-<span class="kw">fn</span> <span class="ident">zipsl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="ident">A</span>, <span class="ident">B</span><span class="op">&gt;</span>(<span class="ident">t</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">A</span>], <span class="ident">u</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">B</span>])
-    <span class="op">-&gt;</span> <span class="ident">ZipIter</span><span class="op">&lt;</span><span class="ident">SliceIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span><span class="op">&gt;</span>, <span class="ident">SliceIter</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">B</span><span class="op">&gt;&gt;</span> {
-    <span class="ident">t</span>.<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">u</span>)
-}
-<span class="kw">fn</span> <span class="ident">zipsl_mut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="ident">A</span>, <span class="ident">B</span><span class="op">&gt;</span>(<span class="ident">t</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> [<span class="ident">A</span>], <span class="ident">u</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> [<span class="ident">B</span>])
-    <span class="op">-&gt;</span> <span class="ident">ZipIter</span><span class="op">&lt;</span><span class="ident">SliceIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span><span class="op">&gt;</span>, <span class="ident">SliceIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">B</span><span class="op">&gt;&gt;</span> {
-    <span class="ident">t</span>.<span class="ident">iter_mut</span>().<span class="ident">zip</span>(<span class="ident">u</span>)
-}
-
-<span class="kw">use</span> <span class="ident">itertools</span>::{<span class="ident">cons_tuples</span>, <span class="ident">ConsTuples</span>};
-
-<span class="kw">trait</span> <span class="ident">ZipExt</span> : <span class="ident">Iterator</span> {
-    <span class="kw">fn</span> <span class="ident">zip_cons</span><span class="op">&lt;</span><span class="ident">J</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">iter</span>: <span class="ident">J</span>) <span class="op">-&gt;</span> <span class="ident">ConsTuples</span><span class="op">&lt;</span><span class="ident">ZipIter</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">J</span>::<span class="ident">IntoIter</span><span class="op">&gt;</span>, (<span class="self">Self</span>::<span class="ident">Item</span>, <span class="ident">J</span>::<span class="ident">Item</span>)<span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="ident">J</span>: <span class="ident">IntoIterator</span>,
-              <span class="self">Self</span>: <span class="ident">Sized</span>,
-    {
-        <span class="ident">cons_tuples</span>(<span class="self">self</span>.<span class="ident">zip</span>(<span class="ident">iter</span>))
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span> <span class="ident">ZipExt</span> <span class="kw">for</span> <span class="ident">I</span> <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">Iterator</span> { }
-
-
 <span class="doccomment">/// A contiguous array shape of n dimensions.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Either c- or f- memory ordered (*c* a.k.a *row major* is the default).</span>
@@ -1772,13 +1833,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.10.10/src/free_functions.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.11.1/src/free_functions.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>free_functions.rs.html -- source</title>
@@ -28,6 +28,7 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
@@ -305,6 +306,40 @@
 <span id="260">260</span>
 <span id="261">261</span>
 <span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2014-2016 bluss and ndarray developers.</span>
 <span class="comment">//</span>
@@ -430,6 +465,40 @@
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">aview_mut1</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="ident">xs</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">A</span>]) <span class="op">-&gt;</span> <span class="ident">ArrayViewMut1</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
     <span class="ident">ArrayViewMut</span>::<span class="ident">from</span>(<span class="ident">xs</span>)
+}
+
+<span class="doccomment">/// Create a two-dimensional read-write array view with elements borrowing `xs`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Example</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// use ndarray::aview_mut2;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// fn main() {</span>
+<span class="doccomment">///     // The inner (nested) array must be of length 1 to 16, but the outer</span>
+<span class="doccomment">///     // can be of any length.</span>
+<span class="doccomment">///     let mut data = [[0.; 2]; 128];</span>
+<span class="doccomment">///     {</span>
+<span class="doccomment">///         // Make a 128 x 2 mut array view then turn it into 2 x 128</span>
+<span class="doccomment">///         let mut a = aview_mut2(&amp;mut data).reversed_axes();</span>
+<span class="doccomment">///         // Make the first row ones and second row minus ones.</span>
+<span class="doccomment">///         a.row_mut(0).fill(1.);</span>
+<span class="doccomment">///         a.row_mut(1).fill(-1.);</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">///     // look at the start of the result</span>
+<span class="doccomment">///     assert_eq!(&amp;data[..3], [[1., -1.], [1., -1.], [1., -1.]]);</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">aview_mut2</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">V</span>: <span class="ident">FixedInitializer</span><span class="op">&lt;</span><span class="ident">Elem</span><span class="op">=</span><span class="ident">A</span><span class="op">&gt;&gt;</span>(<span class="ident">xs</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">V</span>]) <span class="op">-&gt;</span> <span class="ident">ArrayViewMut2</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">cols</span> <span class="op">=</span> <span class="ident">V</span>::<span class="ident">len</span>();
+    <span class="kw">let</span> <span class="ident">rows</span> <span class="op">=</span> <span class="ident">xs</span>.<span class="ident">len</span>();
+    <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+        <span class="ident">slice</span>::<span class="ident">from_raw_parts_mut</span>(<span class="ident">xs</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">A</span>, <span class="ident">cols</span> <span class="op">*</span> <span class="ident">rows</span>)
+    };
+    <span class="kw">let</span> <span class="ident">dim</span> <span class="op">=</span> <span class="ident">Ix2</span>(<span class="ident">rows</span>, <span class="ident">cols</span>);
+    <span class="kw">unsafe</span> {
+        <span class="ident">ArrayViewMut</span>::<span class="ident">from_shape_ptr</span>(<span class="ident">dim</span>, <span class="ident">data</span>.<span class="ident">as_mut_ptr</span>())
+    }
 }
 
 <span class="doccomment">/// Fixed-size array used for array initialization</span>
@@ -586,13 +655,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
