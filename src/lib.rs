@@ -42,9 +42,9 @@
 //!
 //! \\begin{equation}
 //!   \mathrm{SU}(2) = \left\\{
-//!     \begin{pmatrix} \alpha & - \beta\^{*} \\\\ \beta & \alpha\^{*} \end{pmatrix}
+//!     \begin{pmatrix} \alpha & - \beta\^{\*} \\\\ \beta & \alpha\^{\*} \end{pmatrix}
 //!     \middle\|
-//!     \alpha, \beta \in \mathbb{C}, |\alpha|\^2 + |\beta|\^{2} = 1
+//!     \alpha, \beta \in \mathbb{C}, |\alpha|\^2 + |\beta|\^2 = 1
 //!   \right\\}
 //! \\end{equation}
 //!

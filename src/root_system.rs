@@ -51,8 +51,8 @@ pub type CartanMatrix = ndarray::Array2<i64>;
 /// As the elements of the Cartan matrix are all integers, the inverted Cartan
 /// matrix will consist of rational numbers with the largest denominator being
 /// at most the determinant of the Cartan matrix.  Consequently, the inverted
-/// matrix is stored as the tuple `(M: Array2<i64>, d: i64)` where `M` is the
-/// matrix \\(\det A A^{-1}\\) and `d` is  \\(\det(A)\\).
+/// matrix is stored as the tuple \\((M, d)\\) where \\(M = d A^{-1}\\) and \\(d
+/// = \det(A)\\).
 pub type InverseCartanMatrix = (ndarray::Array2<i64>, i64);
 
 /// Type definition for a basis lengths.
