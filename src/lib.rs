@@ -139,4 +139,4 @@ pub mod series;
 
 pub use root::Root;
 pub use error::Error;
-pub use root_system::{CartanMatrix, RootSystem, BasisLengths};
+pub use root_system::{BasisLengths, CartanMatrix, InverseCartanMatrix, RootSystem};

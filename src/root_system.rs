@@ -41,6 +41,20 @@ use root::Root;
 /// are integers.
 pub type CartanMatrix = ndarray::Array2<i64>;
 
+/// Type definition for an inverted Cartan matrix.
+///
+/// # Definition
+///
+/// The inverse Cartan matrix is the matrix \\(A^{-1}\\) defined such that \\(A
+/// A\^{-1} = A\^{-1} A = I\\).
+///
+/// As the elements of the Cartan matrix are all integers, the inverted Cartan
+/// matrix will consist of rational numbers with the largest denominator being
+/// at most the determinant of the Cartan matrix.  Consequently, the inverted
+/// matrix is stored as the tuple `(M: Array2<i64>, d: i64)` where `M` is the
+/// matrix \\(\det A A^{-1}\\) and `d` is  \\(\det(A)\\).
+pub type InverseCartanMatrix = (ndarray::Array2<i64>, i64);
+
 /// Type definition for a basis lengths.
 ///
 /// # Definition
@@ -83,7 +97,6 @@ pub type CartanMatrix = ndarray::Array2<i64>;
 /// but it isn't used here in order to avoid requiring the use of rational
 /// numbers.
 pub type BasisLengths = ndarray::Array1<i64>;
-
 
 /// Trait for root systems.
 ///
@@ -168,6 +181,17 @@ pub trait RootSystem {
     ///   \begin{pmatrix} 2 & -1 \\\\ -1 & 2 \end{pmatrix}
     /// \\end{equation}
     fn cartan_matrix(&self) -> &CartanMatrix;
+
+    /// Return the inverse Cartan matrix of the Lie group.
+    ///
+    /// See [`InverseCartanMatrix`] for details as to how the matrix is stored
+    /// within the library.
+    fn inverse_cartan_matrix(&self) -> &InverseCartanMatrix;
+
+    /// Return the determinant of the Cartan matrix of the Lie group.
+    fn determinant(&self) -> i64 {
+        self.inverse_cartan_matrix().1
+    }
 
     /// Return the squared norm of each simple roots.
     ///

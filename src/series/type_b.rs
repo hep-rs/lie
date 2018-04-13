@@ -1,8 +1,9 @@
 use std::fmt;
+use ndarray::Array2;
 
 use error::Error;
 use root::Root;
-use root_system::{self, CartanMatrix, RootSystem, BasisLengths};
+use root_system::{self, BasisLengths, CartanMatrix, InverseCartanMatrix, RootSystem};
 
 /// The \\(B_{n}\\) infinite series of Lie groups.
 ///
@@ -31,6 +32,7 @@ use root_system::{self, CartanMatrix, RootSystem, BasisLengths};
 pub struct TypeB {
     rank: usize,
     cartan_matrix: CartanMatrix,
+    inverse_cartan_matrix: InverseCartanMatrix,
     basis_lengths: BasisLengths,
     simple_roots: Vec<Root>,
     positive_roots: Vec<Root>,
@@ -66,6 +68,7 @@ impl TypeB {
             )),
             rank => {
                 let cartan_matrix = Self::cartan_matrix(rank);
+                let inverse_cartan_matrix = Self::inverse_cartan_matrix(rank);
                 let basis_lengths = Self::basis_lengths(rank);
                 let simple_roots = root_system::find_simple_roots(&cartan_matrix);
                 let positive_roots = root_system::find_positive_roots(&simple_roots);
@@ -73,6 +76,7 @@ impl TypeB {
                 Ok(TypeB {
                     rank,
                     cartan_matrix,
+                    inverse_cartan_matrix,
                     basis_lengths,
                     simple_roots,
                     positive_roots,
@@ -84,13 +88,29 @@ impl TypeB {
 
     /// Generate the Cartan matrix for the \\(B_{n}\\) group.
     fn cartan_matrix(rank: usize) -> CartanMatrix {
-        CartanMatrix::from_shape_fn((rank, rank), |indices| match indices {
+        let mut m = CartanMatrix::from_shape_fn((rank, rank), |indices| match indices {
             (i, j) if i == j => 2,
             (i, j) if i == j + 1 => -1,
-            (i, j) if i + 1 == j && j != rank - 1 => -1,
-            (i, j) if i + 1 == j && j == rank - 1 => -2,
+            (i, j) if i + 1 == j => -1,
             _ => 0,
-        })
+        });
+        m[[rank - 2, rank - 1]] = -2;
+        m
+    }
+
+    /// Generate the inverse Cartan matrix for the \\(B_{n}\\) group.
+    fn inverse_cartan_matrix(rank: usize) -> InverseCartanMatrix {
+        let m = Array2::from_shape_fn((rank, rank), |indices| {
+            let v = match indices {
+                // The last row increments by one
+                (i, j) if i == rank - 1 => j + 1,
+                (i, j) if i <= j => 2 * (i + 1),
+                (i, j) if i > j => 2 * (j + 1),
+                _ => unreachable!(),
+            };
+            v as i64
+        });
+        (m, 2)
     }
 
     /// Generate the basis lengths in \\(B_{n}\\).
@@ -109,6 +129,10 @@ impl RootSystem for TypeB {
 
     fn cartan_matrix(&self) -> &CartanMatrix {
         &self.cartan_matrix
+    }
+
+    fn inverse_cartan_matrix(&self) -> &InverseCartanMatrix {
+        &self.inverse_cartan_matrix
     }
 
     fn basis_lengths(&self) -> &BasisLengths {
@@ -144,12 +168,12 @@ impl fmt::Display for TypeB {
 
 #[cfg(test)]
 mod test {
-    #[cfg(feature = "nightly")]
-    use test::Bencher;
+    use super::*;
 
     use ndarray::Array2;
     use root_system::RootSystem;
-    use super::TypeB;
+    #[cfg(feature = "nightly")]
+    use test::Bencher;
 
     #[test]
     fn root_system() {
@@ -160,6 +184,12 @@ mod test {
             let g = TypeB::new(rank).unwrap();
             assert_eq!(g.rank(), rank);
             assert_eq!(g.cartan_matrix().dim(), (rank, rank));
+            assert_eq!(g.determinant(), 2);
+
+            let cm = g.cartan_matrix();
+            let &(ref icm, d) = g.inverse_cartan_matrix();
+            assert_eq!(cm.dot(icm), icm.dot(cm));
+            assert_eq!(cm.dot(icm) / d, Array2::eye(rank));
         }
 
         let g = TypeB::new(5).unwrap();

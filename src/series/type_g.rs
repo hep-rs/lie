@@ -2,7 +2,7 @@ use std::fmt;
 
 use error::Error;
 use root::Root;
-use root_system::{self, CartanMatrix, RootSystem, BasisLengths};
+use root_system::{self, BasisLengths, CartanMatrix, InverseCartanMatrix, RootSystem};
 
 /// The \\(G_{n}\\) exceptional Lie groups.
 ///
@@ -20,6 +20,7 @@ use root_system::{self, CartanMatrix, RootSystem, BasisLengths};
 pub struct TypeG {
     rank: usize,
     cartan_matrix: CartanMatrix,
+    inverse_cartan_matrix: InverseCartanMatrix,
     basis_lengths: BasisLengths,
     simple_roots: Vec<Root>,
     positive_roots: Vec<Root>,
@@ -53,6 +54,7 @@ impl TypeG {
             0 => Err(Error::new("Rank of a Lie group must be at least 1.")),
             rank if rank == 2 => {
                 let cartan_matrix = array![[2, -1], [-3, 2]];
+                let inverse_cartan_matrix = (array![[2, 1], [3, 2]], 1);
                 let basis_lengths = array![2, 6];
                 let simple_roots = root_system::find_simple_roots(&cartan_matrix);
                 let positive_roots = root_system::find_positive_roots(&simple_roots);
@@ -60,6 +62,7 @@ impl TypeG {
                 Ok(TypeG {
                     rank,
                     cartan_matrix,
+                    inverse_cartan_matrix,
                     basis_lengths,
                     simple_roots,
                     positive_roots,
@@ -78,6 +81,10 @@ impl RootSystem for TypeG {
 
     fn cartan_matrix(&self) -> &CartanMatrix {
         &self.cartan_matrix
+    }
+
+    fn inverse_cartan_matrix(&self) -> &InverseCartanMatrix {
+        &self.inverse_cartan_matrix
     }
 
     fn basis_lengths(&self) -> &BasisLengths {
@@ -113,12 +120,12 @@ impl fmt::Display for TypeG {
 
 #[cfg(test)]
 mod test {
-    #[cfg(feature = "nightly")]
-    use test::Bencher;
+    use super::*;
 
     use ndarray::Array2;
-    use super::TypeG;
     use root_system::RootSystem;
+    #[cfg(feature = "nightly")]
+    use test::Bencher;
 
     #[test]
     fn root_system() {
@@ -129,13 +136,14 @@ mod test {
         let g = TypeG::new(2).unwrap();
         assert_eq!(g.rank(), 2);
         assert_eq!(g.cartan_matrix().dim(), (2, 2));
-        assert_eq!(
-            g.cartan_matrix(),
-            &array![
-                [2, -1],
-                [-3, 2],
-            ]
-        );
+        assert_eq!(g.determinant(), 1);
+
+        let cm = g.cartan_matrix();
+        let &(ref icm, d) = g.inverse_cartan_matrix();
+        assert_eq!(cm.dot(icm), icm.dot(cm));
+        assert_eq!(cm.dot(icm) / d, Array2::eye(2));
+
+        assert_eq!(g.cartan_matrix(), &array![[2, -1], [-3, 2]]);
     }
 
     #[test]
@@ -160,13 +168,7 @@ mod test {
             g.inner_product(&g.simple_roots()[i], &g.simple_roots()[j])
         });
 
-        assert_eq!(
-            sij,
-            array![
-                [2, -3],
-                [-3, 6],
-            ]
-        );
+        assert_eq!(sij, array![[2, -3], [-3, 6]]);
         assert_eq!(&sij.diag(), g.basis_lengths());
     }
 

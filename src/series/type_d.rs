@@ -1,8 +1,9 @@
 use std::fmt;
+use ndarray::Array2;
 
 use error::Error;
 use root::Root;
-use root_system::{self, CartanMatrix, RootSystem, BasisLengths};
+use root_system::{self, BasisLengths, CartanMatrix, InverseCartanMatrix, RootSystem};
 
 /// The \\(D_{n}\\) infinite series of Lie groups.
 ///
@@ -36,6 +37,7 @@ use root_system::{self, CartanMatrix, RootSystem, BasisLengths};
 pub struct TypeD {
     rank: usize,
     cartan_matrix: CartanMatrix,
+    inverse_cartan_matrix: InverseCartanMatrix,
     basis_lengths: BasisLengths,
     simple_roots: Vec<Root>,
     positive_roots: Vec<Root>,
@@ -77,6 +79,7 @@ impl TypeD {
             )),
             rank => {
                 let cartan_matrix = Self::cartan_matrix(rank);
+                let inverse_cartan_matrix = Self::inverse_cartan_matrix(rank);
                 let basis_lengths = Self::basis_lengths(rank);
                 let simple_roots = root_system::find_simple_roots(&cartan_matrix);
                 let positive_roots = root_system::find_positive_roots(&simple_roots);
@@ -84,6 +87,7 @@ impl TypeD {
                 Ok(TypeD {
                     rank,
                     cartan_matrix,
+                    inverse_cartan_matrix,
                     basis_lengths,
                     simple_roots,
                     positive_roots,
@@ -95,14 +99,41 @@ impl TypeD {
 
     /// Generate the Cartan matrix for the \\(D_{n}\\) group.
     fn cartan_matrix(rank: usize) -> CartanMatrix {
-        CartanMatrix::from_shape_fn((rank, rank), |indices| match indices {
+        let mut m = CartanMatrix::from_shape_fn((rank, rank), |indices| match indices {
             (i, j) if i == j => 2,
-            (i, j) if i == j + 1 && i != rank - 1 => -1,
-            (i, j) if i + 1 == j && j != rank - 1 => -1,
-            (i, j) if i == j + 2 && i == rank - 1 => -1,
-            (i, j) if i + 2 == j && j == rank - 1 => -1,
+            (i, j) if i == j + 1 => -1,
+            (i, j) if i + 1 == j => -1,
             _ => 0,
-        })
+        });
+        m[[rank - 3, rank - 1]] = -1;
+        m[[rank - 1, rank - 3]] = -1;
+        m[[rank - 2, rank - 1]] = 0;
+        m[[rank - 1, rank - 2]] = 0;
+        m
+    }
+
+    /// Generate the inverse Cartan matrix for the \\(D_{n}\\) group.
+    fn inverse_cartan_matrix(rank: usize) -> InverseCartanMatrix {
+        let r = rank as i64;
+        let mut m = Array2::from_shape_fn((rank, rank), |indices| {
+            let v = match indices {
+                // The last two columns/rows increment in steps of 2
+                (i, j) if j >= rank - 2 => 2 * (i + 1),
+                (i, j) if i >= rank - 2 => 2 * (j + 1),
+                // The rest of the matrix increments in steps of 4
+                (i, j) if i <= j => 4 * (i + 1),
+                (i, j) if i > j => 4 * (j + 1),
+                _ => unreachable!(),
+            };
+            v as i64
+        });
+        // Except for the very bottom left 2x2 corner
+        m[[rank - 1, rank - 1]] = r;
+        m[[rank - 2, rank - 2]] = r;
+        m[[rank - 1, rank - 2]] = r - 2;
+        m[[rank - 2, rank - 1]] = r - 2;
+
+        (m, 4)
     }
 
     /// Generate the basis lengths in \\(D_{n}\\).
@@ -120,6 +151,10 @@ impl RootSystem for TypeD {
 
     fn cartan_matrix(&self) -> &CartanMatrix {
         &self.cartan_matrix
+    }
+
+    fn inverse_cartan_matrix(&self) -> &InverseCartanMatrix {
+        &self.inverse_cartan_matrix
     }
 
     fn basis_lengths(&self) -> &BasisLengths {
@@ -155,12 +190,12 @@ impl fmt::Display for TypeD {
 
 #[cfg(test)]
 mod test {
-    #[cfg(feature = "nightly")]
-    use test::Bencher;
+    use super::*;
 
     use ndarray::Array2;
     use root_system::RootSystem;
-    use super::TypeD;
+    #[cfg(feature = "nightly")]
+    use test::Bencher;
 
     #[test]
     fn root_system() {
@@ -173,6 +208,13 @@ mod test {
             let g = TypeD::new(rank).unwrap();
             assert_eq!(g.rank(), rank);
             assert_eq!(g.cartan_matrix().dim(), (rank, rank));
+            assert_eq!(g.determinant(), 4);
+
+            let cm = g.cartan_matrix();
+            let &(ref icm, d) = g.inverse_cartan_matrix();
+            println!("\n{}", icm);
+            assert_eq!(cm.dot(icm), icm.dot(cm));
+            assert_eq!(cm.dot(icm) / d, Array2::eye(rank));
         }
 
         let g = TypeD::new(5).unwrap();

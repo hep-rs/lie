@@ -2,7 +2,7 @@ use std::fmt;
 
 use error::Error;
 use root::Root;
-use root_system::{self, CartanMatrix, RootSystem, BasisLengths};
+use root_system::{self, BasisLengths, CartanMatrix, InverseCartanMatrix, RootSystem};
 
 /// The \\(E_{n}\\) exceptional Lie groups.
 ///
@@ -52,6 +52,7 @@ use root_system::{self, CartanMatrix, RootSystem, BasisLengths};
 pub struct TypeE {
     rank: usize,
     cartan_matrix: CartanMatrix,
+    inverse_cartan_matrix: InverseCartanMatrix,
     basis_lengths: BasisLengths,
     simple_roots: Vec<Root>,
     positive_roots: Vec<Root>,
@@ -98,6 +99,7 @@ impl TypeE {
             )),
             rank if rank == 6 || rank == 7 || rank == 8 => {
                 let cartan_matrix = Self::cartan_matrix(rank);
+                let inverse_cartan_matrix = Self::inverse_cartan_matrix(rank);
                 let basis_lengths = Self::basis_lengths(rank);
                 let simple_roots = root_system::find_simple_roots(&cartan_matrix);
                 let positive_roots = root_system::find_positive_roots(&simple_roots);
@@ -105,6 +107,7 @@ impl TypeE {
                 Ok(TypeE {
                     rank,
                     cartan_matrix,
+                    inverse_cartan_matrix,
                     basis_lengths,
                     simple_roots,
                     positive_roots,
@@ -130,6 +133,49 @@ impl TypeE {
         m
     }
 
+    /// Generate the inverse Cartan matrix for the \\(E_{n}\\) group.
+    fn inverse_cartan_matrix(rank: usize) -> InverseCartanMatrix {
+        match rank {
+            6 => (
+                array![
+                    [04, 05, 06, 04, 02, 03],
+                    [05, 10, 12, 08, 04, 06],
+                    [06, 12, 18, 12, 06, 09],
+                    [04, 08, 12, 10, 05, 06],
+                    [02, 04, 06, 05, 04, 03],
+                    [03, 06, 09, 06, 03, 06]
+                ],
+                3,
+            ),
+            7 => (
+                array![
+                    [04, 06, 08, 06, 04, 02, 04],
+                    [06, 12, 16, 12, 08, 04, 08],
+                    [08, 16, 24, 18, 12, 06, 12],
+                    [06, 12, 18, 15, 10, 05, 09],
+                    [04, 08, 12, 10, 08, 04, 06],
+                    [02, 04, 06, 05, 04, 03, 03],
+                    [04, 08, 12, 09, 06, 03, 07]
+                ],
+                2,
+            ),
+            8 => (
+                array![
+                    [04, 07, 10, 08, 06, 04, 02, 05],
+                    [07, 14, 20, 16, 12, 08, 04, 10],
+                    [10, 20, 30, 24, 18, 12, 06, 15],
+                    [08, 16, 24, 20, 15, 10, 05, 12],
+                    [06, 12, 18, 15, 12, 08, 04, 09],
+                    [04, 08, 12, 10, 08, 06, 03, 06],
+                    [02, 04, 06, 05, 04, 03, 02, 03],
+                    [05, 10, 15, 12, 09, 06, 03, 08]
+                ],
+                1,
+            ),
+            _ => unreachable!(),
+        }
+    }
+
     /// Generate the basis lengths in \\(E_{n}\\).
     ///
     /// For \\(E_{n}\\), all simple roots have length \\(\sqrt{2}\\).
@@ -145,6 +191,10 @@ impl RootSystem for TypeE {
 
     fn cartan_matrix(&self) -> &CartanMatrix {
         &self.cartan_matrix
+    }
+
+    fn inverse_cartan_matrix(&self) -> &InverseCartanMatrix {
+        &self.inverse_cartan_matrix
     }
 
     fn basis_lengths(&self) -> &BasisLengths {
@@ -180,12 +230,12 @@ impl fmt::Display for TypeE {
 
 #[cfg(test)]
 mod test {
-    #[cfg(feature = "nightly")]
-    use test::Bencher;
+    use super::*;
 
     use ndarray::Array2;
     use root_system::RootSystem;
-    use super::TypeE;
+    #[cfg(feature = "nightly")]
+    use test::Bencher;
 
     #[test]
     fn root_system() {
@@ -197,6 +247,12 @@ mod test {
             let g = TypeE::new(rank).unwrap();
             assert_eq!(g.rank(), rank);
             assert_eq!(g.cartan_matrix().dim(), (rank, rank));
+            assert_eq!(g.determinant(), 9 - rank as i64);
+
+            let cm = g.cartan_matrix();
+            let &(ref icm, d) = g.inverse_cartan_matrix();
+            assert_eq!(cm.dot(icm), icm.dot(cm));
+            assert_eq!(cm.dot(icm) / d, Array2::eye(rank));
         }
 
         assert_eq!(
@@ -206,7 +262,7 @@ mod test {
                 [-1, 2, -1, 0, 0, 0],
                 [0, -1, 2, -1, 0, -1],
                 [0, 0, -1, 2, -1, 0],
-                [0, 0,  0, -1, 2, 0],
+                [0, 0, 0, -1, 2, 0],
                 [0, 0, -1, 0, 0, 2],
             ]
         );
