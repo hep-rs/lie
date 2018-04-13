@@ -67,8 +67,8 @@ A^{-1} = A^{-1} A = I\).</p>
 <p>As the elements of the Cartan matrix are all integers, the inverted Cartan
 matrix will consist of rational numbers with the largest denominator being
 at most the determinant of the Cartan matrix.  Consequently, the inverted
-matrix is stored as the tuple <code>(M: Array2&lt;i64&gt;, d: i64)</code> where <code>M</code> is the
-matrix \(\det A A^{-1}\) and <code>d</code> is  \(\det(A)\).</p>
+matrix is stored as the tuple \((M, d)\) where \(M = d A^{-1}\) and \(d
+= \det(A)\).</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 
