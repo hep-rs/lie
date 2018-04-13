@@ -10,8 +10,11 @@
     <title>ndarray - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -30,9 +33,16 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Crate ndarray</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'ndarray', ty: 'mod', relpath: '../'};</script></div>
+        <p class='location'>Crate ndarray</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'ndarray', ty: 'mod', relpath: '../'};</script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -49,15 +59,13 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/ndarray/lib.rs.html#8-885' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/ndarray/lib.rs.html#8-920' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>The <code>ndarray</code> crate provides an <em>n</em>-dimensional container for general elements
 and for numerics.</p>
-
 <p>In <em>n</em>-dimensional we include for example 1-dimensional rows or columns,
 2-dimensional matrices, and higher dimensional arrays. If the array has <em>n</em>
 dimensions, then an element in the array is accessed by using that many indices.
 Each dimension is also called an <em>axis</em>.</p>
-
 <ul>
 <li><strong><a href="struct.ArrayBase.html"><code>ArrayBase</code></a></strong>:
 The <em>n</em>-dimensional array type itself.<br>
@@ -66,8 +74,7 @@ for an overview of all array features.<br></li>
 <li>The main specific array type is <strong><a href="type.Array.html"><code>Array</code></a></strong>, which owns
 its elements.</li>
 </ul>
-
-<h2 id='highlights' class='section-header'><a href='#highlights'>Highlights</a></h2>
+<h2 id="highlights" class="section-header"><a href="#highlights">Highlights</a></h2>
 <ul>
 <li>Generic <em>n</em>-dimensional array</li>
 <li>Slicing, also with arbitrary step size, and negative indices to mean
@@ -79,67 +86,79 @@ elements from the end of the axis.</li>
 <li><code>Zip</code> for lock step function application across two or more arrays or other
 item producers (<code>NdProducer</code> trait).</li>
 </ul>
-
-<h2 id='crate-status' class='section-header'><a href='#crate-status'>Crate Status</a></h2>
+<h2 id="crate-status" class="section-header"><a href="#crate-status">Crate Status</a></h2>
 <ul>
 <li>Still iterating on and evolving the crate
-
 <ul>
 <li>The crate is continuously developing, and breaking changes are expected
 during evolution from version to version. We adopt the newest stable
 rust features if we need them.</li>
-</ul></li>
+</ul>
+</li>
 <li>Performance:
-
 <ul>
 <li>Prefer higher order methods and arithmetic operations on arrays first,
 then iteration, and as a last priority using indexed algorithms.</li>
-<li>The higher order functions like <code>.map()</code>, <code>.map_inplace()</code>, 
+<li>The higher order functions like <code>.map()</code>, <code>.map_inplace()</code>,
 <code>.zip_mut_with()</code>, <code>Zip</code> and <code>azip!()</code> are the most efficient ways
 to perform single traversal and lock step traversal respectively.</li>
 <li>Performance of an operation depends on the memory layout of the array
-or array view. Especially if it&#39;s a binary operation, which
+or array view. Especially if it's a binary operation, which
 needs matching memory layout to be efficient (with some exceptions).</li>
 <li>Efficient floating point matrix multiplication even for very large
 matrices; can optionally use BLAS to improve it further.</li>
 <li>See also the <a href="https://docs.rs/ndarray-parallel"><code>ndarray-parallel</code></a> crate for integration with rayon.</li>
-</ul></li>
+</ul>
+</li>
 <li><strong>Requires Rust 1.22</strong></li>
 </ul>
-
-<h2 id='crate-feature-flags' class='section-header'><a href='#crate-feature-flags'>Crate Feature Flags</a></h2>
+<h2 id="crate-feature-flags" class="section-header"><a href="#crate-feature-flags">Crate Feature Flags</a></h2>
 <p>The following crate feature flags are available. They are configured in your
 <code>Cargo.toml</code>.</p>
-
 <ul>
 <li><code>rustc-serialize</code>
-
 <ul>
 <li>Optional, compatible with Rust stable</li>
 <li>Enables serialization support for rustc-serialize 0.3</li>
-</ul></li>
+</ul>
+</li>
 <li><code>serde-1</code>
-
 <ul>
 <li>Optional, compatible with Rust stable</li>
 <li>Enables serialization support for serde 1.0</li>
-</ul></li>
+</ul>
+</li>
 <li><code>blas</code>
-
 <ul>
 <li>Optional and experimental, compatible with Rust stable</li>
 <li>Enable transparent BLAS support for matrix multiplication.
 Uses <code>blas-src</code> for pluggable backend, which needs to be configured
 separately.</li>
-</ul></li>
 </ul>
-</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+</li>
+</ul>
+<h2 id="documentation" class="section-header"><a href="#documentation">Documentation</a></h2>
+<ul>
+<li>
+<p>The docs for <a href="struct.ArrayBase.html"><code>ArrayBase</code></a> provide an overview of
+the <em>n</em>-dimensional array type. Other good pages to look at are the
+documentation for the <a href="macro.s.html"><code>s![]</code></a> and
+<a href="macro.azip.html"><code>azip!()</code></a> macros.</p>
+</li>
+<li>
+<p>If you have experience with NumPy, you may also be interested in
+<a href="doc/ndarray_for_numpy_users/index.html"><code>ndarray_for_numpy_users</code></a>.</p>
+</li>
+</ul>
+</div><h2 id='reexports' class='section-header'><a href="#reexports">Re-exports</a></h2>
+<table><tr><td><code>pub use self::<a class="struct" href="../ndarray/struct.OwnedArcRepr.html" title="struct ndarray::OwnedArcRepr">OwnedArcRepr</a> as OwnedRcRepr;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                        <tr class=' module-item'>
                            <td><a class="mod" href="iter/index.html"
                                   title='mod ndarray::iter'>iter</a></td>
                            <td class='docblock-short'>
                                 <p>Producers, iterables and iterators.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -147,6 +166,7 @@ separately.</li>
                                   title='mod ndarray::linalg'>linalg</a></td>
                            <td class='docblock-short'>
                                 <p>Linear algebra.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -154,6 +174,7 @@ separately.</li>
                                   title='mod ndarray::prelude'>prelude</a></td>
                            <td class='docblock-short'>
                                 <p>ndarray prelude.</p>
+
                            </td>
                        </tr></table><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
 <table>
@@ -163,6 +184,7 @@ separately.</li>
                            <td class='docblock-short'>
                                 <p>Create an <a href="type.Array.html"><strong><code>Array</code></strong></a> with one, two or
 three dimensions.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -171,6 +193,7 @@ three dimensions.</p>
                            <td class='docblock-short'>
                                 <p>Array zip macro: lock step function application across several arrays and
 producers.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -178,6 +201,7 @@ producers.</p>
                                   title='macro ndarray::s'>s</a></td>
                            <td class='docblock-short'>
                                 <p>Slice argument constructor.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -185,6 +209,7 @@ producers.</p>
                                   title='macro ndarray::stack'>stack</a></td>
                            <td class='docblock-short'>
                                 <p>Stack arrays along the given axis.</p>
+
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
@@ -193,6 +218,7 @@ producers.</p>
                                   title='struct ndarray::ArrayBase'>ArrayBase</a></td>
                            <td class='docblock-short'>
                                 <p>An <em>n</em>-dimensional array.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -200,6 +226,7 @@ producers.</p>
                                   title='struct ndarray::Axis'>Axis</a></td>
                            <td class='docblock-short'>
                                 <p>An axis index.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -207,6 +234,7 @@ producers.</p>
                                   title='struct ndarray::AxisDescription'>AxisDescription</a></td>
                            <td class='docblock-short'>
                                 <p>Description of the axis, its length and its stride.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -214,6 +242,7 @@ producers.</p>
                                   title='struct ndarray::Dim'>Dim</a></td>
                            <td class='docblock-short'>
                                 <p>Dimension description.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -221,20 +250,23 @@ producers.</p>
                                   title='struct ndarray::IxDynImpl'>IxDynImpl</a></td>
                            <td class='docblock-short'>
                                 <p>Dynamic dimension or index type.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="struct" href="struct.OwnedRcRepr.html"
-                                  title='struct ndarray::OwnedRcRepr'>OwnedRcRepr</a></td>
+                           <td><a class="struct" href="struct.OwnedArcRepr.html"
+                                  title='struct ndarray::OwnedArcRepr'>OwnedArcRepr</a></td>
                            <td class='docblock-short'>
-                                <p>RcArray&#39;s representation.</p>
+                                <p>ArcArray's representation.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.OwnedRepr.html"
                                   title='struct ndarray::OwnedRepr'>OwnedRepr</a></td>
                            <td class='docblock-short'>
-                                <p>Array&#39;s representation.</p>
+                                <p>Array's representation.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -242,6 +274,7 @@ producers.</p>
                                   title='struct ndarray::Shape'>Shape</a></td>
                            <td class='docblock-short'>
                                 <p>A contiguous array shape of n dimensions.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -249,6 +282,7 @@ producers.</p>
                                   title='struct ndarray::ShapeError'>ShapeError</a></td>
                            <td class='docblock-short'>
                                 <p>An error related to array shape or layout.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -256,6 +290,7 @@ producers.</p>
                                   title='struct ndarray::Slice'>Slice</a></td>
                            <td class='docblock-short'>
                                 <p>A slice (range with step size).</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -263,6 +298,7 @@ producers.</p>
                                   title='struct ndarray::SliceInfo'>SliceInfo</a></td>
                            <td class='docblock-short'>
                                 <p>Represents all of the necessary information to perform a slice.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -270,6 +306,7 @@ producers.</p>
                                   title='struct ndarray::StrideShape'>StrideShape</a></td>
                            <td class='docblock-short'>
                                 <p>An array shape of n dimensions in c-order, f-order or custom strides.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -277,6 +314,7 @@ producers.</p>
                                   title='struct ndarray::ViewRepr'>ViewRepr</a></td>
                            <td class='docblock-short'>
                                 <p>Array view’s representation.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -284,6 +322,7 @@ producers.</p>
                                   title='struct ndarray::Zip'>Zip</a></td>
                            <td class='docblock-short'>
                                 <p>Lock step function application across several arrays or other producers.</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
@@ -292,6 +331,7 @@ producers.</p>
                                   title='enum ndarray::ErrorKind'>ErrorKind</a></td>
                            <td class='docblock-short'>
                                 <p>Error code for an error related to array shape or layout.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -299,6 +339,7 @@ producers.</p>
                                   title='enum ndarray::FoldWhile'>FoldWhile</a></td>
                            <td class='docblock-short'>
                                 <p>Value controlling the execution of <code>.fold_while</code> on <code>Zip</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -306,6 +347,7 @@ producers.</p>
                                   title='enum ndarray::SliceOrIndex'>SliceOrIndex</a></td>
                            <td class='docblock-short'>
                                 <p>A slice (range with step) or an index.</p>
+
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
@@ -314,6 +356,7 @@ producers.</p>
                                   title='trait ndarray::AsArray'>AsArray</a></td>
                            <td class='docblock-short'>
                                 <p>Argument conversion into an array view</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -321,6 +364,7 @@ producers.</p>
                                   title='trait ndarray::Data'>Data</a></td>
                            <td class='docblock-short'>
                                 <p>Array representation trait.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -328,6 +372,7 @@ producers.</p>
                                   title='trait ndarray::DataClone'>DataClone</a></td>
                            <td class='docblock-short'>
                                 <p>Array representation trait.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -335,6 +380,7 @@ producers.</p>
                                   title='trait ndarray::DataMut'>DataMut</a></td>
                            <td class='docblock-short'>
                                 <p>Array representation trait.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -342,6 +388,7 @@ producers.</p>
                                   title='trait ndarray::DataOwned'>DataOwned</a></td>
                            <td class='docblock-short'>
                                 <p>Array representation trait.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -349,6 +396,7 @@ producers.</p>
                                   title='trait ndarray::DataShared'>DataShared</a></td>
                            <td class='docblock-short'>
                                 <p>Array representation trait.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -356,6 +404,7 @@ producers.</p>
                                   title='trait ndarray::Dimension'>Dimension</a></td>
                            <td class='docblock-short'>
                                 <p>Array shape and index trait.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -363,6 +412,7 @@ producers.</p>
                                   title='trait ndarray::FixedInitializer'>FixedInitializer</a></td>
                            <td class='docblock-short'>
                                 <p>Fixed-size array used for array initialization</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -370,6 +420,7 @@ producers.</p>
                                   title='trait ndarray::IndexLonger'>IndexLonger</a></td>
                            <td class='docblock-short'>
                                 <p>Extra indexing methods for array views</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -377,6 +428,7 @@ producers.</p>
                                   title='trait ndarray::IntoDimension'>IntoDimension</a></td>
                            <td class='docblock-short'>
                                 <p>Argument conversion a dimension.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -384,6 +436,7 @@ producers.</p>
                                   title='trait ndarray::IntoNdProducer'>IntoNdProducer</a></td>
                            <td class='docblock-short'>
                                 <p>Argument conversion into a producer.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -391,6 +444,7 @@ producers.</p>
                                   title='trait ndarray::LinalgScalar'>LinalgScalar</a></td>
                            <td class='docblock-short'>
                                 <p>Elements that support linear algebra operations.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -398,6 +452,7 @@ producers.</p>
                                   title='trait ndarray::NdFloat'>NdFloat</a></td>
                            <td class='docblock-short'>
                                 <p>Floating-point element types <code>f32</code> and <code>f64</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -405,6 +460,7 @@ producers.</p>
                                   title='trait ndarray::NdIndex'>NdIndex</a></td>
                            <td class='docblock-short'>
                                 <p>Tuple or fixed size arrays that can be used to index an array.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -414,6 +470,7 @@ producers.</p>
                                 <p>A producer of an n-dimensional set of elements;
 for example an array view, mutable array view or an iterator
 that yields chunks.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -421,6 +478,7 @@ that yields chunks.</p>
                                   title='trait ndarray::RemoveAxis'>RemoveAxis</a></td>
                            <td class='docblock-short'>
                                 <p>Array shape with a next smaller dimension.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -428,6 +486,7 @@ that yields chunks.</p>
                                   title='trait ndarray::ScalarOperand'>ScalarOperand</a></td>
                            <td class='docblock-short'>
                                 <p>Elements that can be used as direct operands in arithmetic with arrays.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -436,6 +495,7 @@ that yields chunks.</p>
                            <td class='docblock-short'>
                                 <p>A trait for <code>Shape</code> and <code>D where D: Dimension</code> that allows
 customizing the memory layout (strides) of an array shape.</p>
+
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
@@ -444,6 +504,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::Dim'>Dim</a></td>
                            <td class='docblock-short'>
                                 <p>Create a new dimension value.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -451,6 +512,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::Ix0'>Ix0</a></td>
                            <td class='docblock-short'>
                                 <p>Create a zero-dimensional index</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -458,6 +520,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::Ix1'>Ix1</a></td>
                            <td class='docblock-short'>
                                 <p>Create a one-dimensional index</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -465,6 +528,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::Ix2'>Ix2</a></td>
                            <td class='docblock-short'>
                                 <p>Create a two-dimensional index</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -472,6 +536,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::Ix3'>Ix3</a></td>
                            <td class='docblock-short'>
                                 <p>Create a three-dimensional index</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -479,6 +544,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::Ix4'>Ix4</a></td>
                            <td class='docblock-short'>
                                 <p>Create a four-dimensional index</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -486,6 +552,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::Ix5'>Ix5</a></td>
                            <td class='docblock-short'>
                                 <p>Create a five-dimensional index</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -493,6 +560,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::Ix6'>Ix6</a></td>
                            <td class='docblock-short'>
                                 <p>Create a six-dimensional index</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -500,6 +568,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::IxDyn'>IxDyn</a></td>
                            <td class='docblock-short'>
                                 <p>Create a dynamic-dimensional index</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -507,6 +576,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::arr0'>arr0</a></td>
                            <td class='docblock-short'>
                                 <p>Create a zero-dimensional array with the element <code>x</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -514,6 +584,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::arr1'>arr1</a></td>
                            <td class='docblock-short'>
                                 <p>Create a one-dimensional array with elements from <code>xs</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -521,6 +592,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::arr2'>arr2</a></td>
                            <td class='docblock-short'>
                                 <p>Create a two-dimensional array with elements from <code>xs</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -528,6 +600,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::arr3'>arr3</a></td>
                            <td class='docblock-short'>
                                 <p>Create a three-dimensional array with elements from <code>xs</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -535,6 +608,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::aview0'>aview0</a></td>
                            <td class='docblock-short'>
                                 <p>Create a zero-dimensional array view borrowing <code>x</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -542,6 +616,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::aview1'>aview1</a></td>
                            <td class='docblock-short'>
                                 <p>Create a one-dimensional array view with elements borrowing <code>xs</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -549,6 +624,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::aview2'>aview2</a></td>
                            <td class='docblock-short'>
                                 <p>Create a two-dimensional array view with elements borrowing <code>xs</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -556,6 +632,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::aview_mut1'>aview_mut1</a></td>
                            <td class='docblock-short'>
                                 <p>Create a one-dimensional read-write array view with elements borrowing <code>xs</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -563,6 +640,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::aview_mut2'>aview_mut2</a></td>
                            <td class='docblock-short'>
                                 <p>Create a two-dimensional read-write array view with elements borrowing <code>xs</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -570,6 +648,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::indices'>indices</a></td>
                            <td class='docblock-short'>
                                 <p>Create an iterable of the array shape <code>shape</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -577,6 +656,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::indices_of'>indices_of</a></td>
                            <td class='docblock-short'>
                                 <p>Return an iterable of the indices of the passed-in array.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -584,6 +664,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::rcarr1'>rcarr1</a></td>
                            <td class='docblock-short'>
                                 <p>Create a one-dimensional array with elements from <code>xs</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -591,6 +672,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::rcarr2'>rcarr2</a></td>
                            <td class='docblock-short'>
                                 <p>Create a two-dimensional array with elements from <code>xs</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -598,6 +680,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::rcarr3'>rcarr3</a></td>
                            <td class='docblock-short'>
                                 <p>Create a three-dimensional array with elements from <code>xs</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -605,14 +688,24 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='fn ndarray::stack'>stack</a></td>
                            <td class='docblock-short'>
                                 <p>Stack arrays along the given axis.</p>
+
                            </td>
                        </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
 <table>
+                       <tr class=' module-item'>
+                           <td><a class="type" href="type.ArcArray.html"
+                                  title='type ndarray::ArcArray'>ArcArray</a></td>
+                           <td class='docblock-short'>
+                                <p>An array where the data has shared ownership and is copy on write.</p>
+
+                           </td>
+                       </tr>
                        <tr class=' module-item'>
                            <td><a class="type" href="type.Array.html"
                                   title='type ndarray::Array'>Array</a></td>
                            <td class='docblock-short'>
                                 <p>An array that owns its data uniquely.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -620,6 +713,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::Array0'>Array0</a></td>
                            <td class='docblock-short'>
                                 <p>zero-dimensional array</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -627,6 +721,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::Array1'>Array1</a></td>
                            <td class='docblock-short'>
                                 <p>one-dimensional array</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -634,6 +729,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::Array2'>Array2</a></td>
                            <td class='docblock-short'>
                                 <p>two-dimensional array</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -641,6 +737,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::Array3'>Array3</a></td>
                            <td class='docblock-short'>
                                 <p>three-dimensional array</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -648,6 +745,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::Array4'>Array4</a></td>
                            <td class='docblock-short'>
                                 <p>four-dimensional array</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -655,6 +753,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::Array5'>Array5</a></td>
                            <td class='docblock-short'>
                                 <p>five-dimensional array</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -662,6 +761,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::Array6'>Array6</a></td>
                            <td class='docblock-short'>
                                 <p>six-dimensional array</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -669,6 +769,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::ArrayD'>ArrayD</a></td>
                            <td class='docblock-short'>
                                 <p>dynamic-dimensional array</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -676,6 +777,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::ArrayView'>ArrayView</a></td>
                            <td class='docblock-short'>
                                 <p>A read-only array view.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -683,6 +785,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::ArrayView0'>ArrayView0</a></td>
                            <td class='docblock-short'>
                                 <p>zero-dimensional array view</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -690,6 +793,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::ArrayView1'>ArrayView1</a></td>
                            <td class='docblock-short'>
                                 <p>one-dimensional array view</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -697,6 +801,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::ArrayView2'>ArrayView2</a></td>
                            <td class='docblock-short'>
                                 <p>two-dimensional array view</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -704,6 +809,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::ArrayView3'>ArrayView3</a></td>
                            <td class='docblock-short'>
                                 <p>three-dimensional array view</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -711,6 +817,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::ArrayView4'>ArrayView4</a></td>
                            <td class='docblock-short'>
                                 <p>four-dimensional array view</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -718,6 +825,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::ArrayView5'>ArrayView5</a></td>
                            <td class='docblock-short'>
                                 <p>five-dimensional array view</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -725,6 +833,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::ArrayView6'>ArrayView6</a></td>
                            <td class='docblock-short'>
                                 <p>six-dimensional array view</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -732,6 +841,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::ArrayViewD'>ArrayViewD</a></td>
                            <td class='docblock-short'>
                                 <p>dynamic-dimensional array view</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -739,6 +849,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::ArrayViewMut'>ArrayViewMut</a></td>
                            <td class='docblock-short'>
                                 <p>A read-write array view.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -746,6 +857,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::ArrayViewMut0'>ArrayViewMut0</a></td>
                            <td class='docblock-short'>
                                 <p>zero-dimensional read-write array view</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -753,6 +865,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::ArrayViewMut1'>ArrayViewMut1</a></td>
                            <td class='docblock-short'>
                                 <p>one-dimensional read-write array view</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -760,6 +873,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::ArrayViewMut2'>ArrayViewMut2</a></td>
                            <td class='docblock-short'>
                                 <p>two-dimensional read-write array view</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -767,6 +881,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::ArrayViewMut3'>ArrayViewMut3</a></td>
                            <td class='docblock-short'>
                                 <p>three-dimensional read-write array view</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -774,6 +889,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::ArrayViewMut4'>ArrayViewMut4</a></td>
                            <td class='docblock-short'>
                                 <p>four-dimensional read-write array view</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -781,6 +897,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::ArrayViewMut5'>ArrayViewMut5</a></td>
                            <td class='docblock-short'>
                                 <p>five-dimensional read-write array view</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -788,6 +905,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::ArrayViewMut6'>ArrayViewMut6</a></td>
                            <td class='docblock-short'>
                                 <p>six-dimensional read-write array view</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -795,6 +913,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::ArrayViewMutD'>ArrayViewMutD</a></td>
                            <td class='docblock-short'>
                                 <p>dynamic-dimensional read-write array view</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -802,6 +921,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::Ix'>Ix</a></td>
                            <td class='docblock-short'>
                                 <p>Array index type</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -809,6 +929,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::Ix0'>Ix0</a></td>
                            <td class='docblock-short'>
                                 <p>zero-dimensionial</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -816,6 +937,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::Ix1'>Ix1</a></td>
                            <td class='docblock-short'>
                                 <p>one-dimensional</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -823,6 +945,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::Ix2'>Ix2</a></td>
                            <td class='docblock-short'>
                                 <p>two-dimensional</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -830,6 +953,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::Ix3'>Ix3</a></td>
                            <td class='docblock-short'>
                                 <p>three-dimensional</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -837,6 +961,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::Ix4'>Ix4</a></td>
                            <td class='docblock-short'>
                                 <p>four-dimensional</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -844,6 +969,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::Ix5'>Ix5</a></td>
                            <td class='docblock-short'>
                                 <p>five-dimensional</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -851,6 +977,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::Ix6'>Ix6</a></td>
                            <td class='docblock-short'>
                                 <p>six-dimensional</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -858,6 +985,7 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::IxDyn'>IxDyn</a></td>
                            <td class='docblock-short'>
                                 <p>dynamic-dimensional</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -865,15 +993,15 @@ customizing the memory layout (strides) of an array shape.</p>
                                   title='type ndarray::Ixs'>Ixs</a></td>
                            <td class='docblock-short'>
                                 <p>Array index type (signed)</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="type" href="type.RcArray.html"
                                   title='type ndarray::RcArray'>RcArray</a></td>
                            <td class='docblock-short'>
-                                <p>An array where the data has shared ownership and is copy on write.
-It can act as both an owner as the data as well as a shared reference (view
-like).</p>
+                                <p>An array where the data has shared ownership and is copy on write.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -881,6 +1009,7 @@ like).</p>
                                   title='type ndarray::RcArray1'>RcArray1</a></td>
                            <td class='docblock-short'>
                                 <p>one-dimensional shared ownership array</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -888,6 +1017,7 @@ like).</p>
                                   title='type ndarray::RcArray2'>RcArray2</a></td>
                            <td class='docblock-short'>
                                 <p>two-dimensional shared ownership array</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -902,20 +1032,22 @@ like).</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

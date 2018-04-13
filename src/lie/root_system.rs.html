@@ -10,8 +10,11 @@
     <title>root_system.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -728,6 +738,30 @@
 <span id="682">682</span>
 <span id="683">683</span>
 <span id="684">684</span>
+<span id="685">685</span>
+<span id="686">686</span>
+<span id="687">687</span>
+<span id="688">688</span>
+<span id="689">689</span>
+<span id="690">690</span>
+<span id="691">691</span>
+<span id="692">692</span>
+<span id="693">693</span>
+<span id="694">694</span>
+<span id="695">695</span>
+<span id="696">696</span>
+<span id="697">697</span>
+<span id="698">698</span>
+<span id="699">699</span>
+<span id="700">700</span>
+<span id="701">701</span>
+<span id="702">702</span>
+<span id="703">703</span>
+<span id="704">704</span>
+<span id="705">705</span>
+<span id="706">706</span>
+<span id="707">707</span>
+<span id="708">708</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Definitions for root systems</span>
 <span class="doccomment">//!</span>
@@ -772,6 +806,20 @@
 <span class="doccomment">/// are integers.</span>
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">CartanMatrix</span> <span class="op">=</span> <span class="ident">ndarray</span>::<span class="ident">Array2</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>;
 
+<span class="doccomment">/// Type definition for an inverted Cartan matrix.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Definition</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The inverse Cartan matrix is the matrix \\(A^{-1}\\) defined such that \\(A</span>
+<span class="doccomment">/// A\^{-1} = A\^{-1} A = I\\).</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// As the elements of the Cartan matrix are all integers, the inverted Cartan</span>
+<span class="doccomment">/// matrix will consist of rational numbers with the largest denominator being</span>
+<span class="doccomment">/// at most the determinant of the Cartan matrix.  Consequently, the inverted</span>
+<span class="doccomment">/// matrix is stored as the tuple `(M: Array2&lt;i64&gt;, d: i64)` where `M` is the</span>
+<span class="doccomment">/// matrix \\(\det A A^{-1}\\) and `d` is  \\(\det(A)\\).</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">InverseCartanMatrix</span> <span class="op">=</span> (<span class="ident">ndarray</span>::<span class="ident">Array2</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>, <span class="ident">i64</span>);
+
 <span class="doccomment">/// Type definition for a basis lengths.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Definition</span>
@@ -814,7 +862,6 @@
 <span class="doccomment">/// but it isn&#39;t used here in order to avoid requiring the use of rational</span>
 <span class="doccomment">/// numbers.</span>
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">BasisLengths</span> <span class="op">=</span> <span class="ident">ndarray</span>::<span class="ident">Array1</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>;
-
 
 <span class="doccomment">/// Trait for root systems.</span>
 <span class="doccomment">///</span>
@@ -899,6 +946,17 @@
     <span class="doccomment">///   \begin{pmatrix} 2 &amp; -1 \\\\ -1 &amp; 2 \end{pmatrix}</span>
     <span class="doccomment">/// \\end{equation}</span>
     <span class="kw">fn</span> <span class="ident">cartan_matrix</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">CartanMatrix</span>;
+
+    <span class="doccomment">/// Return the inverse Cartan matrix of the Lie group.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See [`InverseCartanMatrix`] for details as to how the matrix is stored</span>
+    <span class="doccomment">/// within the library.</span>
+    <span class="kw">fn</span> <span class="ident">inverse_cartan_matrix</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">InverseCartanMatrix</span>;
+
+    <span class="doccomment">/// Return the determinant of the Cartan matrix of the Lie group.</span>
+    <span class="kw">fn</span> <span class="ident">determinant</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">i64</span> {
+        <span class="self">self</span>.<span class="ident">inverse_cartan_matrix</span>().<span class="number">1</span>
+    }
 
     <span class="doccomment">/// Return the squared norm of each simple roots.</span>
     <span class="doccomment">///</span>
@@ -1427,20 +1485,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

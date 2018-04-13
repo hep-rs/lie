@@ -4,14 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.11.1/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.11.2/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -929,6 +939,41 @@
 <span id="883">883</span>
 <span id="884">884</span>
 <span id="885">885</span>
+<span id="886">886</span>
+<span id="887">887</span>
+<span id="888">888</span>
+<span id="889">889</span>
+<span id="890">890</span>
+<span id="891">891</span>
+<span id="892">892</span>
+<span id="893">893</span>
+<span id="894">894</span>
+<span id="895">895</span>
+<span id="896">896</span>
+<span id="897">897</span>
+<span id="898">898</span>
+<span id="899">899</span>
+<span id="900">900</span>
+<span id="901">901</span>
+<span id="902">902</span>
+<span id="903">903</span>
+<span id="904">904</span>
+<span id="905">905</span>
+<span id="906">906</span>
+<span id="907">907</span>
+<span id="908">908</span>
+<span id="909">909</span>
+<span id="910">910</span>
+<span id="911">911</span>
+<span id="912">912</span>
+<span id="913">913</span>
+<span id="914">914</span>
+<span id="915">915</span>
+<span id="916">916</span>
+<span id="917">917</span>
+<span id="918">918</span>
+<span id="919">919</span>
+<span id="920">920</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2014-2016 bluss and ndarray developers.</span>
 <span class="comment">//</span>
@@ -1006,6 +1051,15 @@
 <span class="doccomment">//!     Uses ``blas-src`` for pluggable backend, which needs to be configured</span>
 <span class="doccomment">//!     separately.</span>
 <span class="doccomment">//!</span>
+<span class="doccomment">//! ## Documentation</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! * The docs for [`ArrayBase`](struct.ArrayBase.html) provide an overview of</span>
+<span class="doccomment">//!   the *n*-dimensional array type. Other good pages to look at are the</span>
+<span class="doccomment">//!   documentation for the [`s![]`](macro.s.html) and</span>
+<span class="doccomment">//!   [`azip!()`](macro.azip.html) macros.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! * If you have experience with NumPy, you may also be interested in</span>
+<span class="doccomment">//!   [`ndarray_for_numpy_users`](doc/ndarray_for_numpy_users/index.html).</span>
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde-1&quot;</span>)]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde</span>;
@@ -1023,8 +1077,11 @@
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">num_traits</span> <span class="kw">as</span> <span class="ident">libnum</span>;
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">num_complex</span>;
 
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;docs&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">doc</span>;
+
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Arc</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">dimension</span>::{
     <span class="ident">Dimension</span>,
@@ -1134,18 +1191,18 @@
 <span class="doccomment">/// The `ArrayBase&lt;S, D&gt;` is parameterized by `S` for the data container and</span>
 <span class="doccomment">/// `D` for the dimensionality.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Type aliases [`Array`], [`RcArray`], [`ArrayView`], and [`ArrayViewMut`] refer</span>
+<span class="doccomment">/// Type aliases [`Array`], [`ArcArray`], [`ArrayView`], and [`ArrayViewMut`] refer</span>
 <span class="doccomment">/// to `ArrayBase` with different types for the data container.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// [`Array`]: type.Array.html</span>
-<span class="doccomment">/// [`RcArray`]: type.RcArray.html</span>
+<span class="doccomment">/// [`ArcArray`]: type.ArcArray.html</span>
 <span class="doccomment">/// [`ArrayView`]: type.ArrayView.html</span>
 <span class="doccomment">/// [`ArrayViewMut`]: type.ArrayViewMut.html</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Contents</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// + [Array](#array)</span>
-<span class="doccomment">/// + [RcArray](#rcarray)</span>
+<span class="doccomment">/// + [ArcArray](#arcarray)</span>
 <span class="doccomment">/// + [Array Views](#array-views)</span>
 <span class="doccomment">/// + [Indexing and Dimension](#indexing-and-dimension)</span>
 <span class="doccomment">/// + [Loops, Producers and Iterators](#loops-producers-and-iterators)</span>
@@ -1176,12 +1233,12 @@
 <span class="doccomment">/// temperature[[2, 2, 2]] += 0.5;</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// ## `RcArray`</span>
+<span class="doccomment">/// ## `ArcArray`</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// [`RcArray`](type.RcArray.html) is an owned array with reference counted</span>
+<span class="doccomment">/// [`ArcArray`](type.ArcArray.html) is an owned array with reference counted</span>
 <span class="doccomment">/// data (shared ownership).</span>
 <span class="doccomment">/// Sharing requires that it uses copy-on-write for mutable operations.</span>
-<span class="doccomment">/// Calling a method for mutating elements on `RcArray`, for example</span>
+<span class="doccomment">/// Calling a method for mutating elements on `ArcArray`, for example</span>
 <span class="doccomment">/// [`view_mut()`](#method.view_mut) or [`get_mut()`](#method.get_mut),</span>
 <span class="doccomment">/// will break sharing and require a clone of the data (if it is not uniquely held).</span>
 <span class="doccomment">///</span>
@@ -1504,8 +1561,8 @@
 <span class="doccomment">/// ### Binary Operators with Two Arrays</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Let `A` be an array or view of any kind. Let `B` be an array</span>
-<span class="doccomment">/// with owned storage (either `Array` or `RcArray`).</span>
-<span class="doccomment">/// Let `C` be an array with mutable data (either `Array`, `RcArray`</span>
+<span class="doccomment">/// with owned storage (either `Array` or `ArcArray`).</span>
+<span class="doccomment">/// Let `C` be an array with mutable data (either `Array`, `ArcArray`</span>
 <span class="doccomment">/// or `ArrayViewMut`).</span>
 <span class="doccomment">/// The following combinations of operands</span>
 <span class="doccomment">/// are supported for an arbitrary binary operator denoted by `@` (it can be</span>
@@ -1530,7 +1587,7 @@
 <span class="doccomment">/// ### Unary Operators</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Let `A` be an array or view of any kind. Let `B` be an array with owned</span>
-<span class="doccomment">/// storage (either `Array` or `RcArray`). The following operands are supported</span>
+<span class="doccomment">/// storage (either `Array` or `ArcArray`). The following operands are supported</span>
 <span class="doccomment">/// for an arbitrary unary operator denoted by `@` (it can be `-` or `!`).</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// - `@&amp;A` which produces a new `Array`</span>
@@ -1580,11 +1637,27 @@
 }
 
 <span class="doccomment">/// An array where the data has shared ownership and is copy on write.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// It can act as both an owner as the data as well as a shared reference (view like).</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// **Note: this type alias is obsolete.** See the equivalent [`ArcArray`] instead.</span>
+<span class="comment">// Use soon: #[deprecated(note=&quot;RcArray is replaced by ArcArray&quot;)]</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">RcArray</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">D</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">OwnedRcRepr</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>, <span class="ident">D</span><span class="op">&gt;</span>;
+
+<span class="doccomment">/// An array where the data has shared ownership and is copy on write.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The `ArcArray&lt;A, D&gt;` is parameterized by `A` for the element type and `D` for</span>
+<span class="doccomment">/// the dimensionality.</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// It can act as both an owner as the data as well as a shared reference (view</span>
 <span class="doccomment">/// like).</span>
+<span class="doccomment">/// Calling a method for mutating elements on `ArcArray`, for example</span>
+<span class="doccomment">/// [`view_mut()`](struct.ArrayBase.html#method.view_mut) or</span>
+<span class="doccomment">/// [`get_mut()`](struct.ArrayBase.html#method.get_mut), will break sharing and</span>
+<span class="doccomment">/// require a clone of the data (if it is not uniquely held).</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// The `RcArray&lt;A, D&gt;` is parameterized by `A` for the element type and `D` for</span>
-<span class="doccomment">/// the dimensionality.</span>
+<span class="doccomment">/// `ArcArray` uses atomic reference counting like `Arc`, so it is `Send` and</span>
+<span class="doccomment">/// `Sync` (when allowed by the element type of the array too).</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// [**`ArrayBase`**](struct.ArrayBase.html) is used to implement both the owned</span>
 <span class="doccomment">/// arrays and the views; see its docs for an overview of all array features.  </span>
@@ -1593,7 +1666,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// + [Constructor Methods for Owned Arrays](struct.ArrayBase.html#constructor-methods-for-owned-arrays)</span>
 <span class="doccomment">/// + [Methods For All Array Types](struct.ArrayBase.html#methods-for-all-array-types)</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">RcArray</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">D</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">OwnedRcRepr</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>, <span class="ident">D</span><span class="op">&gt;</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">ArcArray</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">D</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">OwnedArcRepr</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>, <span class="ident">D</span><span class="op">&gt;</span>;
 
 <span class="doccomment">/// An array that owns its data uniquely.</span>
 <span class="doccomment">///</span>
@@ -1659,15 +1732,22 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// *Don’t use this type directly—use the type alias</span>
 <span class="doccomment">/// [`RcArray`](type.RcArray.html) for the array type!*</span>
+<span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span><span class="op">=</span><span class="string">&quot;RcArray is replaced by ArcArray&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">OwnedArcRepr</span> <span class="kw">as</span> <span class="ident">OwnedRcRepr</span>;
+
+<span class="doccomment">/// ArcArray&#39;s representation.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// *Don’t use this type directly—use the type alias</span>
+<span class="doccomment">/// [`ArcArray`](type.ArcArray.html) for the array type!*</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">OwnedRcRepr</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;&gt;</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">OwnedArcRepr</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;&gt;</span>);
 
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">OwnedRcRepr</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">OwnedArcRepr</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="ident">OwnedRcRepr</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">clone</span>())
+        <span class="ident">OwnedArcRepr</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">clone</span>())
     }
 }
+
 
 <span class="doccomment">/// Array view’s representation.</span>
 <span class="doccomment">///</span>
@@ -1829,20 +1909,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

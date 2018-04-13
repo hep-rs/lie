@@ -10,8 +10,11 @@
     <title>ndarray::NdProducer - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Trait NdProducer</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#associated-types">Associated Types</a><div class="sidebar-links"><a href="#associatedtype.Item">Item</a><a href="#associatedtype.Dim">Dim</a></div><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.__private__">__private__</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='index.html'>ndarray</a></p><script>window.sidebarCurrent = {name: 'NdProducer', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -57,20 +67,16 @@
 }</pre><div class='docblock'><p>A producer of an n-dimensional set of elements;
 for example an array view, mutable array view or an iterator
 that yields chunks.</p>
-
 <p>Producers are used as a arguments to <code>Zip</code> and <code>azip!()</code>.</p>
-
-<h1 id='comparison-to-intoiterator' class='section-header'><a href='#comparison-to-intoiterator'>Comparison to <code>IntoIterator</code></a></h1>
+<h1 id="comparison-to-intoiterator" class="section-header"><a href="#comparison-to-intoiterator">Comparison to <code>IntoIterator</code></a></h1>
 <p>Most <code>NdProducers</code> are <em>iterable</em> (implement <code>IntoIterator</code>) but not directly
 iterators. This separation is needed because the producer represents
 a multidimensional set of items, it can be split along a particular axis for
 parallelization, and it has no fixed correspondance to a sequence.</p>
-
 <p>The natural exception is one dimensional producers, like <code>AxisIter</code>, which
 implement <code>Iterator</code> directly
 (<code>AxisIter</code> traverses a one dimensional sequence, along an axis, while
 <em>producing</em> multidimensional items).</p>
-
 <p>See also <a href="trait.IntoNdProducer.html"><code>IntoNdProducer</code></a></p>
 </div>
             <h2 id='associated-types' class='small-section-header'>
@@ -116,20 +122,22 @@ impossible to implement outside the crate.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

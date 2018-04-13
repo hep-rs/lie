@@ -10,8 +10,11 @@
     <title>ndarray::Dim - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Struct Dim</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Index%3Cusize%3E">Index&lt;usize&gt;</a><a href="#impl-IndexMut%3Cusize%3E">IndexMut&lt;usize&gt;</a><a href="#impl-Zero">Zero</a><a href="#impl-Copy">Copy</a><a href="#impl-Clone">Clone</a><a href="#impl-PartialEq">PartialEq</a><a href="#impl-Eq">Eq</a><a href="#impl-Default">Default</a><a href="#impl-PartialEq%3CI%3E">PartialEq&lt;I&gt;</a><a href="#impl-Hash">Hash</a><a href="#impl-Debug">Debug</a><a href="#impl-Add">Add</a><a href="#impl-AddAssign">AddAssign</a><a href="#impl-AddAssign%3C%26%27a%20Dim%3CI%3E%3E">AddAssign&lt;&amp;&#39;a Dim&lt;I&gt;&gt;</a><a href="#impl-Add%3CIx%3E">Add&lt;Ix&gt;</a><a href="#impl-AddAssign%3CIx%3E">AddAssign&lt;Ix&gt;</a><a href="#impl-Sub">Sub</a><a href="#impl-SubAssign">SubAssign</a><a href="#impl-SubAssign%3C%26%27a%20Dim%3CI%3E%3E">SubAssign&lt;&amp;&#39;a Dim&lt;I&gt;&gt;</a><a href="#impl-Sub%3CIx%3E">Sub&lt;Ix&gt;</a><a href="#impl-SubAssign%3CIx%3E">SubAssign&lt;Ix&gt;</a><a href="#impl-Mul">Mul</a><a href="#impl-MulAssign">MulAssign</a><a href="#impl-MulAssign%3C%26%27a%20Dim%3CI%3E%3E">MulAssign&lt;&amp;&#39;a Dim&lt;I&gt;&gt;</a><a href="#impl-Mul%3CIx%3E">Mul&lt;Ix&gt;</a><a href="#impl-MulAssign%3CIx%3E">MulAssign&lt;Ix&gt;</a><a href="#impl-Dimension">Dimension</a><a href="#impl-RemoveAxis">RemoveAxis</a><a href="#impl-NdIndex%3CIxDyn%3E">NdIndex&lt;IxDyn&gt;</a></div></div><p class='location'><a href='index.html'>ndarray</a></p><script>window.sidebarCurrent = {name: 'Dim', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -51,15 +61,12 @@
                    </a>
                </span><a class='srclink' href='../src/ndarray/dimension/dim.rs.html#40-42' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Dim&lt;I:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>&gt; { /* fields omitted */ }</pre><div class='docblock'><p>Dimension description.</p>
-
 <p><code>Dim</code> describes the number of axes and the length of each axis
 in an array. It is also used as an index type.</p>
-
 <p>See also the <a href="Dimension.t.html"><code>Dimension</code> trait</a> for its methods and
 operations.</p>
-
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
-<p>To create an array with a particular dimension, you&#39;d just pass
+<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
+<p>To create an array with a particular dimension, you'd just pass
 a tuple (in this example (3, 2) is used), which is converted to
 <code>Dim</code> by the array constructor.</p>
 
@@ -563,20 +570,22 @@ a tuple (in this example (3, 2) is used), which is converted to
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

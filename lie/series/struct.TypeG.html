@@ -10,8 +10,11 @@
     <title>lie::series::TypeG - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Struct TypeG</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Debug">Debug</a><a href="#impl-RootSystem">RootSystem</a><a href="#impl-Display">Display</a></div></div><p class='location'><a href='../index.html'>lie</a>::<wbr><a href='index.html'>series</a></p><script>window.sidebarCurrent = {name: 'TypeG', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -49,31 +59,26 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/lie/series/type_g.rs.html#20-27' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/lie/series/type_g.rs.html#20-28' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct TypeG { /* fields omitted */ }</pre><div class='docblock'><p>The \(G_{n}\) exceptional Lie groups.</p>
-
 <p>The only allows value of \(n\) is 2.</p>
-
 <p>The Cartan matrix for \(G_{2}\) is:</p>
-
 <p>\begin{equation}
-  \begin{pmatrix}
-    2 &amp; -1 \\
-    -3 &amp; 2
-  \end{pmatrix}
+\begin{pmatrix}
+2 &amp; -1 \\
+-3 &amp; 2
+\end{pmatrix}
 \end{equation}</p>
 </div>
                     <h2 id='methods' class='small-section-header'>
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
-                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../lie/series/struct.TypeG.html" title="struct lie::series::TypeG">TypeG</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#29-72' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>(rank: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self, <a class="struct" href="../../lie/struct.Error.html" title="struct lie::Error">Error</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#51-71' title='goto source code'>[src]</a></span></h4>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../lie/series/struct.TypeG.html" title="struct lie::series::TypeG">TypeG</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#30-75' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>(rank: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self, <a class="struct" href="../../lie/struct.Error.html" title="struct lie::Error">Error</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#52-74' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Create new Lie group \(G_{n}\).</p>
-
 <p>This function will automatic convert the exceptional isomorphisms to
-their corresponding &#39;standard&#39; label.</p>
-
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+their corresponding 'standard' label.</p>
+<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">lie</span>::<span class="ident">RootSystem</span>;
 <span class="kw">use</span> <span class="ident">lie</span>::<span class="ident">series</span>::<span class="ident">TypeG</span>;
@@ -94,31 +99,35 @@ their corresponding &#39;standard&#39; label.</p>
         <h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../lie/series/struct.TypeG.html" title="struct lie::series::TypeG">TypeG</a></code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#19' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#19' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
-</div></div><h3 id='impl-RootSystem' class='impl'><span class='in-band'><code>impl <a class="trait" href="../../lie/root_system/trait.RootSystem.html" title="trait lie::root_system::RootSystem">RootSystem</a> for <a class="struct" href="../../lie/series/struct.TypeG.html" title="struct lie::series::TypeG">TypeG</a></code><a href='#impl-RootSystem' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#74-98' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.rank' class="method"><span id='rank.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#method.rank' class='fnname'>rank</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#75-77' title='goto source code'>[src]</a></span></h4>
+</div></div><h3 id='impl-RootSystem' class='impl'><span class='in-band'><code>impl <a class="trait" href="../../lie/root_system/trait.RootSystem.html" title="trait lie::root_system::RootSystem">RootSystem</a> for <a class="struct" href="../../lie/series/struct.TypeG.html" title="struct lie::series::TypeG">TypeG</a></code><a href='#impl-RootSystem' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#77-105' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.rank' class="method"><span id='rank.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#method.rank' class='fnname'>rank</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#78-80' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Return the rank of the Lie group. <a href="../../lie/root_system/trait.RootSystem.html#method.rank">Read more</a></p>
-</div><h4 id='method.cartan_matrix' class="method"><span id='cartan_matrix.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#tymethod.cartan_matrix' class='fnname'>cartan_matrix</a>(&amp;self) -&gt; &amp;<a class="type" href="../../lie/root_system/type.CartanMatrix.html" title="type lie::root_system::CartanMatrix">CartanMatrix</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#79-81' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.cartan_matrix' class="method"><span id='cartan_matrix.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#tymethod.cartan_matrix' class='fnname'>cartan_matrix</a>(&amp;self) -&gt; &amp;<a class="type" href="../../lie/root_system/type.CartanMatrix.html" title="type lie::root_system::CartanMatrix">CartanMatrix</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#82-84' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Return the Cartan matrix of the Lie group. <a href="../../lie/root_system/trait.RootSystem.html#tymethod.cartan_matrix">Read more</a></p>
-</div><h4 id='method.basis_lengths' class="method"><span id='basis_lengths.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#tymethod.basis_lengths' class='fnname'>basis_lengths</a>(&amp;self) -&gt; &amp;<a class="type" href="../../lie/root_system/type.BasisLengths.html" title="type lie::root_system::BasisLengths">BasisLengths</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#83-85' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.inverse_cartan_matrix' class="method"><span id='inverse_cartan_matrix.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#tymethod.inverse_cartan_matrix' class='fnname'>inverse_cartan_matrix</a>(&amp;self) -&gt; &amp;<a class="type" href="../../lie/root_system/type.InverseCartanMatrix.html" title="type lie::root_system::InverseCartanMatrix">InverseCartanMatrix</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#86-88' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Return the inverse Cartan matrix of the Lie group. <a href="../../lie/root_system/trait.RootSystem.html#tymethod.inverse_cartan_matrix">Read more</a></p>
+</div><h4 id='method.basis_lengths' class="method"><span id='basis_lengths.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#tymethod.basis_lengths' class='fnname'>basis_lengths</a>(&amp;self) -&gt; &amp;<a class="type" href="../../lie/root_system/type.BasisLengths.html" title="type lie::root_system::BasisLengths">BasisLengths</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#90-92' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Return the squared norm of each simple roots. <a href="../../lie/root_system/trait.RootSystem.html#tymethod.basis_lengths">Read more</a></p>
-</div><h4 id='method.simple_roots' class="method"><span id='simple_roots.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#tymethod.simple_roots' class='fnname'>simple_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#87-89' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Return the simple roots of the Lie group&#39;s root system. <a href="../../lie/root_system/trait.RootSystem.html#tymethod.simple_roots">Read more</a></p>
-</div><h4 id='method.positive_roots' class="method"><span id='positive_roots.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#tymethod.positive_roots' class='fnname'>positive_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#91-93' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Return the positive roots of the Lie group&#39;s root system. <a href="../../lie/root_system/trait.RootSystem.html#tymethod.positive_roots">Read more</a></p>
-</div><h4 id='method.roots' class="method"><span id='roots.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#tymethod.roots' class='fnname'>roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#95-97' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Return the roots in the Lie group&#39;s root system. <a href="../../lie/root_system/trait.RootSystem.html#tymethod.roots">Read more</a></p>
-</div><h4 id='method.num_simple_roots' class="method"><span id='num_simple_roots.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#method.num_simple_roots' class='fnname'>num_simple_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/root_system.rs.html#222-224' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Return the number of simple roots in the Lie group&#39;s root system. <a href="../../lie/root_system/trait.RootSystem.html#method.num_simple_roots">Read more</a></p>
-</div><h4 id='method.num_positive_roots' class="method"><span id='num_positive_roots.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#method.num_positive_roots' class='fnname'>num_positive_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/root_system.rs.html#256-258' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Return the number of positive roots in the Lie group&#39;s root system.</p>
-</div><h4 id='method.num_roots' class="method"><span id='num_roots.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#method.num_roots' class='fnname'>num_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/root_system.rs.html#290-292' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Return a number of roots in the Lie group&#39;s root system.</p>
-</div><h4 id='method.inner_product' class="method"><span id='inner_product.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#method.inner_product' class='fnname'>inner_product</a>&lt;'a, 'b&gt;(&amp;'a self, a: &amp;'b <a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>, b: &amp;'b <a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/root_system.rs.html#318-335' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.simple_roots' class="method"><span id='simple_roots.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#tymethod.simple_roots' class='fnname'>simple_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#94-96' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Return the simple roots of the Lie group's root system. <a href="../../lie/root_system/trait.RootSystem.html#tymethod.simple_roots">Read more</a></p>
+</div><h4 id='method.positive_roots' class="method"><span id='positive_roots.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#tymethod.positive_roots' class='fnname'>positive_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#98-100' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Return the positive roots of the Lie group's root system. <a href="../../lie/root_system/trait.RootSystem.html#tymethod.positive_roots">Read more</a></p>
+</div><h4 id='method.roots' class="method"><span id='roots.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#tymethod.roots' class='fnname'>roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#102-104' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Return the roots in the Lie group's root system. <a href="../../lie/root_system/trait.RootSystem.html#tymethod.roots">Read more</a></p>
+</div><h4 id='method.determinant' class="method"><span id='determinant.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#method.determinant' class='fnname'>determinant</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/root_system.rs.html#192-194' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Return the determinant of the Cartan matrix of the Lie group.</p>
+</div><h4 id='method.num_simple_roots' class="method"><span id='num_simple_roots.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#method.num_simple_roots' class='fnname'>num_simple_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/root_system.rs.html#246-248' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Return the number of simple roots in the Lie group's root system. <a href="../../lie/root_system/trait.RootSystem.html#method.num_simple_roots">Read more</a></p>
+</div><h4 id='method.num_positive_roots' class="method"><span id='num_positive_roots.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#method.num_positive_roots' class='fnname'>num_positive_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/root_system.rs.html#280-282' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Return the number of positive roots in the Lie group's root system.</p>
+</div><h4 id='method.num_roots' class="method"><span id='num_roots.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#method.num_roots' class='fnname'>num_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/root_system.rs.html#314-316' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Return a number of roots in the Lie group's root system.</p>
+</div><h4 id='method.inner_product' class="method"><span id='inner_product.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#method.inner_product' class='fnname'>inner_product</a>&lt;'a, 'b&gt;(&amp;'a self, a: &amp;'b <a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>, b: &amp;'b <a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/root_system.rs.html#342-359' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Evaluate the Euclidean inner product between two roots of the system. <a href="../../lie/root_system/trait.RootSystem.html#method.inner_product">Read more</a></p>
-</div><h4 id='method.scalar_product' class="method"><span id='scalar_product.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#method.scalar_product' class='fnname'>scalar_product</a>(&amp;self, b: &amp;<a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>, a: &amp;<a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/root_system.rs.html#351-360' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.scalar_product' class="method"><span id='scalar_product.v' class='invisible'><code>fn <a href='../../lie/root_system/trait.RootSystem.html#method.scalar_product' class='fnname'>scalar_product</a>(&amp;self, b: &amp;<a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>, a: &amp;<a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/root_system.rs.html#375-384' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Evaluate the scalar product between two roots of the system. <a href="../../lie/root_system/trait.RootSystem.html#method.scalar_product">Read more</a></p>
-</div></div><h3 id='impl-Display' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html" title="trait core::fmt::Display">Display</a> for <a class="struct" href="../../lie/series/struct.TypeG.html" title="struct lie::series::TypeG">TypeG</a></code><a href='#impl-Display' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#104-108' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt-1' class="method"><span id='fmt.v-1' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#105-107' title='goto source code'>[src]</a></span></h4>
+</div></div><h3 id='impl-Display' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html" title="trait core::fmt::Display">Display</a> for <a class="struct" href="../../lie/series/struct.TypeG.html" title="struct lie::series::TypeG">TypeG</a></code><a href='#impl-Display' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#111-115' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt-1' class="method"><span id='fmt.v-1' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/lie/series/type_g.rs.html#112-114' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#tymethod.fmt">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
@@ -133,20 +142,22 @@ their corresponding &#39;standard&#39; label.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

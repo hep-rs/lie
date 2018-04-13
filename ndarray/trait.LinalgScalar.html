@@ -10,8 +10,11 @@
     <title>ndarray::LinalgScalar - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Trait LinalgScalar</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='index.html'>ndarray</a></p><script>window.sidebarCurrent = {name: 'LinalgScalar', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -51,15 +61,14 @@
                    </a>
                </span><a class='srclink' href='../src/ndarray/linalg_traits.rs.html#24-32' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait LinalgScalar: 'static + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> + <a class="trait" href="../num_traits/identities/trait.Zero.html" title="trait num_traits::identities::Zero">Zero</a> + <a class="trait" href="../num_traits/identities/trait.One.html" title="trait num_traits::identities::One">One</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Add.html" title="trait core::ops::arith::Add">Add</a>&lt;Output = Self&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Sub.html" title="trait core::ops::arith::Sub">Sub</a>&lt;Output = Self&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Mul.html" title="trait core::ops::arith::Mul">Mul</a>&lt;Output = Self&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Div.html" title="trait core::ops::arith::Div">Div</a>&lt;Output = Self&gt; { }</pre><div class='docblock'><p>Elements that support linear algebra operations.</p>
-
-<p><code>&#39;static</code> for type-based specialization, <code>Copy</code> so that they don&#39;t need move
+<p><code>'static</code> for type-based specialization, <code>Copy</code> so that they don't need move
 semantics or destructors, and the rest are numerical traits.</p>
 </div>
         <h2 id='implementors' class='small-section-header'>
           Implementors<a href='#implementors' class='anchor'></a>
         </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;T&gt; LinalgScalar for T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: 'static + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> + <a class="trait" href="../num_traits/identities/trait.Zero.html" title="trait num_traits::identities::Zero">Zero</a> + <a class="trait" href="../num_traits/identities/trait.One.html" title="trait num_traits::identities::One">One</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Add.html" title="trait core::ops::arith::Add">Add</a>&lt;Output = T&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Sub.html" title="trait core::ops::arith::Sub">Sub</a>&lt;Output = T&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Mul.html" title="trait core::ops::arith::Mul">Mul</a>&lt;Output = T&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Div.html" title="trait core::ops::arith::Div">Div</a>&lt;Output = T&gt;,&nbsp;</span></code></li>
+    <li><div class='out-of-band'><a class='srclink' href='../src/ndarray/linalg_traits.rs.html#34-43' title='goto source code'>[src]</a></div><code>impl&lt;T&gt; LinalgScalar for T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: 'static + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> + <a class="trait" href="../num_traits/identities/trait.Zero.html" title="trait num_traits::identities::Zero">Zero</a> + <a class="trait" href="../num_traits/identities/trait.One.html" title="trait num_traits::identities::One">One</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Add.html" title="trait core::ops::arith::Add">Add</a>&lt;Output = T&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Sub.html" title="trait core::ops::arith::Sub">Sub</a>&lt;Output = T&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Mul.html" title="trait core::ops::arith::Mul">Mul</a>&lt;Output = T&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Div.html" title="trait core::ops::arith::Div">Div</a>&lt;Output = T&gt;,&nbsp;</span></code></li>
 </ul><script type="text/javascript" async
                          src="../implementors/ndarray/trait.LinalgScalar.js">
                  </script></section>
@@ -75,20 +84,22 @@ semantics or destructors, and the rest are numerical traits.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

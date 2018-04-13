@@ -10,8 +10,11 @@
     <title>lie::root_system::RootSystem - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -30,9 +33,16 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Trait RootSystem</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.cartan_matrix">cartan_matrix</a><a href="#tymethod.basis_lengths">basis_lengths</a><a href="#tymethod.simple_roots">simple_roots</a><a href="#tymethod.positive_roots">positive_roots</a><a href="#tymethod.roots">roots</a></div><a class="sidebar-title" href="#provided-methods">Provided Methods</a><div class="sidebar-links"><a href="#method.rank">rank</a><a href="#method.num_simple_roots">num_simple_roots</a><a href="#method.num_positive_roots">num_positive_roots</a><a href="#method.num_roots">num_roots</a><a href="#method.inner_product">inner_product</a><a href="#method.scalar_product">scalar_product</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='../index.html'>lie</a>::<wbr><a href='index.html'>root_system</a></p><script>window.sidebarCurrent = {name: 'RootSystem', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
+        <p class='location'>Trait RootSystem</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.cartan_matrix">cartan_matrix</a><a href="#tymethod.inverse_cartan_matrix">inverse_cartan_matrix</a><a href="#tymethod.basis_lengths">basis_lengths</a><a href="#tymethod.simple_roots">simple_roots</a><a href="#tymethod.positive_roots">positive_roots</a><a href="#tymethod.roots">roots</a></div><a class="sidebar-title" href="#provided-methods">Provided Methods</a><div class="sidebar-links"><a href="#method.rank">rank</a><a href="#method.determinant">determinant</a><a href="#method.num_simple_roots">num_simple_roots</a><a href="#method.num_positive_roots">num_positive_roots</a><a href="#method.num_roots">num_roots</a><a href="#method.inner_product">inner_product</a><a href="#method.scalar_product">scalar_product</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='../index.html'>lie</a>::<wbr><a href='index.html'>root_system</a></p><script>window.sidebarCurrent = {name: 'RootSystem', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -49,52 +59,58 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/lie/root_system.rs.html#129-361' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/lie/root_system.rs.html#142-385' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait RootSystem {
     fn <a href='#tymethod.cartan_matrix' class='fnname'>cartan_matrix</a>(&amp;self) -&gt; &amp;<a class="type" href="../../lie/root_system/type.CartanMatrix.html" title="type lie::root_system::CartanMatrix">CartanMatrix</a>;
+<div class='item-spacer'></div>    fn <a href='#tymethod.inverse_cartan_matrix' class='fnname'>inverse_cartan_matrix</a>(&amp;self) -&gt; &amp;<a class="type" href="../../lie/root_system/type.InverseCartanMatrix.html" title="type lie::root_system::InverseCartanMatrix">InverseCartanMatrix</a>;
 <div class='item-spacer'></div>    fn <a href='#tymethod.basis_lengths' class='fnname'>basis_lengths</a>(&amp;self) -&gt; &amp;<a class="type" href="../../lie/root_system/type.BasisLengths.html" title="type lie::root_system::BasisLengths">BasisLengths</a>;
 <div class='item-spacer'></div>    fn <a href='#tymethod.simple_roots' class='fnname'>simple_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>;
 <div class='item-spacer'></div>    fn <a href='#tymethod.positive_roots' class='fnname'>positive_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>;
 <div class='item-spacer'></div>    fn <a href='#tymethod.roots' class='fnname'>roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>;
 
     fn <a href='#method.rank' class='fnname'>rank</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> { ... }
+<div class='item-spacer'></div>    fn <a href='#method.determinant' class='fnname'>determinant</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a> { ... }
 <div class='item-spacer'></div>    fn <a href='#method.num_simple_roots' class='fnname'>num_simple_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> { ... }
 <div class='item-spacer'></div>    fn <a href='#method.num_positive_roots' class='fnname'>num_positive_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> { ... }
 <div class='item-spacer'></div>    fn <a href='#method.num_roots' class='fnname'>num_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> { ... }
 <div class='item-spacer'></div>    fn <a href='#method.inner_product' class='fnname'>inner_product</a>&lt;'a, 'b&gt;(&amp;'a self, a: &amp;'b <a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>, b: &amp;'b <a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a> { ... }
 <div class='item-spacer'></div>    fn <a href='#method.scalar_product' class='fnname'>scalar_product</a>(&amp;self, b: &amp;<a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>, a: &amp;<a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a> { ... }
 }</pre><div class='docblock'><p>Trait for root systems.</p>
-
-<h2 id='definition' class='section-header'><a href='#definition'>Definition</a></h2>
+<h2 id="definition" class="section-header"><a href="#definition">Definition</a></h2>
 <p>Let \(V\) be a finite dimensional Euclidean vector space with the standard
 Euclidean inner product being denoted by \(\langle \cdot, \cdot \rangle\).
 A <em>root system</em> in \(V\) is a finite set \(\Phi\) of non-zero vectors
 (called <em>roots</em>) that satisfy the following conditions:</p>
-
 <ol>
-<li><p>The roots span \(V\);</p></li>
-<li><p>The only scalar multiple of a root \(\alpha \in \Phi\) that belong to
-\(\Phi\) are \(\alpha\) and \(-\alpha\);</p></li>
-<li><p>For every root \(\alpha \in \Phi\), the set \(\Phi\) is closed under
-reflections through the hyperplane perpendicular to \(\alpha\);</p></li>
-<li><p>If \(\alpha, \beta \in \Phi\), then the projection of
+<li>
+<p>The roots span \(V\);</p>
+</li>
+<li>
+<p>The only scalar multiple of a root \(\alpha \in \Phi\) that belong to
+\(\Phi\) are \(\alpha\) and \(-\alpha\);</p>
+</li>
+<li>
+<p>For every root \(\alpha \in \Phi\), the set \(\Phi\) is closed under
+reflections through the hyperplane perpendicular to \(\alpha\);</p>
+</li>
+<li>
+<p>If \(\alpha, \beta \in \Phi\), then the projection of
 \(\beta\) onto \(\alpha\) is a half-integral multiple of
-\(\alpha\).</p></li>
+\(\alpha\).</p>
+</li>
 </ol>
-
 <p>In addition to the set of roots themselves, there are two important subsets
 of \(\Phi\) which are commonly used:</p>
-
 <ul>
 <li>\(\Phi^{+} \subseteq \Phi\): the set of positive roots.  This is the
 subset chosen such that:
-
 <ul>
 <li>For each \(\alpha \in \Phi\), only one of \(\alpha\) and
 \(-\alpha\) are in \(\Phi^{+}\); and,</li>
 <li>For any two distinct \(\alpha, \beta \in \Phi^{+}\) then \(\alpha +
 \beta \in \Phi^{+}\) provided that \(\alpha + \beta \in \Phi\).</li>
-</ul></li>
+</ul>
+</li>
 <li>\(\Delta \subseteq \Phi^{+}\): the set of simple root.  An element of
 \(\Phi^{+}\) is a simple root if it cannot be expressed as the sum of
 two other elements in \(\Phi^{+}\).  The set of simple roots has the
@@ -102,7 +118,6 @@ property that every root in \(\Phi\) can be expressed as linear
 combination of elements of \(\Delta\) with all coefficients
 non-negative, or all coefficients non-positive.</li>
 </ul>
-
 <p>Although the roots are, strictly speaking, elements of a Euclidean vector
 space; we will not be handling these vectors directly.  Instead, all the
 relevant information is contained in the <a href="type.CartanMatrix.html">Cartan
@@ -113,60 +128,48 @@ matrix</a>.</p>
             </h2>
             <div class='methods'>
         <h3 id='tymethod.cartan_matrix' class='method'><span id='cartan_matrix.v' class='invisible'><code>fn <a href='#tymethod.cartan_matrix' class='fnname'>cartan_matrix</a>(&amp;self) -&gt; &amp;<a class="type" href="../../lie/root_system/type.CartanMatrix.html" title="type lie::root_system::CartanMatrix">CartanMatrix</a></code></span></h3><div class='docblock'><p>Return the Cartan matrix of the Lie group.</p>
-
-<h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
+<h1 id="example" class="section-header"><a href="#example">Example</a></h1>
 <p>The Cartan matrix for \(\mathrm{SU}(3)\) is:</p>
-
 <p>\begin{equation}
-  \begin{pmatrix} 2 &amp; -1 \\ -1 &amp; 2 \end{pmatrix}
+\begin{pmatrix} 2 &amp; -1 \\ -1 &amp; 2 \end{pmatrix}
 \end{equation}</p>
+</div><h3 id='tymethod.inverse_cartan_matrix' class='method'><span id='inverse_cartan_matrix.v' class='invisible'><code>fn <a href='#tymethod.inverse_cartan_matrix' class='fnname'>inverse_cartan_matrix</a>(&amp;self) -&gt; &amp;<a class="type" href="../../lie/root_system/type.InverseCartanMatrix.html" title="type lie::root_system::InverseCartanMatrix">InverseCartanMatrix</a></code></span></h3><div class='docblock'><p>Return the inverse Cartan matrix of the Lie group.</p>
+<p>See [<code>InverseCartanMatrix</code>] for details as to how the matrix is stored
+within the library.</p>
 </div><h3 id='tymethod.basis_lengths' class='method'><span id='basis_lengths.v' class='invisible'><code>fn <a href='#tymethod.basis_lengths' class='fnname'>basis_lengths</a>(&amp;self) -&gt; &amp;<a class="type" href="../../lie/root_system/type.BasisLengths.html" title="type lie::root_system::BasisLengths">BasisLengths</a></code></span></h3><div class='docblock'><p>Return the squared norm of each simple roots.</p>
-
-<h1 id='example-1' class='section-header'><a href='#example-1'>Example</a></h1>
+<h1 id="example-1" class="section-header"><a href="#example-1">Example</a></h1>
 <p>The squared norms of the three simple roots in \(B_{3} =
 \mathrm{SO}(7)\) are:</p>
-
 <p>\begin{equation}
-  \left( 2, 2, 1 \right)
+\left( 2, 2, 1 \right)
 \end{equation}</p>
-
 <p>The three roots in Euclidean space are:</p>
-
 <p>\begin{align}
-  \alpha_{1} &amp;= (1, -1,  0) \\
-  \alpha_{2} &amp;= (0,  1, -1) \\
-  \alpha_{3} &amp;= (0,  0,  1)
+\alpha_{1} &amp;= (1, -1,  0) \\
+\alpha_{2} &amp;= (0,  1, -1) \\
+\alpha_{3} &amp;= (0,  0,  1)
 \end{align}</p>
-</div><h3 id='tymethod.simple_roots' class='method'><span id='simple_roots.v' class='invisible'><code>fn <a href='#tymethod.simple_roots' class='fnname'>simple_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span></h3><div class='docblock'><p>Return the simple roots of the Lie group&#39;s root system.</p>
-
+</div><h3 id='tymethod.simple_roots' class='method'><span id='simple_roots.v' class='invisible'><code>fn <a href='#tymethod.simple_roots' class='fnname'>simple_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span></h3><div class='docblock'><p>Return the simple roots of the Lie group's root system.</p>
 <p>The roots are sorted such that they correspond with the Cartan matrix.</p>
-
 <p>This can be algorithmically created using the <code>find_simple_roots</code>
 function.</p>
-
-<h1 id='definition-1' class='section-header'><a href='#definition-1'>Definition</a></h1>
+<h1 id="definition-1" class="section-header"><a href="#definition-1">Definition</a></h1>
 <p>The set of simple roots, \(\Delta\), consists of the subset of
 positive roots which cannot be expressed as the sum of other elements in
 \(\Phi^{+}\).</p>
-
-<h1 id='example-2' class='section-header'><a href='#example-2'>Example</a></h1>
+<h1 id="example-2" class="section-header"><a href="#example-2">Example</a></h1>
 <p>The simple roots of \(\mathrm{SU}(3)\) are:</p>
-
 <p>\begin{align}
-  (-1, 2) &amp;~ (2, -1) \\
+(-1, 2) &amp;~ (2, -1) \\
 \end{align}</p>
-</div><h3 id='tymethod.positive_roots' class='method'><span id='positive_roots.v' class='invisible'><code>fn <a href='#tymethod.positive_roots' class='fnname'>positive_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span></h3><div class='docblock'><p>Return the positive roots of the Lie group&#39;s root system.</p>
-
+</div><h3 id='tymethod.positive_roots' class='method'><span id='positive_roots.v' class='invisible'><code>fn <a href='#tymethod.positive_roots' class='fnname'>positive_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span></h3><div class='docblock'><p>Return the positive roots of the Lie group's root system.</p>
 <p>The roots should be ordered by level, but no particular ordering should
 be assumed within each level.</p>
-
 <p>This can be algorithmically created using the <code>find_positive_roots</code>
 function.</p>
-
-<h1 id='definition-2' class='section-header'><a href='#definition-2'>Definition</a></h1>
+<h1 id="definition-2" class="section-header"><a href="#definition-2">Definition</a></h1>
 <p>The set of positive roots, \(\Phi^{+} \subseteq \Phi\), is the subset
 chosen such that:</p>
-
 <ul>
 <li>For each \(\alpha \in \Phi\), only one of \(\alpha\) and
 \(-\alpha\) are in \(\Phi^{+}\); and,</li>
@@ -174,38 +177,31 @@ chosen such that:</p>
 \(\alpha+\beta \in \Phi^{+}\) provided that \(\alpha + \beta \in
 \Phi\).</li>
 </ul>
-
-<h1 id='example-3' class='section-header'><a href='#example-3'>Example</a></h1>
+<h1 id="example-3" class="section-header"><a href="#example-3">Example</a></h1>
 <p>The positive roots of \(\mathrm{SU}(3)\) are:</p>
-
 <p>\begin{align}
-  (1, &amp;~ 1) \\
-  (-1, 2) &amp;~ (2, -1) \\
+(1, &amp;~ 1) \\
+(-1, 2) &amp;~ (2, -1) \\
 \end{align}</p>
-</div><h3 id='tymethod.roots' class='method'><span id='roots.v' class='invisible'><code>fn <a href='#tymethod.roots' class='fnname'>roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span></h3><div class='docblock'><p>Return the roots in the Lie group&#39;s root system.</p>
-
+</div><h3 id='tymethod.roots' class='method'><span id='roots.v' class='invisible'><code>fn <a href='#tymethod.roots' class='fnname'>roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span></h3><div class='docblock'><p>Return the roots in the Lie group's root system.</p>
 <p>The roots should be ordered by level, but no particular ordering should
 be assumed within each level.</p>
-
 <p>This can be algorithmically created using the <code>find_roots_from_simple</code>
 or <code>find_roots_from_positive</code> functions.</p>
-
-<h1 id='definition-3' class='section-header'><a href='#definition-3'>Definition</a></h1>
-<p>The roots in the Lie group&#39;s root system corresponds to the number of
+<h1 id="definition-3" class="section-header"><a href="#definition-3">Definition</a></h1>
+<p>The roots in the Lie group's root system corresponds to the number of
 generators for the Lie group.</p>
-
-<h1 id='example-4' class='section-header'><a href='#example-4'>Example</a></h1>
+<h1 id="example-4" class="section-header"><a href="#example-4">Example</a></h1>
 <p>The Lie group \(\mathrm{SU}(3)\) has 8 generators (one common choice
 of generators is the 8 <a href="https://en.wikipedia.org/wiki/Gell-Mann_matrices">Gell-Mann
 matrices</a>), and thus
 has 8 roots:</p>
-
 <p>\begin{align}
-  (1, &amp;~ 1) \\
-  (-1, 2) &amp;~ (2, -1) \\
-  (0, 0)  &amp;~ (0, 0) \\
-  (-2, 1) &amp;~ (1, -2) \\
-  (-1, &amp;~ {-1})
+(1, &amp;~ 1) \\
+(-1, 2) &amp;~ (2, -1) \\
+(0, 0)  &amp;~ (0, 0) \\
+(-2, 1) &amp;~ (1, -2) \\
+(-1, &amp;~ {-1})
 \end{align}</p>
 </div></div>
             <h2 id='provided-methods' class='small-section-header'>
@@ -213,73 +209,58 @@ has 8 roots:</p>
             </h2>
             <div class='methods'>
         <h3 id='method.rank' class='method'><span id='rank.v' class='invisible'><code>fn <a href='#method.rank' class='fnname'>rank</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h3><div class='docblock'><p>Return the rank of the Lie group.</p>
-
-<h1 id='definition-4' class='section-header'><a href='#definition-4'>Definition</a></h1>
-<p>The rank of a Lie group is the dimensionality of the group&#39;s Cartan
+<h1 id="definition-4" class="section-header"><a href="#definition-4">Definition</a></h1>
+<p>The rank of a Lie group is the dimensionality of the group's Cartan
 subgroup.  In the case of groups of matrices, the Cartan subgroup
 corresponds to the subgroup of diagonal matrices.</p>
-
 <p>The rank of the Lie group also corresponds to the number of simple roots
-in the Lie group&#39;s root system.</p>
-
-<h1 id='example-5' class='section-header'><a href='#example-5'>Example</a></h1>
+in the Lie group's root system.</p>
+<h1 id="example-5" class="section-header"><a href="#example-5">Example</a></h1>
 <p>The Lie group \(\mathrm{SU}(3)\) has rank 2 and the two generators of
 the Cartan subgroup are:</p>
-
 <p>\begin{equation}
-  \left\{
-  \begin{pmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; -1 &amp; 0 \\ 0 &amp; 0 &amp; 0 \end{pmatrix}
-  ,
-  \frac{1}{\sqrt{3}} \begin{pmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; -2 \end{pmatrix}
-  \right\}
+\left\{
+\begin{pmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; -1 &amp; 0 \\ 0 &amp; 0 &amp; 0 \end{pmatrix}
+,
+\frac{1}{\sqrt{3}} \begin{pmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; -2 \end{pmatrix}
+\right\}
 \end{equation}</p>
-
 <p>In the case of \(\mathrm{SU}(3)\), the simple roots are \(\{(2, -1),
 (-1, 2)\}\) and correspond to the rows of the Cartan matrix of
 \(\mathrm{SU}(3)\).</p>
-</div><h3 id='method.num_simple_roots' class='method'><span id='num_simple_roots.v' class='invisible'><code>fn <a href='#method.num_simple_roots' class='fnname'>num_simple_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h3><div class='docblock'><p>Return the number of simple roots in the Lie group&#39;s root system.</p>
-
-<h1 id='warning' class='section-header'><a href='#warning'>Warning</a></h1>
+</div><h3 id='method.determinant' class='method'><span id='determinant.v' class='invisible'><code>fn <a href='#method.determinant' class='fnname'>determinant</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a></code></span></h3><div class='docblock'><p>Return the determinant of the Cartan matrix of the Lie group.</p>
+</div><h3 id='method.num_simple_roots' class='method'><span id='num_simple_roots.v' class='invisible'><code>fn <a href='#method.num_simple_roots' class='fnname'>num_simple_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h3><div class='docblock'><p>Return the number of simple roots in the Lie group's root system.</p>
+<h1 id="warning" class="section-header"><a href="#warning">Warning</a></h1>
 <p>The default implementation of this function will generate all the simple
 roots in the root system, and then return the length of the
 corresponding vector.  If there exists a simple closed form for the
 number of simple roots, it should be implemented.</p>
-</div><h3 id='method.num_positive_roots' class='method'><span id='num_positive_roots.v' class='invisible'><code>fn <a href='#method.num_positive_roots' class='fnname'>num_positive_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h3><div class='docblock'><p>Return the number of positive roots in the Lie group&#39;s root system.</p>
-</div><h3 id='method.num_roots' class='method'><span id='num_roots.v' class='invisible'><code>fn <a href='#method.num_roots' class='fnname'>num_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h3><div class='docblock'><p>Return a number of roots in the Lie group&#39;s root system.</p>
+</div><h3 id='method.num_positive_roots' class='method'><span id='num_positive_roots.v' class='invisible'><code>fn <a href='#method.num_positive_roots' class='fnname'>num_positive_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h3><div class='docblock'><p>Return the number of positive roots in the Lie group's root system.</p>
+</div><h3 id='method.num_roots' class='method'><span id='num_roots.v' class='invisible'><code>fn <a href='#method.num_roots' class='fnname'>num_roots</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h3><div class='docblock'><p>Return a number of roots in the Lie group's root system.</p>
 </div><h3 id='method.inner_product' class='method'><span id='inner_product.v' class='invisible'><code>fn <a href='#method.inner_product' class='fnname'>inner_product</a>&lt;'a, 'b&gt;(&amp;'a self, a: &amp;'b <a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>, b: &amp;'b <a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a></code></span></h3><div class='docblock'><p>Evaluate the Euclidean inner product between two roots of the system.</p>
-
 <p>The Euclidean product, denoted by \(( \cdot, \cdot)\), is the usual
 inner product from Euclidean space.</p>
-
 <p>The roots are scaled such that the product is always an integer.  See
 <a href="type.BasisLengths.html"><code>BasisLengths</code></a> for more information.</p>
-
-<h1 id='example-6' class='section-header'><a href='#example-6'>Example</a></h1>
+<h1 id="example-6" class="section-header"><a href="#example-6">Example</a></h1>
 <p>The roots of \(B_{3}\) in Euclidean space are</p>
-
 <p>\begin{align}
-  \alpha_{1} &amp;= (1, -1,  0) \\
-  \alpha_{2} &amp;= (0,  1, -1) \\
-  \alpha_{3} &amp;= (0,  0,  1)
+\alpha_{1} &amp;= (1, -1,  0) \\
+\alpha_{2} &amp;= (0,  1, -1) \\
+\alpha_{3} &amp;= (0,  0,  1)
 \end{align}</p>
-
 <p>So for example \(( \alpha_{1}, \alpha_{2} ) = 2\), and
 \(( \alpha_{1}, \alpha_{2} ) = -1\).</p>
-
-<h1 id='panics' class='section-header'><a href='#panics'>Panics</a></h1>
+<h1 id="panics" class="section-header"><a href="#panics">Panics</a></h1>
 <p>Panics if the roots do not have the same rank as the root system.</p>
 </div><h3 id='method.scalar_product' class='method'><span id='scalar_product.v' class='invisible'><code>fn <a href='#method.scalar_product' class='fnname'>scalar_product</a>(&amp;self, b: &amp;<a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>, a: &amp;<a class="struct" href="../../lie/struct.Root.html" title="struct lie::Root">Root</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a></code></span></h3><div class='docblock'><p>Evaluate the scalar product between two roots of the system.</p>
-
 <p>The scalar product between roots is defined as</p>
-
 <p>\begin{equation}
-  \langle \beta, \alpha \rangle \equiv 2 \frac{(\alpha, \beta)}{(\alpha, \alpha)}
+\langle \beta, \alpha \rangle \equiv 2 \frac{(\alpha, \beta)}{(\alpha, \alpha)}
 \end{equation}</p>
-
 <p>where \((\cdot, \cdot)\) is the usual Euclidean inner product between
 the roots in Euclidean space.  This should always evaluate to an integer
 in a root system.</p>
-
 <p>Note that this scalar product is only linear in its first argument.  It
 is <em>not</em> an inner product.</p>
 </div></div>
@@ -287,13 +268,13 @@ is <em>not</em> an inner product.</p>
           Implementors<a href='#implementors' class='anchor'></a>
         </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><div class='out-of-band'><a class='srclink' href='../../src/lie/series/type_a.rs.html#98-122' title='goto source code'>[src]</a></div><code>impl RootSystem for <a class="struct" href="../../lie/series/struct.TypeA.html" title="struct lie::series::TypeA">TypeA</a></code></li>
-<li><div class='out-of-band'><a class='srclink' href='../../src/lie/series/type_b.rs.html#105-129' title='goto source code'>[src]</a></div><code>impl RootSystem for <a class="struct" href="../../lie/series/struct.TypeB.html" title="struct lie::series::TypeB">TypeB</a></code></li>
-<li><div class='out-of-band'><a class='srclink' href='../../src/lie/series/type_c.rs.html#110-134' title='goto source code'>[src]</a></div><code>impl RootSystem for <a class="struct" href="../../lie/series/struct.TypeC.html" title="struct lie::series::TypeC">TypeC</a></code></li>
-<li><div class='out-of-band'><a class='srclink' href='../../src/lie/series/type_d.rs.html#116-140' title='goto source code'>[src]</a></div><code>impl RootSystem for <a class="struct" href="../../lie/series/struct.TypeD.html" title="struct lie::series::TypeD">TypeD</a></code></li>
-<li><div class='out-of-band'><a class='srclink' href='../../src/lie/series/type_e.rs.html#141-165' title='goto source code'>[src]</a></div><code>impl RootSystem for <a class="struct" href="../../lie/series/struct.TypeE.html" title="struct lie::series::TypeE">TypeE</a></code></li>
-<li><div class='out-of-band'><a class='srclink' href='../../src/lie/series/type_f.rs.html#84-108' title='goto source code'>[src]</a></div><code>impl RootSystem for <a class="struct" href="../../lie/series/struct.TypeF.html" title="struct lie::series::TypeF">TypeF</a></code></li>
-<li><div class='out-of-band'><a class='srclink' href='../../src/lie/series/type_g.rs.html#74-98' title='goto source code'>[src]</a></div><code>impl RootSystem for <a class="struct" href="../../lie/series/struct.TypeG.html" title="struct lie::series::TypeG">TypeG</a></code></li>
+    <li><div class='out-of-band'><a class='srclink' href='../../src/lie/series/type_a.rs.html#115-143' title='goto source code'>[src]</a></div><code>impl RootSystem for <a class="struct" href="../../lie/series/struct.TypeA.html" title="struct lie::series::TypeA">TypeA</a></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../../src/lie/series/type_b.rs.html#125-153' title='goto source code'>[src]</a></div><code>impl RootSystem for <a class="struct" href="../../lie/series/struct.TypeB.html" title="struct lie::series::TypeB">TypeB</a></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../../src/lie/series/type_c.rs.html#130-158' title='goto source code'>[src]</a></div><code>impl RootSystem for <a class="struct" href="../../lie/series/struct.TypeC.html" title="struct lie::series::TypeC">TypeC</a></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../../src/lie/series/type_d.rs.html#147-175' title='goto source code'>[src]</a></div><code>impl RootSystem for <a class="struct" href="../../lie/series/struct.TypeD.html" title="struct lie::series::TypeD">TypeD</a></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../../src/lie/series/type_e.rs.html#187-215' title='goto source code'>[src]</a></div><code>impl RootSystem for <a class="struct" href="../../lie/series/struct.TypeE.html" title="struct lie::series::TypeE">TypeE</a></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../../src/lie/series/type_f.rs.html#85-113' title='goto source code'>[src]</a></div><code>impl RootSystem for <a class="struct" href="../../lie/series/struct.TypeF.html" title="struct lie::series::TypeF">TypeF</a></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../../src/lie/series/type_g.rs.html#77-105' title='goto source code'>[src]</a></div><code>impl RootSystem for <a class="struct" href="../../lie/series/struct.TypeG.html" title="struct lie::series::TypeG">TypeG</a></code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/lie/root_system/trait.RootSystem.js">
                  </script></section>
@@ -309,20 +290,22 @@ is <em>not</em> an inner product.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

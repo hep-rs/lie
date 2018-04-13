@@ -10,8 +10,11 @@
     <title>lib.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -182,6 +192,10 @@
 <span id="136">136</span>
 <span id="137">137</span>
 <span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! `lie-rs` provides functionalities to manipulate Lie groups and their</span>
 <span class="doccomment">//! representations, including the ability to:</span>
@@ -291,6 +305,10 @@
 <span class="doccomment">//!   of irreducible representations, where a sum of representations amounts to</span>
 <span class="doccomment">//!   arranging each matrix representation in block-diagonal.</span>
 <span class="doccomment">//!</span>
+<span class="doccomment">//! Quite frequently, the notation for a representation of \\(G\\) is simplified</span>
+<span class="doccomment">//! by just referring to \\(V\\) with the function \\(\Pi : G \to</span>
+<span class="doccomment">//! \mathop{\mathrm{Aut}}(V)\\) being implicit.</span>
+<span class="doccomment">//!</span>
 <span class="doccomment">//! # Root Systems</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! A [root system](https://en.wikipedia.org/wiki/Root_system) is a</span>
@@ -320,7 +338,7 @@
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">root</span>::<span class="ident">Root</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">error</span>::<span class="ident">Error</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">root_system</span>::{<span class="ident">CartanMatrix</span>, <span class="ident">RootSystem</span>, <span class="ident">BasisLengths</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">root_system</span>::{<span class="ident">BasisLengths</span>, <span class="ident">CartanMatrix</span>, <span class="ident">InverseCartanMatrix</span>, <span class="ident">RootSystem</span>};
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
@@ -335,20 +353,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

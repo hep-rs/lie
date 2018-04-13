@@ -10,8 +10,11 @@
     <title>lie::root_system::BasisLengths - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Type Definition BasisLengths</p><div class="sidebar-elems"><p class='location'><a href='../index.html'>lie</a>::<wbr><a href='index.html'>root_system</a></p><script>window.sidebarCurrent = {name: 'BasisLengths', ty: 'type', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -49,46 +59,35 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/lie/root_system.rs.html#85' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/lie/root_system.rs.html#99' title='goto source code'>[src]</a></span></h1>
 <pre class='rust typedef'>type BasisLengths = <a class="type" href="../../ndarray/aliases/type.Array1.html" title="type ndarray::aliases::Array1">Array1</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>&gt;;</pre><div class='docblock'><p>Type definition for a basis lengths.</p>
-
-<h1 id='definition' class='section-header'><a href='#definition'>Definition</a></h1>
+<h1 id="definition" class="section-header"><a href="#definition">Definition</a></h1>
 <p>The array is defined as</p>
-
 <p>\begin{equation}
-  D_{i} = (\alpha_{i}, \alpha_{i})
+D_{i} = (\alpha_{i}, \alpha_{i})
 \end{equation}</p>
-
 <p>and must use the same labelling convention for \(\alpha_{i}\) as used in
 the Cartan matrix.  Although the roots can be arbitrarily rescaled by a
 common factor, they should be chosen such that each \(D_{i}\) is an
 integer and such that the inner product below always produces an integer.</p>
-
 <p>In combination with the Cartan matrix, this allows for the inner product of
 any two simple roots to be evaluated,</p>
-
 <p>\begin{equation}
-  ( \alpha_{i}, \alpha_{j} ) = \frac{1}{2} A_{ji} D_{i},
+( \alpha_{i}, \alpha_{j} ) = \frac{1}{2} A_{ji} D_{i},
 \end{equation}</p>
-
 <p>which can then be further generalized for any two roots \(\beta_{n} =
 \sum_{i} a_{ni} \alpha_{i}\):</p>
-
 <p>\begin{equation}
-  ( \beta_{n}, \beta_{m} ) = \sum_{ij} a_{ni} b_{mj} ( \alpha_{i}, \alpha_{j} ).
+( \beta_{n}, \beta_{m} ) = \sum_{ij} a_{ni} b_{mj} ( \alpha_{i}, \alpha_{j} ).
 \end{equation}</p>
-
 <p>Note that in order to simplify the numerical computations, all roots should
 be scaled such that \(\langle \alpha_{i}, \alpha_{j} \rangle\) returns an
 integer.</p>
-
 <p>This array is closely related to the \(D_{ij}\) matrix defined by</p>
-
 <p>\begin{equation}
-  D_{ij} = \frac{\delta_{ij}}{(\alpha_{i}, \alpha_{i})}
+D_{ij} = \frac{\delta_{ij}}{(\alpha_{i}, \alpha_{i})}
 \end{equation}</p>
-
-<p>but it isn&#39;t used here in order to avoid requiring the use of rational
+<p>but it isn't used here in order to avoid requiring the use of rational
 numbers.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
@@ -103,20 +102,22 @@ numbers.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
