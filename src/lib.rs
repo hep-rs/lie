@@ -106,6 +106,10 @@
 //!   of irreducible representations, where a sum of representations amounts to
 //!   arranging each matrix representation in block-diagonal.
 //!
+//! Quite frequently, the notation for a representation of \\(G\\) is simplified
+//! by just referring to \\(V\\) with the function \\(\Pi : G \to
+//! \mathop{\mathrm{Aut}}(V)\\) being implicit.
+//!
 //! # Root Systems
 //!
 //! A [root system](https://en.wikipedia.org/wiki/Root_system) is a
