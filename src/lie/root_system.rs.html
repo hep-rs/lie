@@ -759,27 +759,22 @@
 <span id="703">703</span>
 <span id="704">704</span>
 <span id="705">705</span>
-<span id="706">706</span>
-<span id="707">707</span>
-<span id="708">708</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Definitions for root systems</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! A [root system](https://en.wikipedia.org/wiki/Root_system) is a</span>
 <span class="doccomment">//! configuration of vectors in Euclidean space which satisfy certain</span>
-<span class="doccomment">//! geometrical properties.  The definition for a root system is found</span>
-<span class="doccomment">//! [here](root_system/trait.RootSystem.html).</span>
+<span class="doccomment">//! geometrical properties.  The definition for a root system is found at</span>
+<span class="doccomment">//! [`RootSystem`].</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! This module defines the [`CartanMatrix`](type.CartanMatrix.html) which</span>
-<span class="doccomment">//! describes the root system.  From the Cartan matrix, the simple roots can be</span>
-<span class="doccomment">//! calculated using [`find_simple_roots`](fn.find_simple_roots.html).  From the</span>
-<span class="doccomment">//! simple roots, it is subsequently possible to algorithmically generate all</span>
-<span class="doccomment">//! the roots in the root system with</span>
-<span class="doccomment">//! [`find_positive_roots`](fn.find_positive_roots.html) and finally, all roots</span>
-<span class="doccomment">//! (including negative and zero roots) can be generated with either</span>
-<span class="doccomment">//! [`find_roots_from_positive`](fn.find_roots_from_positive.html) or</span>
-<span class="doccomment">//! [`find_roots_from_simple`](fn.find_roots_from_simple.html).</span>
-<span class="kw">use</span> <span class="ident">ndarray</span>::{<span class="self">self</span>, <span class="ident">Axis</span>};
+<span class="doccomment">//! This module defines the [`CartanMatrix`] which describes the root system.</span>
+<span class="doccomment">//! From the Cartan matrix, the simple roots can be calculated using</span>
+<span class="doccomment">//! [`find_simple_roots`].  From the simple roots, it is subsequently possible</span>
+<span class="doccomment">//! to algorithmically generate all the roots in the root system with</span>
+<span class="doccomment">//! [`find_positive_roots`] and finally, all roots (including negative and zero</span>
+<span class="doccomment">//! roots) can be generated with either [`find_roots_from_positive`] or</span>
+<span class="doccomment">//! [`find_roots_from_simple`].</span>
+<span class="kw">use</span> <span class="ident">ndarray</span>::{<span class="ident">Array1</span>, <span class="ident">Array2</span>, <span class="ident">Axis</span>};
 <span class="kw">use</span> <span class="ident">rayon</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 
 <span class="kw">use</span> <span class="ident">root</span>::<span class="ident">Root</span>;
@@ -804,7 +799,7 @@
 <span class="doccomment">/// Since the projection of one root onto another must result in a half-integral</span>
 <span class="doccomment">/// multiple of the latter root, it follows that all entries inside the matrix</span>
 <span class="doccomment">/// are integers.</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">CartanMatrix</span> <span class="op">=</span> <span class="ident">ndarray</span>::<span class="ident">Array2</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">CartanMatrix</span> <span class="op">=</span> <span class="ident">Array2</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>;
 
 <span class="doccomment">/// Type definition for an inverted Cartan matrix.</span>
 <span class="doccomment">///</span>
@@ -818,7 +813,7 @@
 <span class="doccomment">/// at most the determinant of the Cartan matrix.  Consequently, the inverted</span>
 <span class="doccomment">/// matrix is stored as the tuple \\((M, d)\\) where \\(M = d A^{-1}\\) and \\(d</span>
 <span class="doccomment">/// = \det(A)\\).</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">InverseCartanMatrix</span> <span class="op">=</span> (<span class="ident">ndarray</span>::<span class="ident">Array2</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>, <span class="ident">i64</span>);
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">InverseCartanMatrix</span> <span class="op">=</span> (<span class="ident">Array2</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>, <span class="ident">i64</span>);
 
 <span class="doccomment">/// Type definition for a basis lengths.</span>
 <span class="doccomment">///</span>
@@ -861,7 +856,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// but it isn&#39;t used here in order to avoid requiring the use of rational</span>
 <span class="doccomment">/// numbers.</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">BasisLengths</span> <span class="op">=</span> <span class="ident">ndarray</span>::<span class="ident">Array1</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">BasisLengths</span> <span class="op">=</span> <span class="ident">Array1</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>;
 
 <span class="doccomment">/// Trait for root systems.</span>
 <span class="doccomment">///</span>
@@ -902,8 +897,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Although the roots are, strictly speaking, elements of a Euclidean vector</span>
 <span class="doccomment">/// space; we will not be handling these vectors directly.  Instead, all the</span>
-<span class="doccomment">/// relevant information is contained in the [Cartan</span>
-<span class="doccomment">/// matrix](type.CartanMatrix.html).</span>
+<span class="doccomment">/// relevant information is contained in the [`CartanMatrix`].</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">RootSystem</span> {
     <span class="doccomment">/// Return the rank of the Lie group.</span>
     <span class="doccomment">///</span>
@@ -1086,7 +1080,7 @@
     <span class="doccomment">/// inner product from Euclidean space.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// The roots are scaled such that the product is always an integer.  See</span>
-    <span class="doccomment">/// [`BasisLengths`](type.BasisLengths.html) for more information.</span>
+    <span class="doccomment">/// [`BasisLengths`] for more information.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">///</span>

@@ -367,9 +367,6 @@
 <span id="311">311</span>
 <span id="312">312</span>
 <span id="313">313</span>
-<span id="314">314</span>
-<span id="315">315</span>
-<span id="316">316</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">ndarray</span>::<span class="ident">Array2</span>;
@@ -547,12 +544,9 @@
         .<span class="ident">map</span>(<span class="op">|</span><span class="ident">level</span><span class="op">|</span> {
             (<span class="number">0</span>..<span class="ident">rank</span> <span class="op">-</span> <span class="ident">level</span> <span class="op">+</span> <span class="number">1</span>)
                 .<span class="ident">map</span>(<span class="op">|</span><span class="ident">offset</span><span class="op">|</span> {
-                    <span class="ident">simple_roots</span>[<span class="ident">offset</span>..<span class="ident">offset</span> <span class="op">+</span> <span class="ident">level</span>].<span class="ident">iter</span>().<span class="ident">fold</span>(
-                        <span class="ident">Root</span>::<span class="ident">zero</span>(<span class="ident">rank</span>),
-                        <span class="op">|</span><span class="ident">result</span>, <span class="ident">r</span><span class="op">|</span> {
-                            <span class="ident">result</span> <span class="op">+</span> <span class="ident">r</span>
-                        },
-                    )
+                    <span class="ident">simple_roots</span>[<span class="ident">offset</span>..<span class="ident">offset</span> <span class="op">+</span> <span class="ident">level</span>]
+                        .<span class="ident">iter</span>()
+                        .<span class="ident">fold</span>(<span class="ident">Root</span>::<span class="ident">zero</span>(<span class="ident">rank</span>), <span class="op">|</span><span class="ident">result</span>, <span class="ident">r</span><span class="op">|</span> <span class="ident">result</span> <span class="op">+</span> <span class="ident">r</span>)
                 })
                 .<span class="ident">collect</span>()
         })
