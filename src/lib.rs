@@ -116,8 +116,8 @@
 //! configuration of vectors in Euclidean space which satisfy certain
 //! geometrical properties.  Although it might not appear that they have much in
 //! common with the study of Lie groups and their representations, they are in
-//! fact extremely useful.  The definition for a root system is found
-//! [here](root_system/trait.RootSystem.html).
+//! fact extremely useful.  The definition for a root system is found at
+//! [`RootSystem`].
 //!
 //!
 //! ## Connection to Group Representations

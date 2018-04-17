@@ -2,19 +2,17 @@
 //!
 //! A [root system](https://en.wikipedia.org/wiki/Root_system) is a
 //! configuration of vectors in Euclidean space which satisfy certain
-//! geometrical properties.  The definition for a root system is found
-//! [here](root_system/trait.RootSystem.html).
+//! geometrical properties.  The definition for a root system is found at
+//! [`RootSystem`].
 //!
-//! This module defines the [`CartanMatrix`](type.CartanMatrix.html) which
-//! describes the root system.  From the Cartan matrix, the simple roots can be
-//! calculated using [`find_simple_roots`](fn.find_simple_roots.html).  From the
-//! simple roots, it is subsequently possible to algorithmically generate all
-//! the roots in the root system with
-//! [`find_positive_roots`](fn.find_positive_roots.html) and finally, all roots
-//! (including negative and zero roots) can be generated with either
-//! [`find_roots_from_positive`](fn.find_roots_from_positive.html) or
-//! [`find_roots_from_simple`](fn.find_roots_from_simple.html).
-use ndarray::{self, Axis};
+//! This module defines the [`CartanMatrix`] which describes the root system.
+//! From the Cartan matrix, the simple roots can be calculated using
+//! [`find_simple_roots`].  From the simple roots, it is subsequently possible
+//! to algorithmically generate all the roots in the root system with
+//! [`find_positive_roots`] and finally, all roots (including negative and zero
+//! roots) can be generated with either [`find_roots_from_positive`] or
+//! [`find_roots_from_simple`].
+use ndarray::{Array1, Array2, Axis};
 use rayon::prelude::*;
 
 use root::Root;
@@ -39,7 +37,7 @@ use root::Root;
 /// Since the projection of one root onto another must result in a half-integral
 /// multiple of the latter root, it follows that all entries inside the matrix
 /// are integers.
-pub type CartanMatrix = ndarray::Array2<i64>;
+pub type CartanMatrix = Array2<i64>;
 
 /// Type definition for an inverted Cartan matrix.
 ///
@@ -53,7 +51,7 @@ pub type CartanMatrix = ndarray::Array2<i64>;
 /// at most the determinant of the Cartan matrix.  Consequently, the inverted
 /// matrix is stored as the tuple \\((M, d)\\) where \\(M = d A^{-1}\\) and \\(d
 /// = \det(A)\\).
-pub type InverseCartanMatrix = (ndarray::Array2<i64>, i64);
+pub type InverseCartanMatrix = (Array2<i64>, i64);
 
 /// Type definition for a basis lengths.
 ///
@@ -96,7 +94,7 @@ pub type InverseCartanMatrix = (ndarray::Array2<i64>, i64);
 ///
 /// but it isn't used here in order to avoid requiring the use of rational
 /// numbers.
-pub type BasisLengths = ndarray::Array1<i64>;
+pub type BasisLengths = Array1<i64>;
 
 /// Trait for root systems.
 ///
@@ -137,8 +135,7 @@ pub type BasisLengths = ndarray::Array1<i64>;
 ///
 /// Although the roots are, strictly speaking, elements of a Euclidean vector
 /// space; we will not be handling these vectors directly.  Instead, all the
-/// relevant information is contained in the [Cartan
-/// matrix](type.CartanMatrix.html).
+/// relevant information is contained in the [`CartanMatrix`].
 pub trait RootSystem {
     /// Return the rank of the Lie group.
     ///
@@ -321,7 +318,7 @@ pub trait RootSystem {
     /// inner product from Euclidean space.
     ///
     /// The roots are scaled such that the product is always an integer.  See
-    /// [`BasisLengths`](type.BasisLengths.html) for more information.
+    /// [`BasisLengths`] for more information.
     ///
     /// # Example
     ///

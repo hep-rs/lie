@@ -174,12 +174,9 @@ fn find_positive_roots(simple_roots: &[Root]) -> Vec<Root> {
         .map(|level| {
             (0..rank - level + 1)
                 .map(|offset| {
-                    simple_roots[offset..offset + level].iter().fold(
-                        Root::zero(rank),
-                        |result, r| {
-                            result + r
-                        },
-                    )
+                    simple_roots[offset..offset + level]
+                        .iter()
+                        .fold(Root::zero(rank), |result, r| result + r)
                 })
                 .collect()
         })

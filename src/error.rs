@@ -13,7 +13,9 @@ impl Error {
     where
         S: Into<String>,
     {
-        Error { description: s.into() }
+        Error {
+            description: s.into(),
+        }
     }
 }
 

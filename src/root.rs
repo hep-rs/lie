@@ -25,13 +25,13 @@ use ndarray::Array1;
 ///   \\(\beta\\) in the \\(\omega\\) basis is expressed \\(\beta = \sum_{i}
 ///   k_{i} A_{ij}\\).
 ///
-/// A root on its own makes little sense without the corresponding [root
-/// system](root_system/trait.RootSystem.html); however, it is still possible to
-/// manipulate roots in several ways without needing the additional information
-/// provided by the root system.  For this to be possible though, it assumes
-/// that the \\(\omega\\) and \\(\alpha\\) weights have been correctly
-/// specified.  **Incorrectly defining \\(\omega\\) or \\(\alpha\\) may result
-/// in undefined behaviour when roots are being manipulated.**
+/// A root on its own makes little sense without the corresponding
+/// [`RootSystem`]; however, it is still possible to manipulate roots in several
+/// ways without needing the additional information provided by the root system.
+/// For this to be possible though, it assumes that the \\(\omega\\) and
+/// \\(\alpha\\) weights have been correctly specified.  **Incorrectly defining
+/// \\(\omega\\) or \\(\alpha\\) may result in undefined behaviour when roots
+/// are being manipulated.**
 #[derive(Clone)]
 pub struct Root {
     omega: Array1<i64>,
@@ -152,13 +152,11 @@ impl Root {
             .iter()
             .map(|&v| i64::signum(v))
             .filter(|&v| v != 0)
-            .fold(
-                (2, -2),
-                |(min, max), s| (cmp::min(min, s), cmp::max(max, s)),
-            );
+            .fold((2, -2), |(min, max), s| {
+                (cmp::min(min, s), cmp::max(max, s))
+            });
         assert_eq!(
-            min,
-            max,
+            min, max,
             "All coefficients in the alpha basis must have the same sign"
         );
         Root { omega, alpha }
@@ -348,7 +346,6 @@ impl<'a> ops::Add<&'a Root> for &'a Root {
     type Output = Root;
 
     fn add(self, other: &Root) -> Self::Output {
-
         Root {
             omega: &self.omega + &other.omega,
             alpha: &self.alpha + &other.alpha,
@@ -360,7 +357,6 @@ impl<'a> ops::Add<Root> for &'a Root {
     type Output = Root;
 
     fn add(self, other: Root) -> Self::Output {
-
         Root {
             omega: &self.omega + &other.omega,
             alpha: &self.alpha + &other.alpha,
@@ -394,7 +390,6 @@ impl<'a> ops::Sub<&'a Root> for &'a Root {
     type Output = Root;
 
     fn sub(self, other: &Root) -> Self::Output {
-
         Root {
             omega: &self.omega - &other.omega,
             alpha: &self.alpha - &other.alpha,
@@ -406,7 +401,6 @@ impl<'a> ops::Sub<Root> for &'a Root {
     type Output = Root;
 
     fn sub(self, other: Root) -> Self::Output {
-
         Root {
             omega: &self.omega - &other.omega,
             alpha: &self.alpha - &other.alpha,
