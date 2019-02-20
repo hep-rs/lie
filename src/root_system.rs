@@ -568,7 +568,7 @@ fn find_positive_roots_multithread(simple_roots: &[Root]) -> Vec<Root> {
                 simple_roots
                     .par_iter()
                     .filter_map(|&(i, simple_root)| {
-                        let m = (1..root.alpha()[i] + 1)
+                        let m = (1..=root.alpha()[i])
                             .take_while(|&m| roots.binary_search(&(root - simple_root * m)).is_ok())
                             .last();
                         let m = match m {
@@ -621,7 +621,7 @@ fn find_positive_roots_single_thread(simple_roots: &[Root]) -> Vec<Root> {
                 simple_roots
                     .iter()
                     .filter_map(|&(i, simple_root)| {
-                        let m = (1..root.alpha()[i] + 1)
+                        let m = (1..=root.alpha()[i])
                             .take_while(|&m| roots.binary_search(&(root - simple_root * m)).is_ok())
                             .last();
                         let m = match m {

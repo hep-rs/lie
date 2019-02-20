@@ -170,9 +170,9 @@ impl RootSystem for TypeA {
 /// \\end{align}
 fn find_positive_roots(simple_roots: &[Root]) -> Vec<Root> {
     let rank = simple_roots[0].rank();
-    let roots: Vec<Vec<_>> = (1..rank + 1)
+    let roots: Vec<Vec<_>> = (1..=rank)
         .map(|level| {
-            (0..rank - level + 1)
+            (0..=rank - level)
                 .map(|offset| {
                     simple_roots[offset..offset + level]
                         .iter()
