@@ -1,5 +1,5 @@
-use std::fmt;
 use std::error;
+use std::fmt;
 
 /// Generic error type of this library.
 #[derive(Debug)]
@@ -41,7 +41,7 @@ mod test {
         let e = Error::new("Test error");
         assert_eq!(e.description, "Test error");
         assert_eq!(e.description(), "Test error");
-        assert!(e.cause().is_none());
+        assert!(e.source().is_none());
         assert_eq!(format!("Error: {}.", e), "Error: Test error.")
     }
 }

@@ -139,6 +139,6 @@ mod root;
 pub mod root_system;
 pub mod series;
 
-pub use root::Root;
-pub use error::Error;
-pub use root_system::{BasisLengths, CartanMatrix, InverseCartanMatrix, RootSystem};
+pub use crate::error::Error;
+pub use crate::root::Root;
+pub use crate::root_system::{BasisLengths, CartanMatrix, InverseCartanMatrix, RootSystem};

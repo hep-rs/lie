@@ -1,9 +1,9 @@
-use std::fmt;
 use ndarray::Array2;
+use std::fmt;
 
-use error::Error;
-use root::Root;
-use root_system::{self, BasisLengths, CartanMatrix, InverseCartanMatrix, RootSystem};
+use crate::error::Error;
+use crate::root::Root;
+use crate::root_system::{self, BasisLengths, CartanMatrix, InverseCartanMatrix, RootSystem};
 
 /// The \\(A_{n}\\) infinite series of Lie groups.
 ///
@@ -203,8 +203,8 @@ impl fmt::Display for TypeA {
 mod test {
     use super::*;
 
+    use crate::root_system::RootSystem;
     use ndarray::Array2;
-    use root_system::RootSystem;
     #[cfg(feature = "nightly")]
     use test::Bencher;
 

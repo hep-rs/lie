@@ -500,7 +500,7 @@ mod test {
             assert!($left > $right);
             assert!($right < $left);
             assert_ne!($left, $right)
-        }
+        };
     }
 
     #[test]

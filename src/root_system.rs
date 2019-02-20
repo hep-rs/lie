@@ -15,7 +15,7 @@
 use ndarray::{Array1, Array2, Axis};
 use rayon::prelude::*;
 
-use root::Root;
+use crate::root::Root;
 
 /// Type definition for a Cartan matrix.
 ///
@@ -651,7 +651,7 @@ fn find_positive_roots_single_thread(simple_roots: &[Root]) -> Vec<Root> {
 #[cfg(test)]
 mod test {
     use super::CartanMatrix;
-    use root::Root;
+    use crate::root::Root;
 
     #[test]
     fn find_simple_roots() {
