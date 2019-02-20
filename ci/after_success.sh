@@ -1,5 +1,7 @@
+#!/usr/bin/bash
+
 # Exit on any error
-set -ux
+set -eux
 
 install_kcov() {
     set -e
@@ -59,15 +61,16 @@ EOF
 s#<body class="rustdoc mod">#<body class="rustdoc mod"><!-- Google Tag Manager (noscript) --><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N9HX7G4" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><!-- End Google Tag Manager (noscript) -->#
 EOF
         read -r MATHJAX <<EOF
-s#</body>#<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script></body>#
+s#</body>#<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script><script>MathJax.Hub.Config({TeX: {Macros: {dd: "{\\mathop{}\\!\\mathrm{d}}"}}});</script></body>#
 EOF
+        MATHJAX="${MATHJAX//\\/\\\\\\\\}"
 
-        find ./target/doc \
-             -type f \
-             -name "*.html" \
-             -exec sed -i "$GTM_HEADER" '{}' + \
-             -exec sed -i "$GTM_BODY" '{}' + \
-             -exec sed -i "$MATHJAX" '{}' +
+        find ./target/doc -type f -name "*.html" -print0 |
+            xargs -0 sed -i "$GTM_HEADER"
+        find ./target/doc -type f -name "*.html" -print0 |
+            xargs -0 sed -i "$GTM_BODY"
+        find ./target/doc -type f -name "*.html" -print0 |
+            xargs -0 sed -i "$MATHJAX"
 
         setup_git
         git clone --depth=1 --branch=gh-pages https://${GH_TOKEN}@github.com/$TRAVIS_REPO_SLUG.git ./target/doc-git
