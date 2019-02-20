@@ -124,8 +124,6 @@
 
 #![cfg_attr(feature = "cargo-clippy", allow(doc_markdown))]
 #![cfg_attr(feature = "nightly", feature(test))]
-#![cfg_attr(feature = "strict", deny(missing_docs))]
-#![cfg_attr(feature = "strict", deny(warnings))]
 
 #[macro_use]
 extern crate ndarray;

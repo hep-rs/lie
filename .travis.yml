@@ -13,7 +13,7 @@ matrix:
 
 env:
   global:
-  - RUSTFLAGS="-C link-dead-code"
+  - RUSTFLAGS="-C link-dead-code -D warnings -D missing_docs"
 
 cache: cargo
 
