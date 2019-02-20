@@ -122,7 +122,6 @@
 //!
 //! ## Connection to Group Representations
 
-#![cfg_attr(feature = "cargo-clippy", allow(doc_markdown))]
 #![cfg_attr(feature = "nightly", feature(test))]
 
 #[macro_use]
