@@ -20,6 +20,7 @@ cache: cargo
 
 addons:
   apt:
+    update: true
     packages:
       - libcurl4-openssl-dev
       - libelf-dev
@@ -28,6 +29,7 @@ addons:
       - gcc
       - binutils-dev
       - libiberty-dev
+      - libgsl0-dev
 
 before_script:
   - |
@@ -36,10 +38,10 @@ before_script:
     else
         export FEATURES="";
     fi
-  - bash ./ci/before_script.sh
+  - ./ci/before_script.sh
 
 script:
-  - bash ./ci/script.sh
+  - ./ci/script.sh
 
 after_success:
-  - bash ./ci/after_success.sh
+  - ./ci/after_success.sh

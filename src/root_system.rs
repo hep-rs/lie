@@ -519,7 +519,7 @@ pub fn find_positive_roots(simple_roots: &[Root]) -> Vec<Root> {
         "At least one simple root must be provided."
     );
     assert!(
-        simple_roots.iter().all(|r| r.is_simple()),
+        simple_roots.iter().all(Root::is_simple),
         "All roots provided must be simple."
     );
 

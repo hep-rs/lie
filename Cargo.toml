@@ -24,4 +24,3 @@ rayon = "1.0.3"
 
 default = []
 nightly = []
-strict = []
